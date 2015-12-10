@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Zg3-Fx-3X9">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+    </dependencies>
+    <scenes>
+        <!--联系人-->
+        <scene sceneID="XWj-UA-pQt">
+            <objects>
+                <viewController id="4g2-gg-PO0" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="cNu-dI-8TB"/>
+                        <viewControllerLayoutGuide type="bottom" id="Pyk-tP-BfF"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="IEN-wt-d5p">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="联系人" id="N8I-S2-Tul"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="S3r-pj-qLb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="816" y="1171"/>
+        </scene>
+        <!--信息-->
+        <scene sceneID="VPr-9M-YZe">
+            <objects>
+                <viewController id="83h-2B-qUg" customClass="MessageListController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Vpi-nZ-f6F"/>
+                        <viewControllerLayoutGuide type="bottom" id="bBw-kE-Fn5"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="yx2-hc-FwN" customClass="MessageUITabBar">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="信息" id="Llg-3Y-nh7">
+                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="10" maxY="10"/>
+                    </tabBarItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="56n-Nd-ttx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="816" y="322"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="ccw-fc-0v4">
+            <objects>
+                <tabBarController id="Zg3-Fx-3X9" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="OwN-xj-7Cl">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="83h-2B-qUg" kind="relationship" relationship="viewControllers" id="9MM-zM-1od"/>
+                        <segue destination="4g2-gg-PO0" kind="relationship" relationship="viewControllers" id="2cq-UX-UOB"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="M7P-8E-5Ve" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-290" y="724"/>
+        </scene>
+    </scenes>
+</document>
