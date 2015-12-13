@@ -17,4 +17,7 @@
 - (NSString *) getThumbPathWithName: (NSString *) name;
 - (NSString *) getPathWithName: (NSString *) name prefix:(NSString *) prefix;
 
+- (NSString *)contentTypeForImageData:(NSData *)data;
++(BOOL)downloadFile:(NSString *)urlstr path:(NSString *)savePath;
+
 @end

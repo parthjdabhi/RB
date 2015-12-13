@@ -30,4 +30,6 @@
 
 +(instancetype) initWithMessage:(Message *) message;
 
+-(void) repack;
+
 @end

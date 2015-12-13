@@ -33,9 +33,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    UIImage *image = [UIImage imageWithContentsOfFile:_imageUrl];
-//    [_imageView setContentMode: UIViewContentModeScaleAspectFit];
-//    [_imageView setImage: image];
+    NSMutableDictionary *dict = [_imgArr[_currentIndex] mutableCopy];
+    NSString *path = [dict objectForKey:@"url"];
+    if ([path hasPrefix:@"http"]) {
+        NSString *key = [[path componentsSeparatedByString:@"/"] lastObject];
+        NSString *downloadPath = [[IMFileHelper shareInstance] getThumbPathWithName:key];
+        if (![[NSFileManager defaultManager] fileExistsAtPath:downloadPath]) {
+            [IMFileHelper downloadFile:path path:downloadPath];
+        }
+        path = key;
+    }
+    _imgArr[_currentIndex] = dict;
+    
     [self.navigationController setNavigationBarHidden:YES animated:TRUE];
     
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dissmissPicture:)]];

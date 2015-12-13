@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "WeiXinCell.h"
+#import "NoticeCell.h"
 #import "User.h"
 #import "MessageInputBar.h"
 #import "VoiceInputBar.h"

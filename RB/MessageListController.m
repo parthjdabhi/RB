@@ -95,9 +95,23 @@
     cell.subTitle.text = dialog.desc;
     [cell setUnreadCount:dialog.unreadCount];
     
-    NSDateFormatter* formatter = [[NSDateFormatter alloc]init];
-    [formatter setDateFormat:@"hh:mm"];
-    cell.time.text = [formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:dialog.stamp]];
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"HH:mm"];
+    
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:dialog.stamp];
+    NSCalendar *greCalendar = [[NSCalendar alloc] initWithCalendarIdentifier: NSCalendarIdentifierGregorian];
+    NSCalendarUnit unit = NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear;
+    NSDateComponents *cmps = [greCalendar components:unit fromDate:date toDate:[NSDate date] options:0];
+    
+    if (cmps.year == 0 && cmps.month == 0 && cmps.day == 1) {
+        cell.time.text = [NSString stringWithFormat:@"昨天"];
+    } else if (cmps.year == 0 && cmps.month == 0 && cmps.day == 0) {
+        cell.time.text = [formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:dialog.stamp]];
+    } else {
+        [formatter setDateFormat:@"yyyy-MM-dd"];
+        cell.time.text = [formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:dialog.stamp]];
+    }
+    
     return cell;
 }
 

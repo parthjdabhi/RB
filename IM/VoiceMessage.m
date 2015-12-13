@@ -73,6 +73,11 @@
     return vm;
 }
 
+-(void) repack {
+    self.messageBody = [self packMessageBody];
+    self.content = [[[[[[[[[[ByteBuffer alloc] init] string:self._id] int32:self.from] int32:self.to] int32:self.target] byte:self.messageType] int64:self.stamp] string:self.messageBody] pack];
+}
+
 -(NSString *) packMessageBody {
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
                                                     _url, @"url",
@@ -110,4 +115,5 @@
     return NO;
     
 }
+
 @end

@@ -63,32 +63,27 @@
     _resultArray = [[NSMutableArray alloc] init];
     _imageArray = [[NSMutableArray alloc] init];
     for (Message *msg in msgs) {
-        NSDictionary *dict = nil;
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                     [NSString stringWithFormat:@"%d", msg.from], @"name",
+                                     msg.from == [User currentUser].uid ? @"1":@"0", @"mine",
+                                     [NSString stringWithFormat:@"%d", msg.contentType], @"type",
+                                     [NSString stringWithFormat:@"%lld", msg.stamp], @"stamp",
+                                     nil];
         
         if (msg.contentType == 2) {
             VoiceMessage *voiceMsg = (VoiceMessage *) msg;
-            dict = [NSDictionary dictionaryWithObjectsAndKeys:
-                    [NSString stringWithFormat:@"%d", voiceMsg.from], @"name",
-                    [NSString stringWithFormat:@"%d", voiceMsg.duration], @"duration",
-                    @"2", @"type",
-                    voiceMsg.url, @"url",
-                    msg.from == [User currentUser].uid ? @"1":@"0", @"mine",
-                    nil];
+            [dict setObject:[NSString stringWithFormat:@"%d", voiceMsg.duration] forKey:@"duration"];
+            [dict setObject:voiceMsg.url forKey:@"url"];
         } else if (msg.contentType == 3) {
             PictureMessage *messageMsg = (PictureMessage *) msg;
-            dict = [NSDictionary dictionaryWithObjectsAndKeys:
-                    [NSString stringWithFormat:@"%d", messageMsg.from], @"name",
-                    @"3", @"type",
-                    messageMsg.url, @"url",
-                    msg.from == [User currentUser].uid ? @"1":@"0", @"mine",
-                    [NSString stringWithFormat:@"%lu", (unsigned long)_imageArray.count], @"idx",
-                    nil];
-            
+            [dict setObject:messageMsg.url forKey:@"url"];
+            [dict setObject:[NSString stringWithFormat:@"%lu", (unsigned long)_imageArray.count] forKey:@"idx"];
             [_imageArray addObject:dict];
         } else {
-            dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d",msg.from], @"name", msg.messageContent, @"content", msg.from == [User currentUser].uid ? @"1":@"0", @"mine", nil];
+            [dict setObject:msg.messageContent forKey:@"content"];
         }
-        [_resultArray addObject:dict];
+        
+        [self add2ListTailWithDict:dict];
     }
     
     if(_resultArray.count > 0) {
@@ -165,14 +160,15 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *dict = [_resultArray objectAtIndex:indexPath.row];
+    int baseHeight = 60;
     
     if ([[dict objectForKey:@"type"] isEqualToString:@"2"]) {
-        return 60;
+        return baseHeight;
     } else if ([[dict objectForKey:@"type"] isEqualToString:@"3"]) {
         NSString *path = [[IMFileHelper shareInstance] getPathWithName:[dict objectForKey:@"url"]];
         UIImage *image = [UIImage imageWithContentsOfFile:path];
         if (!image) {
-            return 60;
+            return baseHeight;
         }
         
         int witdh = image.size.width;
@@ -187,10 +183,12 @@
             height = witdh / image.size.width * image.size.height;
         }
 
-        if (height + 10 > 60) {
+        if (height + 10 > baseHeight) {
             return height + 10 ;
         }
-        return 60;
+        return height;
+    } else if ([[dict objectForKey:@"type"] isEqualToString:@"99"]) {
+        return 30;
     } else {
         UIFont *font = [UIFont systemFontOfSize:14];
         CGSize size = [[dict objectForKey:@"content"] sizeWithFont:font constrainedToSize:CGSizeMake(180.0f, 20000.0f) lineBreakMode:NSLineBreakByWordWrapping];
@@ -201,55 +199,62 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    NSMutableDictionary *dict = [_resultArray objectAtIndex:indexPath.row];
-//    UITableViewCell *cell = nil;
-//    if ([[dict objectForKey:@"type"] isEqualToString:@"2"]) {
-//        VoiceMessageCell *vmc = [tableView dequeueReusableCellWithIdentifier:VoiceMessageCellIdentifier];
-//        BOOL isHost = [[dict objectForKey:@"mine"] isEqualToString:@"1"];
-//        UIImage *avater = nil;
-//        avater = [UIImage imageNamed:[NSString stringWithFormat:@"avater_%d.jpg", isHost? [[User currentUser] uid]:_uid]];
-//        if (!avater) {
-//            avater = [UIImage imageNamed:@"photo.png"];
-//        }
-//        vmc.avater.image = avater;
-//        vmc.duration = [[dict objectForKey:@"duration"] floatValue];
-//        vmc.url = [dict objectForKey:@"url"];
-//        
-//        cell = vmc;
-//    }
-//    return cell;
-    static NSString *CellIdentifier = @"WeiXinCell";
-    WeiXinCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[WeiXinCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    }
-    
     NSMutableDictionary *dict = [_resultArray objectAtIndex:indexPath.row];
-    UIImage *image = nil;
-    BOOL isHost = [[dict objectForKey:@"mine"] isEqualToString:@"1"];
-    image = [UIImage imageNamed:[NSString stringWithFormat:@"avater_%d.jpg", isHost? [[User currentUser] uid]:_uid]];
-    if (!image) {
-        image = [UIImage imageNamed:@"photo.png"];
+    if (![[dict objectForKey:@"type"] isEqualToString:@"99"]) {
+        static NSString *CellIdentifier = @"WeiXinCell";
+        WeiXinCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            cell = [[WeiXinCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+        
+        UIImage *image = nil;
+        BOOL isHost = [[dict objectForKey:@"mine"] isEqualToString:@"1"];
+        image = [UIImage imageNamed:[NSString stringWithFormat:@"avater_%d.jpg", isHost? [[User currentUser] uid]:_uid]];
+        if (!image) {
+            image = [UIImage imageNamed:@"photo.png"];
+        }
+        
+        if ([[dict objectForKey:@"type"] isEqualToString:@"3"]) {
+            NSMutableDictionary *tempDict = [dict mutableCopy];
+            NSString *path = [dict objectForKey:@"url"];
+            if ([path hasPrefix:@"http"]) {
+                NSString *key = [[path componentsSeparatedByString:@"/"] lastObject];
+                NSString *downloadPath = [[IMFileHelper shareInstance] getThumbPathWithName:key];
+                if (![[NSFileManager defaultManager] fileExistsAtPath:downloadPath]) {
+                    [IMFileHelper downloadFile:[path stringByAppendingString:@".thumb"] path:downloadPath];
+                }
+                path = key;
+            } else {
+                //            path = [path stringByAppendingString:@".thumb"];
+            }
+            
+            [tempDict setObject:path forKey:@"url"];
+            dict = tempDict;
+        }
+        
+        cell.delegate = self;
+        [cell initWithImage:image isHost:isHost data:dict];
+        
+        [cell setNeedsUpdateConstraints];
+        [cell updateConstraintsIfNeeded];
+        
+        if (indexPath.row == _resultArray.count - 1) {
+            [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        }
+        
+        return cell;
+    } else {
+        static NSString *CellIdentifier = @"NoticeCell";
+        NoticeCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            cell = [[NoticeCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+        
+        [cell initWithData:dict];
+        return cell;
     }
-    
-//    if ([[dict objectForKey:@"type"] isEqualToString:@"3"]) {
-//        NSString *url = [[IMFileHelper shareInstance] getPathWithName:[dict objectForKey:@"url"] prefix:@"png"];
-//        [dict removeObjectForKey:@"url"];
-//        [dict setObject:url forKey:@"url"];
-//    }
-    
-    cell.delegate = self;
-    [cell initWithImage:image isHost:isHost data:dict];
-    
-    [cell setNeedsUpdateConstraints];
-    [cell updateConstraintsIfNeeded];
-    
-    if (indexPath.row == _resultArray.count - 1) {
-        [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-    }
-    
-    return cell;
 }
 
 //- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -292,7 +297,7 @@
                           nil];
     
     [_imageArray addObject:dict];
-    [_resultArray addObject:dict];
+    [self add2ListTailWithDict:dict];
     [[IMClient shareInstace] sendPictureToUid:self.uid path: key];
     [self refreshMessageList];
     
@@ -323,9 +328,19 @@
 
 - (void) voiceCellClick:(NSDictionary *)dict cell:(WeiXinCell *)cell {
     if ([[dict objectForKey:@"type"] isEqualToString:@"2"]) {
+        NSString *path = [dict objectForKey:@"url"];
+        if ([path hasPrefix:@"http"]) {
+            NSString *key = [[path componentsSeparatedByString:@"/"] lastObject];
+            NSString *downloadPath = [[IMFileHelper shareInstance] getPathWithName:key];
+            if (![[NSFileManager defaultManager] fileExistsAtPath:downloadPath]) {
+                [IMFileHelper downloadFile:path path:downloadPath];
+            }
+            path = key;
+        }
+
         if (cell == _playingCell) {
             if (!_audioPlayer.isPlaying) {
-                NSURL *audioUrl = [NSURL fileURLWithPath:[[IMFileHelper shareInstance] getPathWithName:[dict objectForKey:@"url"]]];
+                NSURL *audioUrl = [NSURL fileURLWithPath:[[IMFileHelper shareInstance] getPathWithName:path]];
                 _audioPlayer = [self audioPlayer:audioUrl];
                 [_audioPlayer play];
                 _playingCell = cell;
@@ -336,7 +351,8 @@
             }
         } else {
             [_playingCell stopPlayVoice];
-            NSURL *audioUrl = [NSURL fileURLWithPath:[[IMFileHelper shareInstance] getPathWithName:[dict objectForKey:@"url"]]];
+
+            NSURL *audioUrl = [NSURL fileURLWithPath:[[IMFileHelper shareInstance] getPathWithName:path]];
             _audioPlayer = [self audioPlayer:audioUrl];
             [_audioPlayer play];
             _playingCell = cell;
@@ -348,7 +364,6 @@
 
 - (void) pictureCellOnClick:(NSDictionary *) dict {
     if ([[dict objectForKey:@"type"] isEqualToString:@"3"]) {
-        
         PictureViewController *pvc = [[PictureViewController alloc] initWithImages:_imageArray index:[[dict objectForKey:@"idx"] integerValue]];
 //        NSString *url = [[IMFileHelper shareInstance] getPathWithName:[dict objectForKey:@"url"]];
         //        [pvc.imageView setImage: [UIImage imageWithContentsOfFile:url]];
@@ -359,7 +374,7 @@
     }
 }
 
-#pragma mark handle delegate
+#pragma mark inputbar handle delegate
 
 -(void)changeKeyBoard:(NSNotification *)aNotifacation
 {
@@ -496,7 +511,7 @@
             @"1", @"mine",
             nil];
 
-    [_resultArray addObject:dict];
+    [self add2ListTailWithDict:dict];
     [[IMClient shareInstace] sendVoiceToUid:self.uid path: voicePath duration:audioDurationSeconds];
     [self refreshMessageList];
 }
@@ -505,11 +520,39 @@
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
                           [NSString stringWithFormat:@"%d", [User currentUser].uid], @"name",
                           _messageInputBar.msgTextField.text, @"content", @"1", @"mine", nil];
-    [_resultArray addObject:dict];
+    [self add2ListTailWithDict:dict];
     [[IMClient shareInstace] sendMessageToUid:self.uid content:_messageInputBar.msgTextField.text];
     [self refreshMessageList];
     _messageInputBar.msgTextField.text = nil;
 }
+
+- (void) add2ListTailWithDict:(NSDictionary *) dict {
+    NSDictionary *pre = [_resultArray lastObject];
+    if (pre == nil || [[dict objectForKey:@"stamp"] longLongValue] - [[pre objectForKey:@"stamp"] longLongValue] > 60 * 3) {
+        long long stamp = [[dict objectForKey:@"stamp"] longLongValue];
+        NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@" HH:mm "];
+            
+        NSString *stampText = nil;
+        NSDate *date = [NSDate dateWithTimeIntervalSince1970:stamp];
+        NSCalendar *greCalendar = [[NSCalendar alloc] initWithCalendarIdentifier: NSCalendarIdentifierGregorian];
+        NSCalendarUnit unit = NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear;
+        NSDateComponents *cmps = [greCalendar components:unit fromDate:date toDate:[NSDate date] options:0];
+            
+        if (cmps.year == 0 && cmps.month == 0 && cmps.day == 1) {
+            stampText = [NSString stringWithFormat:@" 昨天 %@ ", [formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:stamp]]];
+        } else if (cmps.year == 0 && cmps.month == 0 && cmps.day == 0) {
+            stampText = [formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:stamp]];
+        } else {
+            [formatter setDateFormat:@" yyyy-MM-dd HH:mm "];
+            stampText = [formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:stamp]];
+        }
+        [_resultArray addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys: @"99", @"type", stampText, @"stamp", nil]];
+    }
+    [_resultArray addObject:dict];
+}
+
+#pragma mark handle notification
 
 -(void) onReceivedMsgNotifycation:(NSNotification *)aNotifacation
 {
@@ -543,7 +586,7 @@
         dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d",msg.from], @"name", msg.messageContent, @"content", msg.from == [User currentUser].uid ? @"1":@"0", @"mine", nil];
     }
     
-    [_resultArray addObject:dict];
+    [self add2ListTailWithDict:dict];
 
     if(self.isViewLoaded && self.view.window) {
         dispatch_sync(dispatch_get_main_queue(), ^{
@@ -678,7 +721,7 @@
 //    _audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
     _audioPlayer.delegate = self;
 //    _audioPlayer.volume=0.8;
-    _audioPlayer.numberOfLoops=-1;
+//    _audioPlayer.numberOfLoops=-1;
     [_audioPlayer prepareToPlay];
     if (error) {
         NSLog(@"创建播放器过程中发生错误，错误信息：%@",error.localizedDescription);

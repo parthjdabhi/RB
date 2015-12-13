@@ -9,6 +9,8 @@
 #import "IMClient.h"
 #import "IMDAO.h"
 #import "ConnectionConfig.h"
+#import "NetWorkManager.h"
+#import "IMFileHelper.h"
 
 @interface IMClient (){
     NSMutableArray *msgQueue;
@@ -86,7 +88,17 @@ static ConnectionConfig *config;
     // to do
     VoiceMessage *message = [[VoiceMessage alloc] initWithFrom:_uid to:uid target:0 type:1 stamp:[[NSDate date] timeIntervalSince1970]*1000 duration: duration url: url];
     [[IMDAO shareInstance] saveSendMessage:message];
-    [_connection send:message];
+    
+    path = [[IMFileHelper shareInstance] getPathWithName:path];    
+    [[NetWorkManager sharedInstance] uploadFile:path
+                                           type:2
+                                        success:^(NSDictionary *dict) {
+                                            message.url = [dict objectForKey:@"url"];
+                                            [message repack];
+                                            [_connection send:message];
+                                        } fail:^(NSError *error) {
+        
+                                        }];
 }
 
 -(void) sendPictureToUid:(int) uid path:(NSString *) path {
@@ -94,7 +106,17 @@ static ConnectionConfig *config;
     // to do
     PictureMessage *message = [[PictureMessage alloc] initWithFrom:_uid to:uid target:0 type:1 stamp:[[NSDate date] timeIntervalSince1970]*1000 url: url];
     [[IMDAO shareInstance] saveSendMessage:message];
-    [_connection send:message];
+    
+    path = [[IMFileHelper shareInstance] getPathWithName:path];
+    [[NetWorkManager sharedInstance] uploadFile:path
+                                           type:1
+                                        success:^(NSDictionary *dict) {
+                                            message.url = [dict objectForKey:@"url"];
+                                            [message repack];                                            
+                                            [_connection send:message];
+                                        } fail:^(NSError *error) {
+        
+                                        }];
 }
 
 -(void) sendGroupMessageToGid:(int) gid content:(NSString *) content

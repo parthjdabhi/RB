@@ -10,8 +10,11 @@
 
 @interface NetWorkManager : NSObject
 
-+(instancetype) shareInstace;
++(instancetype) sharedInstance;
 
--(NSString *) uploadFile:(NSString *) path;
+-(NSString *) uploadFile:(NSString *) path
+                    type:(int) type
+                 success:(void (^)(NSDictionary *responseObject))success
+                    fail:(void (^)(NSError *error))fail;
 
 @end

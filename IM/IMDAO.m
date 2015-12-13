@@ -198,7 +198,7 @@ static IMDAO *sharedInstance;
         dialog.stamp = message.stamp;
         [self saveDialog:dialog];
     } else {
-        sql = @"UPDATE dialog SET description=?, is_read=is_read+1, unread_count=unread_count+1, stamp=? WHERE uid=?";
+        sql = @"UPDATE dialog SET description=?, is_read=0, unread_count=unread_count+1, stamp=? WHERE uid=?";
         [userDB executeUpdate:sql, description, [NSNumber numberWithUnsignedLongLong:message.stamp/1000], [NSNumber numberWithUnsignedInt:uid]];
     }
 }
@@ -285,7 +285,7 @@ static IMDAO *sharedInstance;
 }
 
 -(void) clearUnreadCountWithUid:(int) uid {
-    NSString *sql = @"UPDATE dialog SET unread_count=0 WHERE uid=?";
+    NSString *sql = @"UPDATE dialog SET unread_count=0, is_read=1 WHERE uid=?";
     [userDB executeUpdate:sql, [NSNumber numberWithUnsignedInt:uid]];
 }
 

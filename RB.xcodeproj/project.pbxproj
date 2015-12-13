@@ -36,7 +36,6 @@
 		3FEB18B51C14385C00FE7C52 /* MessageInputBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3FEB18961C14385C00FE7C52 /* MessageInputBar.xib */; };
 		3FEB18B61C14385C00FE7C52 /* MessageListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FEB18981C14385C00FE7C52 /* MessageListController.m */; };
 		3FEB18B71C14385C00FE7C52 /* MessageListController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3FEB18991C14385C00FE7C52 /* MessageListController.xib */; };
-		3FEB18B81C14385C00FE7C52 /* MessageUITabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FEB189B1C14385C00FE7C52 /* MessageUITabBar.m */; };
 		3FEB18B91C14385C00FE7C52 /* PictureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FEB189D1C14385C00FE7C52 /* PictureViewController.m */; };
 		3FEB18BA1C14385C00FE7C52 /* PictureViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3FEB189E1C14385C00FE7C52 /* PictureViewController.xib */; };
 		3FEB18BB1C14385C00FE7C52 /* RB.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3FEB189F1C14385C00FE7C52 /* RB.xcdatamodeld */; };
@@ -101,6 +100,7 @@
 		3FEE30211C1924BA00969D53 /* iconfont-contact@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FEE301E1C1924BA00969D53 /* iconfont-contact@2x.png */; };
 		3FEE30221C1924BA00969D53 /* iconfont-message@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FEE301F1C1924BA00969D53 /* iconfont-message@2x.png */; };
 		3FEE30241C19252900969D53 /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FEE30231C19252900969D53 /* AFNetworking.framework */; };
+		3FEE302A1C1D38AD00969D53 /* NoticeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FEE30291C1D38AD00969D53 /* NoticeCell.m */; };
 		FB039EB92B09D28D53A22AB9 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E5111A103427861E09E8204 /* Pods.framework */; };
 /* End PBXBuildFile section */
 
@@ -144,12 +144,12 @@
 		3FEB18711C1437F600FE7C52 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3FEB187D1C14385C00FE7C52 /* AppProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppProfile.h; sourceTree = "<group>"; };
 		3FEB187E1C14385C00FE7C52 /* AppProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppProfile.m; sourceTree = "<group>"; };
-		3FEB187F1C14385C00FE7C52 /* DialogItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DialogItemCell.h; sourceTree = "<group>"; };
-		3FEB18801C14385C00FE7C52 /* DialogItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DialogItemCell.m; sourceTree = "<group>"; };
-		3FEB18811C14385C00FE7C52 /* DialogItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DialogItemCell.xib; sourceTree = "<group>"; };
-		3FEB18821C14385C00FE7C52 /* FriendItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendItemCell.h; sourceTree = "<group>"; };
-		3FEB18831C14385C00FE7C52 /* FriendItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendItemCell.m; sourceTree = "<group>"; };
-		3FEB18841C14385C00FE7C52 /* FriendItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendItemCell.xib; sourceTree = "<group>"; };
+		3FEB187F1C14385C00FE7C52 /* DialogItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DialogItemCell.h; path = RB/DialogItemCell.h; sourceTree = "<group>"; };
+		3FEB18801C14385C00FE7C52 /* DialogItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DialogItemCell.m; path = RB/DialogItemCell.m; sourceTree = "<group>"; };
+		3FEB18811C14385C00FE7C52 /* DialogItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DialogItemCell.xib; path = RB/DialogItemCell.xib; sourceTree = "<group>"; };
+		3FEB18821C14385C00FE7C52 /* FriendItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendItemCell.h; path = RB/FriendItemCell.h; sourceTree = "<group>"; };
+		3FEB18831C14385C00FE7C52 /* FriendItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendItemCell.m; path = RB/FriendItemCell.m; sourceTree = "<group>"; };
+		3FEB18841C14385C00FE7C52 /* FriendItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FriendItemCell.xib; path = RB/FriendItemCell.xib; sourceTree = "<group>"; };
 		3FEB18851C14385C00FE7C52 /* FriendListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendListController.h; sourceTree = "<group>"; };
 		3FEB18861C14385C00FE7C52 /* FriendListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendListController.m; sourceTree = "<group>"; };
 		3FEB18871C14385C00FE7C52 /* FriendListController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendListController.xib; sourceTree = "<group>"; };
@@ -165,23 +165,21 @@
 		3FEB18911C14385C00FE7C52 /* MessageDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageDetailViewController.h; sourceTree = "<group>"; };
 		3FEB18921C14385C00FE7C52 /* MessageDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageDetailViewController.m; sourceTree = "<group>"; };
 		3FEB18931C14385C00FE7C52 /* MessageDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageDetailViewController.xib; sourceTree = "<group>"; };
-		3FEB18941C14385C00FE7C52 /* MessageInputBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageInputBar.h; sourceTree = "<group>"; };
-		3FEB18951C14385C00FE7C52 /* MessageInputBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageInputBar.m; sourceTree = "<group>"; };
-		3FEB18961C14385C00FE7C52 /* MessageInputBar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageInputBar.xib; sourceTree = "<group>"; };
+		3FEB18941C14385C00FE7C52 /* MessageInputBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessageInputBar.h; path = RB/MessageInputBar.h; sourceTree = "<group>"; };
+		3FEB18951C14385C00FE7C52 /* MessageInputBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessageInputBar.m; path = RB/MessageInputBar.m; sourceTree = "<group>"; };
+		3FEB18961C14385C00FE7C52 /* MessageInputBar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessageInputBar.xib; path = RB/MessageInputBar.xib; sourceTree = "<group>"; };
 		3FEB18971C14385C00FE7C52 /* MessageListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageListController.h; sourceTree = "<group>"; };
 		3FEB18981C14385C00FE7C52 /* MessageListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageListController.m; sourceTree = "<group>"; };
 		3FEB18991C14385C00FE7C52 /* MessageListController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageListController.xib; sourceTree = "<group>"; };
-		3FEB189A1C14385C00FE7C52 /* MessageUITabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageUITabBar.h; sourceTree = "<group>"; };
-		3FEB189B1C14385C00FE7C52 /* MessageUITabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageUITabBar.m; sourceTree = "<group>"; };
 		3FEB189C1C14385C00FE7C52 /* PictureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PictureViewController.h; sourceTree = "<group>"; };
 		3FEB189D1C14385C00FE7C52 /* PictureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PictureViewController.m; sourceTree = "<group>"; };
 		3FEB189E1C14385C00FE7C52 /* PictureViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PictureViewController.xib; sourceTree = "<group>"; };
 		3FEB18A01C14385C00FE7C52 /* RB.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RB.xcdatamodel; sourceTree = "<group>"; };
 		3FEB18A11C14385C00FE7C52 /* UITabBar+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBar+Badge.h"; sourceTree = "<group>"; };
 		3FEB18A21C14385C00FE7C52 /* UITabBar+Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBar+Badge.m"; sourceTree = "<group>"; };
-		3FEB18A31C14385C00FE7C52 /* VoiceInputBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoiceInputBar.h; sourceTree = "<group>"; };
-		3FEB18A41C14385C00FE7C52 /* VoiceInputBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoiceInputBar.m; sourceTree = "<group>"; };
-		3FEB18A51C14385C00FE7C52 /* VoiceInputBar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VoiceInputBar.xib; sourceTree = "<group>"; };
+		3FEB18A31C14385C00FE7C52 /* VoiceInputBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VoiceInputBar.h; path = RB/VoiceInputBar.h; sourceTree = "<group>"; };
+		3FEB18A41C14385C00FE7C52 /* VoiceInputBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VoiceInputBar.m; path = RB/VoiceInputBar.m; sourceTree = "<group>"; };
+		3FEB18A51C14385C00FE7C52 /* VoiceInputBar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VoiceInputBar.xib; path = RB/VoiceInputBar.xib; sourceTree = "<group>"; };
 		3FEB18C41C1438C400FE7C52 /* Auth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Auth.h; path = IM/Auth.h; sourceTree = "<group>"; };
 		3FEB18C51C1438C400FE7C52 /* Auth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Auth.m; path = IM/Auth.m; sourceTree = "<group>"; };
 		3FEB18C61C1438C400FE7C52 /* AuthResp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AuthResp.h; path = IM/AuthResp.h; sourceTree = "<group>"; };
@@ -261,6 +259,8 @@
 		3FEE301E1C1924BA00969D53 /* iconfont-contact@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iconfont-contact@2x.png"; path = "UI/res/iconfont-contact@2x.png"; sourceTree = "<group>"; };
 		3FEE301F1C1924BA00969D53 /* iconfont-message@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iconfont-message@2x.png"; path = "UI/res/iconfont-message@2x.png"; sourceTree = "<group>"; };
 		3FEE30231C19252900969D53 /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = "Pods/../build/Debug-iphoneos/AFNetworking.framework"; sourceTree = "<group>"; };
+		3FEE30281C1D38AD00969D53 /* NoticeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeCell.h; sourceTree = "<group>"; };
+		3FEE30291C1D38AD00969D53 /* NoticeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeCell.m; sourceTree = "<group>"; };
 		57B7221ED643D2011C16C24A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		8E5111A103427861E09E8204 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D54CA1133DB71BF7F6FD7B2D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -344,12 +344,6 @@
 				3F947BEE1C143D9E00938D46 /* AppDelegate.m */,
 				3FEB187D1C14385C00FE7C52 /* AppProfile.h */,
 				3FEB187E1C14385C00FE7C52 /* AppProfile.m */,
-				3FEB187F1C14385C00FE7C52 /* DialogItemCell.h */,
-				3FEB18801C14385C00FE7C52 /* DialogItemCell.m */,
-				3FEB18811C14385C00FE7C52 /* DialogItemCell.xib */,
-				3FEB18821C14385C00FE7C52 /* FriendItemCell.h */,
-				3FEB18831C14385C00FE7C52 /* FriendItemCell.m */,
-				3FEB18841C14385C00FE7C52 /* FriendItemCell.xib */,
 				3FEB18851C14385C00FE7C52 /* FriendListController.h */,
 				3FEB18861C14385C00FE7C52 /* FriendListController.m */,
 				3FEB18871C14385C00FE7C52 /* FriendListController.xib */,
@@ -365,23 +359,15 @@
 				3FEB18911C14385C00FE7C52 /* MessageDetailViewController.h */,
 				3FEB18921C14385C00FE7C52 /* MessageDetailViewController.m */,
 				3FEB18931C14385C00FE7C52 /* MessageDetailViewController.xib */,
-				3FEB18941C14385C00FE7C52 /* MessageInputBar.h */,
-				3FEB18951C14385C00FE7C52 /* MessageInputBar.m */,
-				3FEB18961C14385C00FE7C52 /* MessageInputBar.xib */,
 				3FEB18971C14385C00FE7C52 /* MessageListController.h */,
 				3FEB18981C14385C00FE7C52 /* MessageListController.m */,
 				3FEB18991C14385C00FE7C52 /* MessageListController.xib */,
-				3FEB189A1C14385C00FE7C52 /* MessageUITabBar.h */,
-				3FEB189B1C14385C00FE7C52 /* MessageUITabBar.m */,
 				3FEB189C1C14385C00FE7C52 /* PictureViewController.h */,
 				3FEB189D1C14385C00FE7C52 /* PictureViewController.m */,
 				3FEB189E1C14385C00FE7C52 /* PictureViewController.xib */,
 				3FEB189F1C14385C00FE7C52 /* RB.xcdatamodeld */,
 				3FEB18A11C14385C00FE7C52 /* UITabBar+Badge.h */,
 				3FEB18A21C14385C00FE7C52 /* UITabBar+Badge.m */,
-				3FEB18A31C14385C00FE7C52 /* VoiceInputBar.h */,
-				3FEB18A41C14385C00FE7C52 /* VoiceInputBar.m */,
-				3FEB18A51C14385C00FE7C52 /* VoiceInputBar.xib */,
 				3FEB18561C1437F500FE7C52 /* Assets.xcassets */,
 				3FEB185B1C1437F500FE7C52 /* Info.plist */,
 				3FEB18531C1437F500FE7C52 /* RB.xcdatamodeld */,
@@ -438,8 +424,22 @@
 			isa = PBXGroup;
 			children = (
 				3FEB18F81C14391500FE7C52 /* res */,
+				3FEB18A31C14385C00FE7C52 /* VoiceInputBar.h */,
+				3FEB18A41C14385C00FE7C52 /* VoiceInputBar.m */,
+				3FEB18A51C14385C00FE7C52 /* VoiceInputBar.xib */,
+				3FEB187F1C14385C00FE7C52 /* DialogItemCell.h */,
+				3FEB18801C14385C00FE7C52 /* DialogItemCell.m */,
+				3FEB18811C14385C00FE7C52 /* DialogItemCell.xib */,
 				3FEB18F51C14391300FE7C52 /* WeiXinCell.h */,
 				3FEB18F61C14391300FE7C52 /* WeiXinCell.m */,
+				3FEE30281C1D38AD00969D53 /* NoticeCell.h */,
+				3FEE30291C1D38AD00969D53 /* NoticeCell.m */,
+				3FEB18821C14385C00FE7C52 /* FriendItemCell.h */,
+				3FEB18831C14385C00FE7C52 /* FriendItemCell.m */,
+				3FEB18841C14385C00FE7C52 /* FriendItemCell.xib */,
+				3FEB18941C14385C00FE7C52 /* MessageInputBar.h */,
+				3FEB18951C14385C00FE7C52 /* MessageInputBar.m */,
+				3FEB18961C14385C00FE7C52 /* MessageInputBar.xib */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -788,6 +788,7 @@
 				3FEB18B11C14385C00FE7C52 /* MainViewController.m in Sources */,
 				3FEB18B61C14385C00FE7C52 /* MessageListController.m in Sources */,
 				3F660DDB1C16E6A5001E4012 /* UserInfoController.m in Sources */,
+				3FEE302A1C1D38AD00969D53 /* NoticeCell.m in Sources */,
 				3FEB18AB1C14385C00FE7C52 /* FriendListController.m in Sources */,
 				3FEB18A71C14385C00FE7C52 /* DialogItemCell.m in Sources */,
 				3FEB18E51C1438C400FE7C52 /* Connection.m in Sources */,
@@ -795,7 +796,6 @@
 				3FEB18EE1C1438C400FE7C52 /* Stanza.m in Sources */,
 				3FEB18EA1C1438C400FE7C52 /* Message.m in Sources */,
 				3FEB18E71C1438C400FE7C52 /* End.m in Sources */,
-				3FEB18B81C14385C00FE7C52 /* MessageUITabBar.m in Sources */,
 				3FEB18BB1C14385C00FE7C52 /* RB.xcdatamodeld in Sources */,
 				3FEB18551C1437F500FE7C52 /* RB.xcdatamodeld in Sources */,
 				3FEB18E61C1438C400FE7C52 /* ConnectionConfig.m in Sources */,

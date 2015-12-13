@@ -16,12 +16,9 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        // Initialization code
         _bubbleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 375, 0)];
         _bubbleView.backgroundColor = [UIColor clearColor];
-        
         _photo = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 50, 50)];
-        
         [self.contentView addSubview:_bubbleView];
         [self.contentView addSubview:_photo];
     }
@@ -37,7 +34,7 @@
 
 - (void) initWithImage:(UIImage *) image isHost:(BOOL) isHost data:(NSMutableDictionary *) dict {
     _photo.image = image;
-    _photo.frame = CGRectMake((isHost)?375-60:10, 10, 50, 50);
+    _photo.frame = CGRectMake((isHost)?375-60:10, 5, 50, 50);
     _dict = dict;
     
     if ([[dict objectForKey:@"type"] isEqualToString:@"2"]) {
@@ -45,6 +42,16 @@
     } else if ([[dict objectForKey:@"type"] isEqualToString:@"3"]) {
         NSString *url = [[IMFileHelper shareInstance] getThumbPathWithName:[dict objectForKey:@"url"]];
         [self pictureView:url from:isHost withPosition:65 withView:_bubbleView];
+//    } else if ([[dict objectForKey:@"type"] isEqualToString:@"99"]){
+//        _timeLabel.text = [dict objectForKey:@"stamp"];
+//        CGSize size = [_timeLabel.text sizeWithAttributes:
+//                       @{NSFontAttributeName: [UIFont systemFontOfSize:13.0f]}];
+//        _timeLabel.backgroundColor = [UIColor grayColor];
+//        _timeLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:13];
+//        _timeLabel.layer.cornerRadius = 3;
+//        _timeLabel.clipsToBounds = YES;
+//        _timeLabel.frame = CGRectMake(0, 0, size.width, size.height);
+//        _timeLabel.center = self.contentView.center;
     } else {
         [self bubbleView:[dict objectForKey:@"content"] from:isHost withPosition:65 withView:_bubbleView];
     }
@@ -72,14 +79,14 @@
 	
     
     //添加文本信息
-	UILabel *bubbleText = [[UILabel alloc] initWithFrame:CGRectMake(isHost?15.0f:22.0f, 20.0f, size.width+10, size.height+10)];
+	UILabel *bubbleText = [[UILabel alloc] initWithFrame:CGRectMake(isHost?15.0f:22.0f, 15.0f, size.width+10, size.height+10)];
 	bubbleText.backgroundColor = [UIColor clearColor];
 	bubbleText.font = font;
 	bubbleText.numberOfLines = 0;
 	bubbleText.lineBreakMode = NSLineBreakByWordWrapping;
 	bubbleText.text = text;
 	
-	bubbleImageView.frame = CGRectMake(0.0f, 14.0f, bubbleText.frame.size.width+30.0f, bubbleText.frame.size.height+20.0f);
+	bubbleImageView.frame = CGRectMake(0.0f, 10.0f, bubbleText.frame.size.width+30.0f, bubbleText.frame.size.height+20.0f);
     
 	if(isHost)
 		returnView.frame = CGRectMake(375-position-(bubbleText.frame.size.width+30.0f), 0.0f, bubbleText.frame.size.width+30.0f, bubbleText.frame.size.height+30.0f);
@@ -117,7 +124,6 @@
     
     _voiceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_voiceBtn addTarget:self action:@selector(playOrStopVoice) forControlEvents:UIControlEventTouchUpInside];
-//    button.tag = 250;
  
     _voiceBtn.frame = CGRectMake(0, 0, width, height);
 
@@ -139,7 +145,7 @@
     label.textAlignment = NSTextAlignmentCenter;
     label.backgroundColor = [UIColor clearColor];
     
-    returnView.frame = isHost?CGRectMake(375-position-width, 14, width, height + 6):CGRectMake(position, 14, width, height + 6);
+    returnView.frame = isHost?CGRectMake(375-position-width, 10.0f, width, height + 6):CGRectMake(position, 12, width, height + 6);
     
 //    NSLog(@"%f", yuyinView.frame.size.height);
 //    [returnView setBackgroundColor:[UIColor blueColor]];
@@ -157,13 +163,13 @@
     UIView *returnView = parentView;
     returnView.backgroundColor = [UIColor clearColor];
     
-    NSLog(@"%@", path);
-    if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
-        NSLog(@"---------------");
-    } else {
-        NSLog(@"===============");
-    }
-    
+//    NSLog(@"%@", path);
+//    if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+//        NSLog(@"---------------");
+//    } else {
+//        NSLog(@"===============");
+//    }
+//    
     UIImage *image = [UIImage imageWithContentsOfFile:path];
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[image stretchableImageWithLeftCapWidth:10 topCapHeight:10]];
 
@@ -182,9 +188,9 @@
         height = witdh / image.size.width * image.size.height;
     }
 
-    imageView.frame = CGRectMake(0.0f, 14.0f, witdh, height);
+    imageView.frame = CGRectMake(0.0f, 10.0f, witdh, height);
 
-    if(isHost)
+    if (isHost)
         returnView.frame = CGRectMake(375-position-(imageView.frame.size.width), 0.0f, imageView.frame.size.width, imageView.frame.size.height);
     else
         returnView.frame = CGRectMake(position, 0.0f, imageView.frame.size.width, imageView.frame.size.height);

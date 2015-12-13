@@ -43,10 +43,44 @@
     if (prefixArray.count > 1) {
         name = [[prefixArray subarrayWithRange:NSMakeRange(0, prefixArray.count-1)] componentsJoinedByString:@"."];
         name = [name stringByReplacingOccurrencesOfString:@"." withString:@"_"];
-        filePath = [urlStr stringByAppendingPathComponent: [[name componentsSeparatedByString:@"-"] componentsJoinedByString: @"/"]];
+        
+        NSArray *pathArr = [name componentsSeparatedByString:@"-"];
+        if (pathArr.count > 1) {
+            filePath = [urlStr stringByAppendingPathComponent: [pathArr componentsJoinedByString: @"/"]];
+        } else {
+            int filePathPartLength = (int) (name.length / 3);
+            NSMutableArray *pathArr = [[NSMutableArray alloc] init];
+            for (int i=0; i < 3; i++) {
+                NSString *filePathPart = nil;
+                if (i < 2) {
+                    filePathPart = [name substringWithRange:NSMakeRange(i*filePathPartLength, filePathPartLength)];
+                } else {
+                    filePathPart = [name substringFromIndex:i*filePathPartLength-1];
+                }
+                [pathArr addObject:filePathPart];
+            }
+            filePath = [urlStr stringByAppendingPathComponent: [pathArr componentsJoinedByString: @"/"]];
+        }
+        
         name = [NSString stringWithFormat:@"%@.%@", name, [prefixArray lastObject]];
     } else {
-        filePath = [urlStr stringByAppendingPathComponent: [[name componentsSeparatedByString:@"-"] componentsJoinedByString: @"/"]];
+        NSArray *pathArr = [name componentsSeparatedByString:@"-"];
+        if (pathArr.count > 1) {
+            filePath = [urlStr stringByAppendingPathComponent: [pathArr componentsJoinedByString: @"/"]];
+        } else {
+            int filePathPartLength = (int) (name.length / 3);
+            NSMutableArray *pathArr = [[NSMutableArray alloc] init];
+            for (int i=0; i < 3; i++) {
+                NSString *filePathPart = nil;
+                if (i < 2) {
+                    filePathPart = [name substringWithRange:NSMakeRange(i*filePathPartLength, filePathPartLength)];
+                } else {
+                    filePathPart = [name substringFromIndex:i*filePathPartLength-1];
+                }
+                [pathArr addObject:filePathPart];
+            }
+            filePath = [urlStr stringByAppendingPathComponent: [pathArr componentsJoinedByString: @"/"]];
+        }
     }
     
     [fileManager createDirectoryAtPath:filePath withIntermediateDirectories:YES attributes:nil error:nil];
@@ -64,5 +98,43 @@
     [fileManager createDirectoryAtPath:filePath withIntermediateDirectories:YES attributes:nil error:nil];
     return [filePath stringByAppendingFormat:@"/%@.%@", name, prefix];
 }
+
+- (NSString *) contentTypeForImageData:(NSData *)data {
+    uint8_t c;
+    [data getBytes:&c length:1];
+    
+    switch (c) {
+        case 0xFF:
+            return @"image/jpeg";
+        case 0x89:
+            return @"image/png";
+        case 0x47:
+            return @"image/gif";
+        case 0x49:
+        case 0x4D:
+            return @"image/tiff";
+    }
+    return nil;
+}
+
++(BOOL)downloadFile:(NSString *)urlstr path:(NSString *)savePath {
+    NSURL *url=[NSURL URLWithString:urlstr];
+    NSURLRequest *request=[NSURLRequest requestWithURL:url];
+    NSError *error=nil;
+    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:&error];
+    if([data length]>0) {
+        NSLog(@"下载成功");
+        if([data writeToFile:savePath atomically:YES]) {
+            NSLog(@"保存成功");
+        } else {
+            NSLog(@"保存失败");
+        }
+        return YES;
+    } else {
+        NSLog(@"下载失败，失败原因：%@",error);
+        return NO;
+    }
+}
+
 
 @end

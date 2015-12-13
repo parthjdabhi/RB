@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong) UIView *bubbleView;
 @property (nonatomic, strong) UIImageView *photo;
+//@property (nonatomic, strong) UILabel *timeLabel;
 @property (nonatomic, strong) UIButton *voiceBtn;
 @property (nonatomic, strong) NSMutableDictionary *dict;
 @property (assign, nonatomic) id delegate;
