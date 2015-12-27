@@ -8,6 +8,7 @@
 
 #import "PictureViewController.h"
 #import "IMFileHelper.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface PictureViewController ()
 
@@ -33,6 +34,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self.navigationController setNavigationBarHidden:YES animated:TRUE];
+    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dissmissPicture:)]];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
     NSMutableDictionary *dict = [_imgArr[_currentIndex] mutableCopy];
     NSString *path = [dict objectForKey:@"url"];
     if ([path hasPrefix:@"http"]) {
@@ -44,11 +50,6 @@
         path = key;
     }
     _imgArr[_currentIndex] = dict;
-    
-    [self.navigationController setNavigationBarHidden:YES animated:TRUE];
-    
-    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dissmissPicture:)]];
-    
     [self refreshScrollView];
 }
 
@@ -77,8 +78,12 @@
             NSLog(@"x:%f", _scrollView.frame.origin.x+_scrollView.frame.size.width*offset);
             UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(_scrollView.frame.origin.x+_scrollView.frame.size.width*offset, _scrollView.frame.origin.y, _scrollView.frame.size.width, _scrollView.frame.size.height)];
             [imageView setContentMode: UIViewContentModeScaleAspectFit];
-            NSString *url = [[IMFileHelper shareInstance] getPathWithName:[_imgArr[index] objectForKey:@"url"]];
-            imageView.image = [UIImage imageWithContentsOfFile:url];
+//            NSString *urlStr = [[IMFileHelper shareInstance] getPathWithName:[_imgArr[index] objectForKey:@"url"]];
+//            imageView.image = [UIImage imageWithContentsOfFile:urlStr];
+            NSURL *url = [NSURL URLWithString:[_imgArr[index] objectForKey:@"url"]];
+            [imageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"avater_default.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                
+            }];
 
             [_scrollView addSubview: imageView];
             imageCount++;

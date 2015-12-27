@@ -15,7 +15,7 @@
 }
 
 - (void) initWithData:(NSMutableDictionary *) dict {
-    _noticeLabel.text = [dict objectForKey:@"stamp"];
+    _noticeLabel.text = [NSString stringWithFormat:@" %@ ", [dict objectForKey:@"content"]];
     CGSize size = [_noticeLabel.text sizeWithAttributes:
                        @{NSFontAttributeName: [UIFont systemFontOfSize:13.0f]}];
     _noticeLabel.backgroundColor = [UIColor lightGrayColor];

@@ -7,6 +7,7 @@
 //
 
 #import "SayHiController.h"
+#import "NetWorkManager.h"
 
 @interface SayHiController ()
 
@@ -16,7 +17,28 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+//    UINavigationItem *navigationItem = [[self.navigationController.viewControllers firstObject] navigationItem];
+    UINavigationItem *navigationItem = self.navigationItem;
+//    UIBarButtonItem *back = [[UIBarButtonItem alloc] initWithTitle:@"取消"
+//                                                             style:UIBarButtonItemStylePlain
+//                                                            target:self
+//                                                            action:nil];
+//    navigationItem.leftBarButtonItem = back;
+
+    UIBarButtonItem *submit = [[UIBarButtonItem alloc] initWithTitle:@"发送"
+                                                             style:UIBarButtonItemStylePlain
+                                                            target:self
+                                                            action:@selector(sendMsg)];
+    navigationItem.rightBarButtonItem = submit;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    UINavigationItem *navigationItem = [[self.navigationController.viewControllers firstObject] navigationItem];
+//    navigationItem.leftBarButtonItem = nil;
+    navigationItem.rightBarButtonItem = nil;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -24,14 +46,16 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void) sendMsg {
+    NSString *content = [_textField text];
+    
+    [[NetWorkManager sharedInstance] sayHelloToUid:_uid
+                                           content:content
+                                           success:^(NSDictionary *responseObject) {
+                                               [self.navigationController popViewControllerAnimated:YES];
+                                           } fail:^(NSError *error) {
+        
+                                           }];
 }
-*/
 
 @end

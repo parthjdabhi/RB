@@ -13,6 +13,17 @@
 		3F947BF51C143EB600938D46 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F947BF11C143EB600938D46 /* LaunchScreen.storyboard */; };
 		3F947BF61C143EB600938D46 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F947BF31C143EB600938D46 /* Main.storyboard */; };
 		3F947BF91C16794F00938D46 /* NetWorkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F947BF81C16794F00938D46 /* NetWorkManager.m */; };
+		3FA9001B1C2A7C7C0041BB02 /* UserInfoOperationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FA900191C2A7C7C0041BB02 /* UserInfoOperationController.m */; };
+		3FA9001C1C2A7C7C0041BB02 /* UserInfoOperationController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3FA9001A1C2A7C7C0041BB02 /* UserInfoOperationController.xib */; };
+		3FA9001F1C2A8FDD0041BB02 /* DialogMemberCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FA9001E1C2A8FDD0041BB02 /* DialogMemberCell.m */; };
+		3FA900231C2A9E450041BB02 /* FriendSelectController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FA900211C2A9E450041BB02 /* FriendSelectController.m */; };
+		3FA900241C2A9E450041BB02 /* FriendSelectController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3FA900221C2A9E450041BB02 /* FriendSelectController.xib */; };
+		3FA900261C2BA3910041BB02 /* avater_default.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FA900251C2BA3910041BB02 /* avater_default.png */; };
+		3FA9002A1C2BD1260041BB02 /* MeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FA900281C2BD1260041BB02 /* MeViewController.m */; };
+		3FA9002B1C2BD1260041BB02 /* MeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3FA900291C2BD1260041BB02 /* MeViewController.xib */; };
+		3FA9002D1C2BE28F0041BB02 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FA9002C1C2BE28F0041BB02 /* SystemConfiguration.framework */; };
+		3FA900301C2E5BBC0041BB02 /* iconfont-user.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FA9002E1C2E5BBC0041BB02 /* iconfont-user.png */; };
+		3FA900311C2E5BBC0041BB02 /* iconfont-users.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FA9002F1C2E5BBC0041BB02 /* iconfont-users.png */; };
 		3FEB18491C1437F500FE7C52 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FEB18481C1437F500FE7C52 /* main.m */; };
 		3FEB18551C1437F500FE7C52 /* RB.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3FEB18531C1437F500FE7C52 /* RB.xcdatamodeld */; };
 		3FEB18571C1437F500FE7C52 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3FEB18561C1437F500FE7C52 /* Assets.xcassets */; };
@@ -101,6 +112,21 @@
 		3FEE30221C1924BA00969D53 /* iconfont-message@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FEE301F1C1924BA00969D53 /* iconfont-message@2x.png */; };
 		3FEE30241C19252900969D53 /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FEE30231C19252900969D53 /* AFNetworking.framework */; };
 		3FEE302A1C1D38AD00969D53 /* NoticeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FEE30291C1D38AD00969D53 /* NoticeCell.m */; };
+		3FEE302E1C1D6A3800969D53 /* SearchAccountController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FEE302C1C1D6A3800969D53 /* SearchAccountController.m */; };
+		3FEE302F1C1D6A3800969D53 /* SearchAccountController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3FEE302D1C1D6A3800969D53 /* SearchAccountController.xib */; };
+		3FEE30331C1EABD900969D53 /* GroupListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FEE30311C1EABD900969D53 /* GroupListController.m */; };
+		3FEE30341C1EABD900969D53 /* GroupListController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3FEE30321C1EABD900969D53 /* GroupListController.xib */; };
+		3FEE30371C1EAD5300969D53 /* Group.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FEE30361C1EAD5300969D53 /* Group.m */; };
+		3FEE303B1C1FBDA900969D53 /* SayHiController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FEE30391C1FBDA900969D53 /* SayHiController.m */; };
+		3FEE303C1C1FBDA900969D53 /* SayHiController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3FEE303A1C1FBDA900969D53 /* SayHiController.xib */; };
+		3FEE30401C2005DF00969D53 /* NewFriendListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FEE303E1C2005DF00969D53 /* NewFriendListController.m */; };
+		3FEE30411C2005DF00969D53 /* NewFriendListController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3FEE303F1C2005DF00969D53 /* NewFriendListController.xib */; };
+		3FEE30451C20070100969D53 /* NewFriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FEE30431C20070000969D53 /* NewFriendCell.m */; };
+		3FEE30461C20070100969D53 /* NewFriendCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3FEE30441C20070000969D53 /* NewFriendCell.xib */; };
+		3FEE30491C21079500969D53 /* iconfont-plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FEE30471C21079500969D53 /* iconfont-plus.png */; };
+		3FEE304A1C21079500969D53 /* iconfont-plus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FEE30481C21079500969D53 /* iconfont-plus@2x.png */; };
+		3FEE304D1C22B78400969D53 /* IMNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FEE304C1C22B78400969D53 /* IMNotification.m */; };
+		3FEE30511C23FA9C00969D53 /* NoticeObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FEE30501C23FA9C00969D53 /* NoticeObserver.m */; };
 		FB039EB92B09D28D53A22AB9 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E5111A103427861E09E8204 /* Pods.framework */; };
 /* End PBXBuildFile section */
 
@@ -131,6 +157,21 @@
 		3F947BF41C143EB600938D46 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3F947BF71C16794F00938D46 /* NetWorkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetWorkManager.h; sourceTree = "<group>"; };
 		3F947BF81C16794F00938D46 /* NetWorkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetWorkManager.m; sourceTree = "<group>"; };
+		3FA900181C2A7C7C0041BB02 /* UserInfoOperationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoOperationController.h; sourceTree = "<group>"; };
+		3FA900191C2A7C7C0041BB02 /* UserInfoOperationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoOperationController.m; sourceTree = "<group>"; };
+		3FA9001A1C2A7C7C0041BB02 /* UserInfoOperationController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserInfoOperationController.xib; sourceTree = "<group>"; };
+		3FA9001D1C2A8FDD0041BB02 /* DialogMemberCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DialogMemberCell.h; sourceTree = "<group>"; };
+		3FA9001E1C2A8FDD0041BB02 /* DialogMemberCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DialogMemberCell.m; sourceTree = "<group>"; };
+		3FA900201C2A9E450041BB02 /* FriendSelectController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendSelectController.h; sourceTree = "<group>"; };
+		3FA900211C2A9E450041BB02 /* FriendSelectController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendSelectController.m; sourceTree = "<group>"; };
+		3FA900221C2A9E450041BB02 /* FriendSelectController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendSelectController.xib; sourceTree = "<group>"; };
+		3FA900251C2BA3910041BB02 /* avater_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = avater_default.png; path = UI/res/avater_default.png; sourceTree = "<group>"; };
+		3FA900271C2BD1260041BB02 /* MeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeViewController.h; sourceTree = "<group>"; };
+		3FA900281C2BD1260041BB02 /* MeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeViewController.m; sourceTree = "<group>"; };
+		3FA900291C2BD1260041BB02 /* MeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MeViewController.xib; sourceTree = "<group>"; };
+		3FA9002C1C2BE28F0041BB02 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		3FA9002E1C2E5BBC0041BB02 /* iconfont-user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iconfont-user.png"; path = "UI/res/iconfont-user.png"; sourceTree = "<group>"; };
+		3FA9002F1C2E5BBC0041BB02 /* iconfont-users.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iconfont-users.png"; path = "UI/res/iconfont-users.png"; sourceTree = "<group>"; };
 		3FEB18441C1437F500FE7C52 /* RB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RB.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FEB18481C1437F500FE7C52 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3FEB18541C1437F500FE7C52 /* RB.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RB.xcdatamodel; sourceTree = "<group>"; };
@@ -261,6 +302,29 @@
 		3FEE30231C19252900969D53 /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = "Pods/../build/Debug-iphoneos/AFNetworking.framework"; sourceTree = "<group>"; };
 		3FEE30281C1D38AD00969D53 /* NoticeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeCell.h; sourceTree = "<group>"; };
 		3FEE30291C1D38AD00969D53 /* NoticeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeCell.m; sourceTree = "<group>"; };
+		3FEE302B1C1D6A3800969D53 /* SearchAccountController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchAccountController.h; sourceTree = "<group>"; };
+		3FEE302C1C1D6A3800969D53 /* SearchAccountController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchAccountController.m; sourceTree = "<group>"; };
+		3FEE302D1C1D6A3800969D53 /* SearchAccountController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchAccountController.xib; sourceTree = "<group>"; };
+		3FEE30301C1EABD900969D53 /* GroupListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupListController.h; sourceTree = "<group>"; };
+		3FEE30311C1EABD900969D53 /* GroupListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupListController.m; sourceTree = "<group>"; };
+		3FEE30321C1EABD900969D53 /* GroupListController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroupListController.xib; sourceTree = "<group>"; };
+		3FEE30351C1EAD5300969D53 /* Group.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Group.h; sourceTree = "<group>"; };
+		3FEE30361C1EAD5300969D53 /* Group.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Group.m; sourceTree = "<group>"; };
+		3FEE30381C1FBDA900969D53 /* SayHiController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SayHiController.h; sourceTree = "<group>"; };
+		3FEE30391C1FBDA900969D53 /* SayHiController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SayHiController.m; sourceTree = "<group>"; };
+		3FEE303A1C1FBDA900969D53 /* SayHiController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SayHiController.xib; sourceTree = "<group>"; };
+		3FEE303D1C2005DF00969D53 /* NewFriendListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewFriendListController.h; sourceTree = "<group>"; };
+		3FEE303E1C2005DF00969D53 /* NewFriendListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewFriendListController.m; sourceTree = "<group>"; };
+		3FEE303F1C2005DF00969D53 /* NewFriendListController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewFriendListController.xib; sourceTree = "<group>"; };
+		3FEE30421C20070000969D53 /* NewFriendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewFriendCell.h; sourceTree = "<group>"; };
+		3FEE30431C20070000969D53 /* NewFriendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewFriendCell.m; sourceTree = "<group>"; };
+		3FEE30441C20070000969D53 /* NewFriendCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewFriendCell.xib; sourceTree = "<group>"; };
+		3FEE30471C21079500969D53 /* iconfont-plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iconfont-plus.png"; path = "UI/res/iconfont-plus.png"; sourceTree = "<group>"; };
+		3FEE30481C21079500969D53 /* iconfont-plus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iconfont-plus@2x.png"; path = "UI/res/iconfont-plus@2x.png"; sourceTree = "<group>"; };
+		3FEE304B1C22B78400969D53 /* IMNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMNotification.h; sourceTree = "<group>"; };
+		3FEE304C1C22B78400969D53 /* IMNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMNotification.m; sourceTree = "<group>"; };
+		3FEE304F1C23FA9C00969D53 /* NoticeObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeObserver.h; sourceTree = "<group>"; };
+		3FEE30501C23FA9C00969D53 /* NoticeObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeObserver.m; sourceTree = "<group>"; };
 		57B7221ED643D2011C16C24A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		8E5111A103427861E09E8204 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D54CA1133DB71BF7F6FD7B2D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -271,6 +335,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FA9002D1C2BE28F0041BB02 /* SystemConfiguration.framework in Frameworks */,
 				3FEE30241C19252900969D53 /* AFNetworking.framework in Frameworks */,
 				3FEB19461C143A4F00FE7C52 /* Foundation.framework in Frameworks */,
 				3FEB19441C143A4500FE7C52 /* libsqlite3.0.tbd in Frameworks */,
@@ -300,6 +365,11 @@
 		237B0467E5CAD770064BEE8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3FEB19431C143A4500FE7C52 /* libsqlite3.0.tbd */,
+				3FEB19411C143A3B00FE7C52 /* UIKit.framework */,
+				3FEB193F1C143A3000FE7C52 /* AVFoundation.framework */,
+				3FEB19451C143A4F00FE7C52 /* Foundation.framework */,
+				3FA9002C1C2BE28F0041BB02 /* SystemConfiguration.framework */,
 				3FEE30231C19252900969D53 /* AFNetworking.framework */,
 				8E5111A103427861E09E8204 /* Pods.framework */,
 			);
@@ -309,13 +379,10 @@
 		3FEB183B1C1437F500FE7C52 = {
 			isa = PBXGroup;
 			children = (
-				3FEB19451C143A4F00FE7C52 /* Foundation.framework */,
-				3FEB19431C143A4500FE7C52 /* libsqlite3.0.tbd */,
-				3FEB19411C143A3B00FE7C52 /* UIKit.framework */,
-				3FEB193F1C143A3000FE7C52 /* AVFoundation.framework */,
 				3FEB18C31C1438B500FE7C52 /* IM */,
 				3FEB18C21C14389A00FE7C52 /* UI */,
 				3FEB18C01C14388C00FE7C52 /* Model */,
+				3FEE304E1C23F9D500969D53 /* Observer */,
 				3FEB18461C1437F500FE7C52 /* RB */,
 				3FEB18631C1437F600FE7C52 /* RBTests */,
 				3FEB186E1C1437F600FE7C52 /* RBUITests */,
@@ -377,6 +444,27 @@
 				3F660DD81C16E6A5001E4012 /* UserInfoController.h */,
 				3F660DD91C16E6A5001E4012 /* UserInfoController.m */,
 				3F660DDA1C16E6A5001E4012 /* UserInfoController.xib */,
+				3FEE302B1C1D6A3800969D53 /* SearchAccountController.h */,
+				3FEE302C1C1D6A3800969D53 /* SearchAccountController.m */,
+				3FEE302D1C1D6A3800969D53 /* SearchAccountController.xib */,
+				3FEE30301C1EABD900969D53 /* GroupListController.h */,
+				3FEE30311C1EABD900969D53 /* GroupListController.m */,
+				3FEE30321C1EABD900969D53 /* GroupListController.xib */,
+				3FEE30381C1FBDA900969D53 /* SayHiController.h */,
+				3FEE30391C1FBDA900969D53 /* SayHiController.m */,
+				3FEE303A1C1FBDA900969D53 /* SayHiController.xib */,
+				3FEE303D1C2005DF00969D53 /* NewFriendListController.h */,
+				3FEE303E1C2005DF00969D53 /* NewFriendListController.m */,
+				3FEE303F1C2005DF00969D53 /* NewFriendListController.xib */,
+				3FA900181C2A7C7C0041BB02 /* UserInfoOperationController.h */,
+				3FA900191C2A7C7C0041BB02 /* UserInfoOperationController.m */,
+				3FA9001A1C2A7C7C0041BB02 /* UserInfoOperationController.xib */,
+				3FA900201C2A9E450041BB02 /* FriendSelectController.h */,
+				3FA900211C2A9E450041BB02 /* FriendSelectController.m */,
+				3FA900221C2A9E450041BB02 /* FriendSelectController.xib */,
+				3FA900271C2BD1260041BB02 /* MeViewController.h */,
+				3FA900281C2BD1260041BB02 /* MeViewController.m */,
+				3FA900291C2BD1260041BB02 /* MeViewController.xib */,
 			);
 			path = RB;
 			sourceTree = "<group>";
@@ -416,6 +504,8 @@
 				3FEB19361C14395200FE7C52 /* Friend.m */,
 				3FEB19371C14395200FE7C52 /* User.h */,
 				3FEB19381C14395200FE7C52 /* User.m */,
+				3FEE30351C1EAD5300969D53 /* Group.h */,
+				3FEE30361C1EAD5300969D53 /* Group.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -440,6 +530,11 @@
 				3FEB18941C14385C00FE7C52 /* MessageInputBar.h */,
 				3FEB18951C14385C00FE7C52 /* MessageInputBar.m */,
 				3FEB18961C14385C00FE7C52 /* MessageInputBar.xib */,
+				3FEE30421C20070000969D53 /* NewFriendCell.h */,
+				3FEE30431C20070000969D53 /* NewFriendCell.m */,
+				3FEE30441C20070000969D53 /* NewFriendCell.xib */,
+				3FA9001D1C2A8FDD0041BB02 /* DialogMemberCell.h */,
+				3FA9001E1C2A8FDD0041BB02 /* DialogMemberCell.m */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -447,9 +542,9 @@
 		3FEB18C31C1438B500FE7C52 /* IM */ = {
 			isa = PBXGroup;
 			children = (
+				3FEB18F11C1438C900FE7C52 /* ByteBuffer */,
 				3FEB193C1C14395F00FE7C52 /* PictureMessage.h */,
 				3FEB193D1C14395F00FE7C52 /* PictureMessage.m */,
-				3FEB18F11C1438C900FE7C52 /* ByteBuffer */,
 				3FEB18C41C1438C400FE7C52 /* Auth.h */,
 				3FEB18C51C1438C400FE7C52 /* Auth.m */,
 				3FEB18C61C1438C400FE7C52 /* AuthResp.h */,
@@ -480,6 +575,8 @@
 				3FEB18DF1C1438C400FE7C52 /* StreamParser.m */,
 				3FEB18E01C1438C400FE7C52 /* VoiceMessage.h */,
 				3FEB18E11C1438C400FE7C52 /* VoiceMessage.m */,
+				3FEE304B1C22B78400969D53 /* IMNotification.h */,
+				3FEE304C1C22B78400969D53 /* IMNotification.m */,
 			);
 			name = IM;
 			sourceTree = "<group>";
@@ -496,6 +593,11 @@
 		3FEB18F81C14391500FE7C52 /* res */ = {
 			isa = PBXGroup;
 			children = (
+				3FA9002E1C2E5BBC0041BB02 /* iconfont-user.png */,
+				3FA9002F1C2E5BBC0041BB02 /* iconfont-users.png */,
+				3FA900251C2BA3910041BB02 /* avater_default.png */,
+				3FEE30471C21079500969D53 /* iconfont-plus.png */,
+				3FEE30481C21079500969D53 /* iconfont-plus@2x.png */,
 				3FEE301D1C1924BA00969D53 /* iconfont-contact.png */,
 				3FEE301E1C1924BA00969D53 /* iconfont-contact@2x.png */,
 				3FEE301F1C1924BA00969D53 /* iconfont-message@2x.png */,
@@ -530,6 +632,15 @@
 				3FEB19151C14392100FE7C52 /* SenderVoiceNodePlaying@2x.png */,
 			);
 			name = res;
+			sourceTree = "<group>";
+		};
+		3FEE304E1C23F9D500969D53 /* Observer */ = {
+			isa = PBXGroup;
+			children = (
+				3FEE304F1C23FA9C00969D53 /* NoticeObserver.h */,
+				3FEE30501C23FA9C00969D53 /* NoticeObserver.m */,
+			);
+			name = Observer;
 			sourceTree = "<group>";
 		};
 		7296A872977CB12D496311AB /* Pods */ = {
@@ -655,7 +766,10 @@
 				3F947BF61C143EB600938D46 /* Main.storyboard in Resources */,
 				3FEB18A81C14385C00FE7C52 /* DialogItemCell.xib in Resources */,
 				3FEB19161C14392100FE7C52 /* avater_101.jpg in Resources */,
+				3FEE30411C2005DF00969D53 /* NewFriendListController.xib in Resources */,
+				3FA9002B1C2BD1260041BB02 /* MeViewController.xib in Resources */,
 				3FEB19281C14392100FE7C52 /* ReceiverTextNodeBkg@2x.png in Resources */,
+				3FEE303C1C1FBDA900969D53 /* SayHiController.xib in Resources */,
 				3FEB18BA1C14385C00FE7C52 /* PictureViewController.xib in Resources */,
 				3FEE30201C1924BA00969D53 /* iconfont-contact.png in Resources */,
 				3FEB18B31C14385C00FE7C52 /* MessageDetailViewController.xib in Resources */,
@@ -665,8 +779,10 @@
 				3FEB19251C14392100FE7C52 /* photo1.png in Resources */,
 				3FEE30211C1924BA00969D53 /* iconfont-contact@2x.png in Resources */,
 				3FEB18B71C14385C00FE7C52 /* MessageListController.xib in Resources */,
+				3FEE302F1C1D6A3800969D53 /* SearchAccountController.xib in Resources */,
 				3FEB19181C14392100FE7C52 /* avater_103.jpg in Resources */,
 				3FEB192C1C14392100FE7C52 /* ReceiverVoiceNodePlaying@2x.png in Resources */,
+				3FA900261C2BA3910041BB02 /* avater_default.png in Resources */,
 				3FEB19291C14392100FE7C52 /* ReceiverVoiceNodeDownloading.png in Resources */,
 				3F660DDC1C16E6A5001E4012 /* UserInfoController.xib in Resources */,
 				3FEB18B01C14385C00FE7C52 /* LoginController.xib in Resources */,
@@ -674,7 +790,10 @@
 				3FEB192F1C14392100FE7C52 /* SenderVoiceNodeDownloading.png in Resources */,
 				3FEB19321C14392100FE7C52 /* SenderVoiceNodePlaying@2x.png in Resources */,
 				3FEB18BE1C14385C00FE7C52 /* VoiceInputBar.xib in Resources */,
+				3FA900241C2A9E450041BB02 /* FriendSelectController.xib in Resources */,
+				3FA900311C2E5BBC0041BB02 /* iconfont-users.png in Resources */,
 				3FEB18AA1C14385C00FE7C52 /* FriendItemCell.xib in Resources */,
+				3FEE30341C1EABD900969D53 /* GroupListController.xib in Resources */,
 				3FEB191A1C14392100FE7C52 /* iconfont-faxian.png in Resources */,
 				3FEB18571C1437F500FE7C52 /* Assets.xcassets in Resources */,
 				3FEE30221C1924BA00969D53 /* iconfont-message@2x.png in Resources */,
@@ -686,15 +805,20 @@
 				3FEB191D1C14392100FE7C52 /* iconfont-message.png in Resources */,
 				3FEB19261C14392100FE7C52 /* photo1@2x.png in Resources */,
 				3FEB19171C14392100FE7C52 /* avater_102.jpg in Resources */,
+				3FEE30461C20070100969D53 /* NewFriendCell.xib in Resources */,
 				3FEB192B1C14392100FE7C52 /* ReceiverVoiceNodePlaying.png in Resources */,
 				3FEB191B1C14392100FE7C52 /* iconfont-jianpan.png in Resources */,
+				3FEE30491C21079500969D53 /* iconfont-plus.png in Resources */,
 				3F947BF51C143EB600938D46 /* LaunchScreen.storyboard in Resources */,
 				3FEB192D1C14392100FE7C52 /* SenderAppNodeBkg_HL.png in Resources */,
+				3FEE304A1C21079500969D53 /* iconfont-plus@2x.png in Resources */,
 				3FEB18B51C14385C00FE7C52 /* MessageInputBar.xib in Resources */,
 				3FEB19191C14392100FE7C52 /* avater_104.jpg in Resources */,
 				3FEB18AC1C14385C00FE7C52 /* FriendListController.xib in Resources */,
+				3FA9001C1C2A7C7C0041BB02 /* UserInfoOperationController.xib in Resources */,
 				3FEB19241C14392100FE7C52 /* photo@2x.png in Resources */,
 				3FEB192A1C14392100FE7C52 /* ReceiverVoiceNodeDownloading@2x.png in Resources */,
+				3FA900301C2E5BBC0041BB02 /* iconfont-user.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -767,16 +891,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FA9002A1C2BD1260041BB02 /* MeViewController.m in Sources */,
 				3FEB18A61C14385C00FE7C52 /* AppProfile.m in Sources */,
+				3FEE30331C1EABD900969D53 /* GroupListController.m in Sources */,
 				3FEB18B91C14385C00FE7C52 /* PictureViewController.m in Sources */,
 				3FEB18EF1C1438C400FE7C52 /* StreamParser.m in Sources */,
 				3FEB18A91C14385C00FE7C52 /* FriendItemCell.m in Sources */,
 				3F947BEF1C143D9E00938D46 /* AppDelegate.m in Sources */,
 				3FEB18B21C14385C00FE7C52 /* MessageDetailViewController.m in Sources */,
 				3FEB18F71C14391300FE7C52 /* WeiXinCell.m in Sources */,
+				3FEE304D1C22B78400969D53 /* IMNotification.m in Sources */,
 				3FEB18E91C1438C400FE7C52 /* IMDAO.m in Sources */,
 				3FEB193E1C14395F00FE7C52 /* PictureMessage.m in Sources */,
+				3FEE303B1C1FBDA900969D53 /* SayHiController.m in Sources */,
 				3FEB18491C1437F500FE7C52 /* main.m in Sources */,
+				3FEE30451C20070100969D53 /* NewFriendCell.m in Sources */,
 				3FEB18E31C1438C400FE7C52 /* AuthResp.m in Sources */,
 				3FEB18EB1C1438C400FE7C52 /* Ping.m in Sources */,
 				3FEB18BD1C14385C00FE7C52 /* VoiceInputBar.m in Sources */,
@@ -784,6 +913,7 @@
 				3FEB18E41C1438C400FE7C52 /* Config.m in Sources */,
 				3F947BF91C16794F00938D46 /* NetWorkManager.m in Sources */,
 				3FEB18EC1C1438C400FE7C52 /* Receipt.m in Sources */,
+				3FA900231C2A9E450041BB02 /* FriendSelectController.m in Sources */,
 				3FEB18E21C1438C400FE7C52 /* Auth.m in Sources */,
 				3FEB18B11C14385C00FE7C52 /* MainViewController.m in Sources */,
 				3FEB18B61C14385C00FE7C52 /* MessageListController.m in Sources */,
@@ -792,7 +922,10 @@
 				3FEB18AB1C14385C00FE7C52 /* FriendListController.m in Sources */,
 				3FEB18A71C14385C00FE7C52 /* DialogItemCell.m in Sources */,
 				3FEB18E51C1438C400FE7C52 /* Connection.m in Sources */,
+				3FEE30401C2005DF00969D53 /* NewFriendListController.m in Sources */,
 				3FEB18AD1C14385C00FE7C52 /* IMFileHelper.m in Sources */,
+				3FA9001B1C2A7C7C0041BB02 /* UserInfoOperationController.m in Sources */,
+				3FEE30371C1EAD5300969D53 /* Group.m in Sources */,
 				3FEB18EE1C1438C400FE7C52 /* Stanza.m in Sources */,
 				3FEB18EA1C1438C400FE7C52 /* Message.m in Sources */,
 				3FEB18E71C1438C400FE7C52 /* End.m in Sources */,
@@ -803,12 +936,15 @@
 				3FEB18F41C1438F200FE7C52 /* ByteBuffer.m in Sources */,
 				3FEB18AE1C14385C00FE7C52 /* IMImageStore.m in Sources */,
 				3FEB18ED1C1438C400FE7C52 /* Session.m in Sources */,
+				3FEE302E1C1D6A3800969D53 /* SearchAccountController.m in Sources */,
 				3FEB19391C14395200FE7C52 /* Dialog.m in Sources */,
+				3FA9001F1C2A8FDD0041BB02 /* DialogMemberCell.m in Sources */,
 				3FEB18B41C14385C00FE7C52 /* MessageInputBar.m in Sources */,
 				3FEB193B1C14395200FE7C52 /* User.m in Sources */,
 				3FEB18F01C1438C400FE7C52 /* VoiceMessage.m in Sources */,
 				3FEB18AF1C14385C00FE7C52 /* LoginController.m in Sources */,
 				3FEB18BC1C14385C00FE7C52 /* UITabBar+Badge.m in Sources */,
+				3FEE30511C23FA9C00969D53 /* NoticeObserver.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

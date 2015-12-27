@@ -16,11 +16,11 @@
                     <animations/>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4dd-WF-AZi">
-                    <rect key="frame" x="334" y="16" width="32" height="32"/>
+                    <rect key="frame" x="335" y="16" width="32" height="32"/>
                     <animations/>
                 </button>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uMY-3z-BTC">
-                    <rect key="frame" x="48" y="17" width="278" height="30"/>
+                    <rect key="frame" x="48" y="17" width="279" height="30"/>
                     <animations/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>

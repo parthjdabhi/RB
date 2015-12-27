@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Stanza.h"
+#import "ByteBuffer.h"
 
 @interface Message : Stanza
 

@@ -10,4 +10,11 @@
 
 @interface SearchAccountController : UIViewController
 
+@property (strong, nonatomic) IBOutlet UITextField *searchTextField;
+@property (strong, nonatomic) IBOutlet UITableView *resultTableView;
+@property (strong, nonatomic) IBOutlet UIButton *cancelBtn;
+
+@property (nonatomic, strong) NSMutableArray *resultArray;
+- (IBAction)cancelBtnClick:(id)sender;
+
 @end

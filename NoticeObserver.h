@@ -10,4 +10,6 @@
 
 @interface NoticeObserver : NSObject
 
++(NoticeObserver *) shareInstance;
+
 @end

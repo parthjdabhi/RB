@@ -9,7 +9,9 @@
 #import "AppDelegate.h"
 #import "FriendListController.h"
 #import "MessageListController.h"
+#import "MeViewController.h"
 #import "LoginController.h"
+#import "NetWorkManager.h"
 #import "User.h"
 
 @interface AppDelegate ()
@@ -22,16 +24,26 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     if (![User currentUser].uid) {
-        [User currentUser].uid = 102;
+        [User currentUser].uid = 104;
         [User currentUser].accessToken = @"MTAxADEwMQAxNjVCNkQ2QTU5QTJDNDY4QzU5MDdCNDBEREE5RkYzQmUzOWM";
+        [[NetWorkManager sharedInstance] getUserInfoWithId:[User currentUser].uid
+                                                   success:^(NSDictionary *dict) {
+                                                       [User currentUser].uid = [[dict objectForKey:@"uid"] integerValue];
+                                                       [User currentUser].nickname = [dict objectForKey:@"nickname"];
+                                                       [User currentUser].signature = [dict objectForKey:@"signature"];
+                                                       [User currentUser].gender = [[dict objectForKey:@"gender"] integerValue];
+                                                   } fail:^(NSError *error) {
+                                                       
+                                                   }];
     }
     
     if ([User currentUser].uid > 0) {
         FriendListController *flc = [[FriendListController alloc] init];
         MessageListController *mlc = [[MessageListController alloc] init];
+        MeViewController *mvc = [[MeViewController alloc] init];
         
         UITabBarController *tabBarController = [[UITabBarController alloc] init];
-        tabBarController.viewControllers = @[mlc, flc];
+        tabBarController.viewControllers = @[mlc, flc, mvc];
         
         UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:tabBarController];
         self.window.rootViewController = navController;

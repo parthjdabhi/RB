@@ -1,6 +1,6 @@
 //
 //  MessageDetailViewController.m
-//  R&B
+//  RB
 //
 //  Created by hjc on 15/11/28.
 //  Copyright © 2015年 hjc. All rights reserved.
@@ -14,6 +14,8 @@
 
 //#import "MessageController.h"
 #import "PictureViewController.h"
+#import "UserInfoController.h"
+#import "UserInfoOperationController.h"
 #import "IMClient.h"
 #import "AppProfile.h"
 #import "Message.h"
@@ -40,63 +42,59 @@
 {
     [super viewDidLoad];
     
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(onReceivedMsgNotifycation:) name:ReceiveMessageNotification object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeKeyBoard:) name:UIKeyboardWillChangeFrameNotification object:nil];
-   
-//        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@"weixin",@"name",@"微信团队欢迎你。很高兴你开启了微信生活，期待能为你和朋友们带来愉快的沟通体检。",@"content", nil];
-//        NSDictionary *dict1 = [NSDictionary dictionaryWithObjectsAndKeys:@"rhl",@"name",@"hello",@"content",@"1",@"mine", nil];
-//        NSDictionary *dict2 = [NSDictionary dictionaryWithObjectsAndKeys:@"rhl",@"name",@"0",@"content", nil];
-//        NSDictionary *dict3 = [NSDictionary dictionaryWithObjectsAndKeys:@"weixin",@"name",@"谢谢反馈，已收录。",@"content", nil];
-//        NSDictionary *dict4 = [NSDictionary dictionaryWithObjectsAndKeys:@"rhl",@"name",@"0",@"content", nil];
-//        NSDictionary *dict5 = [NSDictionary dictionaryWithObjectsAndKeys:@"weixin",@"name",@"谢谢反馈，已收录。",@"content", nil];
-//        NSDictionary *dict6 = [NSDictionary dictionaryWithObjectsAndKeys:@"rhl",@"name",@"大数据测试，长数据测试，大数据测试，长数据测试，大数据测试，长数据测试，大数据测试，长数据测试，大数据测试，长数据测试，大数据测试，长数据测试。",@"content", nil];
-//    
-//        _resultArray = [NSMutableArray arrayWithObjects:dict,dict1,dict2,dict3,dict4,dict5,dict6, nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveMsg:) name:ReceiveMessageNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotice:) name:ReceiveNoticeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeKeyBoard:) name:UIKeyboardWillChangeFrameNotification object:nil];
     
-    int uid = _uid;
-    NSArray *msgs = [[IMDAO shareInstance] getMessageWithUid:uid];
-    int unreadCount = [[IMDAO shareInstance] getUnreadCountWithUid:uid];
-    [[AppProfile shareInstace] incrUnreadCount:-unreadCount];
-    
-    [[IMDAO shareInstance] clearUnreadCountWithUid:uid];
+    NSArray *msgs = nil;
+    if (_gid > 0) {
+        msgs = [[IMDAO shareInstance] getMessageWithGid:_gid];
+        int unreadCount = [[IMDAO shareInstance] getUnreadCountWithGid:_gid];
+        [[AppProfile shareInstace] incrMsgUnreadCount:-unreadCount];
+        [[IMDAO shareInstance] clearUnreadCountWithGid:_gid];
+    } else {
+        int uid = _uid;
+        msgs = [[IMDAO shareInstance] getMessageWithUid:uid];
+        int unreadCount = [[IMDAO shareInstance] getUnreadCountWithUid:uid];
+        [[AppProfile shareInstace] incrMsgUnreadCount:-unreadCount];
+        [[IMDAO shareInstance] clearUnreadCountWithUid:uid];
+    }
     
     _resultArray = [[NSMutableArray alloc] init];
     _imageArray = [[NSMutableArray alloc] init];
     for (Message *msg in msgs) {
-        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                     [NSString stringWithFormat:@"%d", msg.from], @"name",
-                                     msg.from == [User currentUser].uid ? @"1":@"0", @"mine",
-                                     [NSString stringWithFormat:@"%d", msg.contentType], @"type",
-                                     [NSString stringWithFormat:@"%lld", msg.stamp], @"stamp",
-                                     nil];
         
-        if (msg.contentType == 2) {
-            VoiceMessage *voiceMsg = (VoiceMessage *) msg;
-            [dict setObject:[NSString stringWithFormat:@"%d", voiceMsg.duration] forKey:@"duration"];
-            [dict setObject:voiceMsg.url forKey:@"url"];
-        } else if (msg.contentType == 3) {
-            PictureMessage *messageMsg = (PictureMessage *) msg;
-            [dict setObject:messageMsg.url forKey:@"url"];
-            [dict setObject:[NSString stringWithFormat:@"%lu", (unsigned long)_imageArray.count] forKey:@"idx"];
-            [_imageArray addObject:dict];
+//        if (msg.messageType < 3) {
+
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                         [NSString stringWithFormat:@"%d", msg.from], @"name",
+                                         msg.from == [User currentUser].uid ? @"1":@"0", @"mine",
+                                         [NSString stringWithFormat:@"%d", msg.messageType], @"category",
+                                         [NSString stringWithFormat:@"%d", msg.contentType], @"type",
+                                         [NSString stringWithFormat:@"%lld", msg.stamp], @"stamp",
+                                         nil];
+        if (msg.messageType < 3) {            
+            if (msg.contentType == 2) {
+                VoiceMessage *voiceMsg = (VoiceMessage *) msg;
+                [dict setObject:[NSString stringWithFormat:@"%d", voiceMsg.duration] forKey:@"duration"];
+                [dict setObject:voiceMsg.url forKey:@"url"];
+            } else if (msg.contentType == 3) {
+                PictureMessage *messageMsg = (PictureMessage *) msg;
+                [dict setObject:messageMsg.url forKey:@"url"];
+                [dict setObject:[NSString stringWithFormat:@"%lu", (unsigned long)_imageArray.count] forKey:@"idx"];
+                [_imageArray addObject:dict];
+            } else {
+                [dict setObject:msg.messageContent forKey:@"content"];
+            }
         } else {
             [dict setObject:msg.messageContent forKey:@"content"];
         }
-        
         [self add2ListTailWithDict:dict];
     }
     
     if(_resultArray.count > 0) {
         [_tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:_resultArray.count-1 inSection:0] animated:false scrollPosition:UITableViewScrollPositionBottom];
     }
-    
-    UINavigationItem *navigationItem = [[self.navigationController.viewControllers firstObject] navigationItem];
-    UIBarButtonItem *back = [[UIBarButtonItem alloc] initWithTitle:@"返回"
-                                                             style:UIBarButtonItemStylePlain
-                                                            target:nil
-                                                            action:nil];
-    navigationItem.backBarButtonItem = back;
-    self.title = _target.nickname;
     
     _voiceInputBar = [VoiceInputBar instance];
     _voiceInputBar.frame = CGRectMake(0, 607, _voiceInputBar.frame.size.width, _voiceInputBar.frame.size.height);
@@ -130,12 +128,45 @@
     [self setAudioSession];
     //    connection = [Connection shareInstace];
     //    [connection connect];
+    
+//    IMNotification *n = [[IMNotification alloc] initWithFrom:101 to:0 target:0 type:3 stamp:[[NSDate date] timeIntervalSince1970] * 1000 contentType:0 messageContent:@"this is a notification without response" uid:101];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:ReceiveNoticeNotification object:n];
+//
+//    IMNotification *n1 = [[IMNotification alloc] initWithFrom:101 to:0 target:0 type:3 stamp:[[NSDate date] timeIntervalSince1970] * 1000 contentType:2 messageContent:@"xx 同意了你的请求，你们可以开始聊天了" uid:101];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:ReceiveNoticeNotification object:n1];
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+//    UINavigationItem *navigationItem = [[self.navigationController.viewControllers firstObject] navigationItem];
+    UIBarButtonItem *back = [[UIBarButtonItem alloc] initWithTitle:@"返回"
+                                                             style:UIBarButtonItemStylePlain
+                                                            target:self
+                                                            action:@selector(go2PreViewController)];
+    self.navigationItem.leftBarButtonItem = back;
+    
+    UIButton *rightButton = [[UIButton alloc] initWithFrame:CGRectMake(0,0,30,30)];
+    rightButton.titleLabel.text = @"+";
+    if (_gid > 0) {
+        [rightButton setImage:[UIImage imageNamed:@"iconfont-users.png"] forState:UIControlStateNormal];
+    } else {
+        [rightButton setImage:[UIImage imageNamed:@"iconfont-user.png"] forState:UIControlStateNormal];
+    }
+    [rightButton addTarget:self action:@selector(go2UserInfoOperationController) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    self.navigationItem.rightBarButtonItem = rightItem;
+    
+    self.navigationItem.title = _target.nickname;
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
     int unreadCount = [[IMDAO shareInstance] getUnreadCountWithUid:_uid];
-    [[AppProfile shareInstace] incrUnreadCount:-unreadCount];
+    [[AppProfile shareInstace] incrMsgUnreadCount:-unreadCount];
     [[IMDAO shareInstance] clearUnreadCountWithUid:_uid];
+    
+//    UINavigationItem *navigationItem = [[self.navigationController.viewControllers firstObject] navigationItem];
+//    navigationItem.backBarButtonItem = nil;
+    self.navigationItem.title = nil;
+    self.navigationItem.rightBarButtonItem = nil;
 }
 
 - (void)didReceiveMemoryWarning
@@ -187,7 +218,7 @@
             return height + 10 ;
         }
         return height;
-    } else if ([[dict objectForKey:@"type"] isEqualToString:@"99"]) {
+    } else if ([[dict objectForKey:@"type"] isEqualToString:@"99"] || [[dict objectForKey:@"category"] isEqualToString:@"3"]) {
         return 30;
     } else {
         UIFont *font = [UIFont systemFontOfSize:14];
@@ -200,7 +231,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSMutableDictionary *dict = [_resultArray objectAtIndex:indexPath.row];
-    if (![[dict objectForKey:@"type"] isEqualToString:@"99"]) {
+    if (!([[dict objectForKey:@"type"] isEqualToString:@"99"] || [[dict objectForKey:@"category"] isEqualToString:@"3"])) {
         static NSString *CellIdentifier = @"WeiXinCell";
         WeiXinCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
@@ -244,7 +275,17 @@
         }
         
         return cell;
-    } else {
+    } else if ([[dict objectForKey:@"type"] isEqualToString:@"99"]){
+        static NSString *CellIdentifier = @"NoticeCell";
+        NoticeCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            cell = [[NoticeCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+        
+        [cell initWithData:[NSMutableDictionary dictionaryWithObject:[dict objectForKey:@"stamp"] forKey:@"content"]];
+        return cell;
+    } else { //[[dict objectForKey:@"category"] isEqualToString:@"3"]
         static NSString *CellIdentifier = @"NoticeCell";
         NoticeCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
@@ -271,6 +312,19 @@
 //    
 //}
 
+#pragma mark navigatorItem handle
+- (void)go2PreViewController {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)go2UserInfoOperationController {
+    UserInfoOperationController *uioc = [[UserInfoOperationController alloc] init];
+    uioc.uid = _uid;
+    uioc.user = _target;
+    uioc.gid = _gid;
+    [self.navigationController pushViewController:uioc animated:YES];
+}
+
 #pragma mark imagepicker delegate
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
@@ -294,11 +348,17 @@
                           @"3", @"type",
                           @"1", @"mine",
                           [NSString stringWithFormat:@"%lu", (unsigned long)_imageArray.count], @"idx",
+                          [NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]], @"stamp",
                           nil];
     
     [_imageArray addObject:dict];
     [self add2ListTailWithDict:dict];
-    [[IMClient shareInstace] sendPictureToUid:self.uid path: key];
+    
+    if (_gid > 0) {
+        [[IMClient shareInstance] sendPictureToUid:_gid path: key];
+    } else {
+        [[IMClient shareInstance] sendPictureToUid:_uid path: key];
+    }
     [self refreshMessageList];
     
     [picker dismissViewControllerAnimated:YES completion:nil];
@@ -326,7 +386,7 @@
 
 #pragma mark cell delegate
 
-- (void) voiceCellClick:(NSDictionary *)dict cell:(WeiXinCell *)cell {
+- (void) voiceCellOnClick:(NSDictionary *)dict cell:(WeiXinCell *)cell {
     if ([[dict objectForKey:@"type"] isEqualToString:@"2"]) {
         NSString *path = [dict objectForKey:@"url"];
         if ([path hasPrefix:@"http"]) {
@@ -372,6 +432,13 @@
 //        pvc.currentIndex = [_imageArray indexOfObject:dict];
         [self.navigationController pushViewController:pvc animated:YES];
     }
+}
+
+- (void) avaterImageOnClick:(NSDictionary *) dict {
+    UserInfoController *uic = [[UserInfoController alloc] init];
+    uic.uid = [[dict objectForKey:@"name"] integerValue];
+    uic.target = [[IMDAO shareInstance] getUserWithUid:uic.uid];
+    [self.navigationController pushViewController:uic animated:YES];
 }
 
 #pragma mark inputbar handle delegate
@@ -422,9 +489,9 @@
 
 - (void) switchExtendInput {
     if (!_extendInputBar) {
-        _extendInputBar = [[UIView alloc]initWithFrame:CGRectMake(0, 517, 375, 90)];
+        _extendInputBar = [[UIView alloc]initWithFrame:CGRectMake(0, 527, 375, 80)];
         _extendInputBar.userInteractionEnabled = YES;
-        //    extendInput.backgroundColor = [UIColor clearColor];
+        _extendInputBar.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.4];
         
         // 图片
         UIImage *pic = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"iconfont-tupian" ofType:@"png"]];
@@ -433,13 +500,13 @@
         
         UIImageView *picView = [[UIImageView alloc] initWithImage:pic];
         picView.userInteractionEnabled = YES;
-        picView.frame = CGRectMake(10, 10, 64, 64);
+        picView.frame = CGRectMake(20, 10, 64, 64);
         [picView addGestureRecognizer: [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(getPhotoFromLibrary:)]];
 
         UIImageView *photoView = [[UIImageView alloc] initWithImage:photo];
         [photoView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(getPhotoFromCamera:)]];
         photoView.userInteractionEnabled = YES;
-        photoView.frame = CGRectMake(70, 10, 64, 64);
+        photoView.frame = CGRectMake(100, 10, 64, 64);
         
         [_extendInputBar addSubview:picView];
         [_extendInputBar addSubview:photoView];
@@ -509,19 +576,31 @@
             voicePath, @"url",
             @"2", @"type",
             @"1", @"mine",
+            [NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]], @"stamp",
             nil];
 
     [self add2ListTailWithDict:dict];
-    [[IMClient shareInstace] sendVoiceToUid:self.uid path: voicePath duration:audioDurationSeconds];
+    
+    if (_gid > 0) {
+        [[IMClient shareInstance] sendVoiceToUid:_gid path: voicePath duration:audioDurationSeconds];
+    } else {
+        [[IMClient shareInstance] sendVoiceToUid:_uid path: voicePath duration:audioDurationSeconds];
+    }
     [self refreshMessageList];
 }
 
 - (void) sendMessage:(UITextField *)textField {
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
                           [NSString stringWithFormat:@"%d", [User currentUser].uid], @"name",
+                          [NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]], @"stamp",
                           _messageInputBar.msgTextField.text, @"content", @"1", @"mine", nil];
     [self add2ListTailWithDict:dict];
-    [[IMClient shareInstace] sendMessageToUid:self.uid content:_messageInputBar.msgTextField.text];
+    
+    if (_gid > 0) {
+        [[IMClient shareInstance] sendMessageToGid:_gid content:_messageInputBar.msgTextField.text];
+    } else {
+        [[IMClient shareInstance] sendMessageToUid:_uid content:_messageInputBar.msgTextField.text];
+    }
     [self refreshMessageList];
     _messageInputBar.msgTextField.text = nil;
 }
@@ -544,7 +623,7 @@
         } else if (cmps.year == 0 && cmps.month == 0 && cmps.day == 0) {
             stampText = [formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:stamp]];
         } else {
-            [formatter setDateFormat:@" yyyy-MM-dd HH:mm "];
+            [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
             stampText = [formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:stamp]];
         }
         [_resultArray addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys: @"99", @"type", stampText, @"stamp", nil]];
@@ -554,9 +633,8 @@
 
 #pragma mark handle notification
 
--(void) onReceivedMsgNotifycation:(NSNotification *)aNotifacation
-{
-    Message *msg = (Message *)[aNotifacation object];
+-(void) receiveMsg:(NSNotification *)aNotification {
+    Message *msg = (Message *)[aNotification object];
 
     NSDictionary *dict = nil;
     [msg parseMessageBody];
@@ -587,7 +665,7 @@
     }
     
     [self add2ListTailWithDict:dict];
-
+    
     if(self.isViewLoaded && self.view.window) {
         dispatch_sync(dispatch_get_main_queue(), ^{
             [self refreshMessageList];
@@ -595,8 +673,29 @@
     }
 }
 
--(void) refreshMessageList
-{
+-(void) receiveNotice:(NSNotification *)aNotification {
+    Message *msg = (Message *)[aNotification object];
+    IMNotification *notice = [IMNotification initWithMessage:msg];
+    
+    NSDictionary *dict = nil;
+    [notice parseMessageBody];
+    
+    if ((_uid > 0 && _uid != notice.uid) || (_gid > 0 && _gid != notice.gid)) {
+        return;
+    }
+    
+    dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d",notice.messageType], @"category", notice.messageContent, @"content", nil];
+    
+    [self add2ListTailWithDict:dict];
+    
+    if(self.isViewLoaded && self.view.window) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [self refreshMessageList];
+        });
+    }
+}
+
+-(void) refreshMessageList {
     if(_resultArray.count > 0)
     {
         [_tableView reloadData];

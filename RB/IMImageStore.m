@@ -34,8 +34,21 @@
     self = [super init];
     if (self) {
         _dictionary = [[NSMutableDictionary alloc] init];
+        _imageCache = [[SDImageCache alloc] initWithNamespace:@"IM"];
     }
     return self;
+}
+
+- (void) initImage: (UIImage *) image withKey:(NSString *) key {
+//    SDWebImageQueryCompletedBlock doneBlock = ^(UIImage *i, SDImageCacheType cacheType) {
+//        if (i) {
+//            image = i;
+//        } else {
+//            
+//        }
+//    };
+//    
+//    [_imageCache queryDiskCacheForKey:key done:doneBlock];
 }
 
 - (void) setImage: (UIImage *) image forKey:(NSString *) key {

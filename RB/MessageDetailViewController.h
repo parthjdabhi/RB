@@ -23,13 +23,9 @@
 @property (strong, nonatomic) IBOutlet MessageInputBar *messageInputBar;
 @property (strong, nonatomic) IBOutlet VoiceInputBar *voiceInputBar;
 
-//@property (strong, nonatomic) IBOutlet UIView *inputBar;
-//@property (strong, nonatomic) IBOutlet UIButton *voiceBtn;
-//@property (strong, nonatomic) IBOutlet UITextField *textField;
-//@property (strong, nonatomic) IBOutlet UIButton *submitBtn;
-
 @property int uid;
 @property (nonatomic, strong) User *target;
+@property int gid;
 @property (nonatomic, strong) NSMutableArray *resultArray;
 @property (nonatomic, strong) UIImageView *recordingVoiceImg;
 @property (nonatomic, strong) NSString *kRecordAudioFile;

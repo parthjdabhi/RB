@@ -13,6 +13,7 @@
 #import "User.h"
 #import "Dialog.h"
 #import "IMDAO.h"
+#import "NoticeObserver.h"
 #import "DialogItemCell.h"
 #import "MessageDetailViewController.h"
 
@@ -24,12 +25,28 @@
 
 @implementation MessageListController
 
+-(instancetype) init {
+    self = [super init];
+    if (self) {
+        self.tabBarItem.title = @"消息";
+        UIImage *i = [UIImage imageNamed:@"iconfont-message.png"];
+        self.tabBarItem.image = i;        
+    }
+    
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    [[AppProfile shareInstace] incrMsgUnreadCount:[[IMDAO shareInstance] getMsgUnreadCount]];
     
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(onReceivedMsgNotifycation:) name:ReceiveMessageNotification object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(onUpdateConnStatusNotifycation:) name:UpdateConnectionStatusNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(onReceivedMsgNotification:) name:ReceiveMessageNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(onReceivedNoticeNotification:) name:ReceiveNoticeNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateMsgCount) name:UpdateMsgCountNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(onUpdateConnStatusNotification:) name:UpdateConnectionStatusNotification object:nil];
     
     UINib *nib = [UINib nibWithNibName:@"DialogItemCell" bundle:nil];
     [self.tableView registerNib:nib forCellReuseIdentifier:@"DialogItemCell"];
@@ -38,40 +55,26 @@
     [self connectIM];
 }
 
--(instancetype) init {
-    self = [super init];
-    if (self) {
-        self.tabBarItem.title = @"消息";
-        UIImage *i = [UIImage imageNamed:@"iconfont-message.png"];
-        self.tabBarItem.image = i;
-        
-        [[AppProfile shareInstace] incrUnreadCount:[[IMDAO shareInstance] getUnreadCount]];
-    }
-    
-    return self;
-}
-
 - (void) viewWillAppear:(BOOL)animated {
     _dialogs = [[IMDAO shareInstance] getDialogs];
     [self.tableView reloadData];
     
-    UITabBarItem *tabBarItem = [self.tabBarController.tabBar.items objectAtIndex:0];
-    int badgeValue = [[AppProfile shareInstace] getUnreadCount];
-    if (badgeValue > 0) {
-        tabBarItem.badgeValue = [NSString stringWithFormat:@"%d", [[AppProfile shareInstace] getUnreadCount]];
-    } else {
-        tabBarItem = nil;
-    }
-    
+    [self updateMsgCount];
     [self displayNavItemTitle];
+}
+
+- (void) viewWillDisappear:(BOOL)animated {
+    UINavigationItem *item = [[self.navigationController.viewControllers firstObject] navigationItem];
+    item.title = nil;
 }
 
 - (void) connectIM {
     
-    ConnectionConfig *config = [[ConnectionConfig alloc] initWithIp:@"192.168.0.103" port:10101 appVersion:@"golo/5.0"];
+    ConnectionConfig *config = [[ConnectionConfig alloc] initWithIp:@"192.168.0.113" port:10101 appVersion:@"golo/5.0"];
     [IMClient setConfig:config];
-    client = [IMClient shareInstace];
+    client = [IMClient shareInstance];
     [client connectWithUid:[User currentUser].uid accessToken: [User currentUser].accessToken];
+    [NoticeObserver shareInstance];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -79,6 +82,7 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark tableview delegate
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -108,7 +112,7 @@
     } else if (cmps.year == 0 && cmps.month == 0 && cmps.day == 0) {
         cell.time.text = [formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:dialog.stamp]];
     } else {
-        [formatter setDateFormat:@"yyyy-MM-dd"];
+        [formatter setDateFormat:@"MM-dd"];
         cell.time.text = [formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:dialog.stamp]];
     }
     
@@ -154,44 +158,66 @@
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     MessageDetailViewController *mdvc = [[MessageDetailViewController alloc] init];
     Dialog *dialog = (Dialog *)[_dialogs objectAtIndex:indexPath.row];
-    mdvc.uid = dialog.uid;
-    mdvc.target = [[IMDAO shareInstance] getUserWithUid:dialog.uid];
+    
+    if (dialog.type == 2) {
+        mdvc.gid = dialog.uid;
+    } else {
+        mdvc.uid = dialog.uid;
+        mdvc.target = [[IMDAO shareInstance] getUserWithUid:dialog.uid];
+    }
 
     [self.navigationController pushViewController:mdvc animated:YES];
 }
 
--(void) onReceivedMsgNotifycation:(NSNotification *)aNotifacation
-{
-    dispatch_sync(dispatch_get_main_queue(), ^{
-        [[AppProfile shareInstace] incrUnreadCount:1];
-        int unreadCount = [[AppProfile shareInstace] getUnreadCount];
-        UITabBarItem *tabBarItem = [self.tabBarController.tabBar.items objectAtIndex:0];
-        if (unreadCount > 0) {
-            tabBarItem.badgeValue = [NSString stringWithFormat:@"%d", unreadCount];
-        } else {
-            tabBarItem.badgeValue = nil;
-        }
+#pragma mark notification
 
-        if(self.isViewLoaded && self.view.window) {
-            _dialogs = [[IMDAO shareInstance] getDialogs];
-            [self.tableView reloadData];
-        }
-    });
+-(void) onReceivedMsgNotification:(NSNotification *)aNotification {
+
+    [[AppProfile shareInstace] incrMsgUnreadCount:1];
+    [self updateMsgCount];
+    
+    if(self.isViewLoaded && self.view.window) {
+        _dialogs = [[IMDAO shareInstance] getDialogs];
+        [self.tableView reloadData];
+    }
+
 }
 
--(void) onUpdateConnStatusNotifycation:(NSNotification *)aNotifacation {
+-(void) updateMsgCount {
+    int badgeValue = [[AppProfile shareInstace] getMsgUnreadCount];
+    UITabBarItem *tabBarItem = [self.tabBarController.tabBar.items objectAtIndex:0];
+    if (badgeValue > 0) {
+        tabBarItem.badgeValue = [NSString stringWithFormat:@"%d", badgeValue];
+    } else {
+        tabBarItem.badgeValue = nil;
+    }
+}
+
+-(void) onReceivedNoticeNotification:(NSNotification *)aNotification {
+    if(self.isViewLoaded && self.view.window) {
+        _dialogs = [[IMDAO shareInstance] getDialogs];
+        [self.tableView reloadData];
+    }
+}
+
+-(void) onUpdateConnStatusNotification:(NSNotification *)aNotification {
     [self displayNavItemTitle];
 }
 
 -(void) displayNavItemTitle {
     UINavigationItem *item = [[self.navigationController.viewControllers firstObject] navigationItem];
-    if ([IMClient shareInstace].connection.status == Connecting) {
+//    UINavigationItem *item = self.navigationItem;
+    if ([IMClient shareInstance].connection.status == Connecting) {
+//        self.title = @"连接中";
         [item setTitle: @"连接中"];
-    } else if([IMClient shareInstace].connection.status == Binding) {
+    } else if([IMClient shareInstance].connection.status == Binding) {
+//        self.title = @"收取中  ";
         [item setTitle: @"收取中"];
-    } else if([IMClient shareInstace].connection.status == Connected) {
+    } else if([IMClient shareInstance].connection.status == Connected) {
+//        self.title = @"已连接";
         [item setTitle: @"已连接" ];
-    } else if([IMClient shareInstace].connection.status == Disconnected) {
+    } else if([IMClient shareInstance].connection.status == Disconnected) {
+//        self.title = @"已断开";
         [item setTitle: @"已断开" ];
     }
 }

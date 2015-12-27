@@ -175,7 +175,7 @@
         _sessionStamp = message.stamp;
         [self send:[[Receipt alloc] initWithId:message._id]];
     } else if (message.messageType == 3) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:ReceiveMessageNotification object:message];
+        [[NSNotificationCenter defaultCenter] postNotificationName:ReceiveNoticeNotification object:message];
     }
     
     _activeStamp = [[NSDate date] timeIntervalSince1970];

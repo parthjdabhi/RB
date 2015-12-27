@@ -36,6 +36,8 @@
     _photo.image = image;
     _photo.frame = CGRectMake((isHost)?375-60:10, 5, 50, 50);
     _dict = dict;
+    _photo.userInteractionEnabled = YES;
+    [_photo addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(avaterOnClick:)]];
     
     if ([[dict objectForKey:@"type"] isEqualToString:@"2"]) {
         [self yuyinView:[[dict objectForKey:@"duration"] intValue] from:isHost withPosition:65 withView:_bubbleView];
@@ -195,7 +197,7 @@
     else
         returnView.frame = CGRectMake(position, 0.0f, imageView.frame.size.width, imageView.frame.size.height);
 
-    [returnView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onClick:)]];
+    [returnView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(photoOnClick:)]];
 //    [returnView setBackgroundColor:[UIColor yellowColor]];
 //    NSLog(@"%f", returnView.frame.size.height);
     [returnView addSubview:imageView];
@@ -210,7 +212,7 @@
         _isPlaying = NO;
     }
     
-    [_delegate voiceCellClick:_dict cell:self];
+    [_delegate voiceCellOnClick:_dict cell:self];
 }
 
 - (void) stopPlayVoice {
@@ -218,8 +220,12 @@
     [_voiceBtn.layer removeAllAnimations];
 }
 
-- (void) onClick:(NSNotification *)note {
+- (void) photoOnClick:(NSNotification *)note {
     [_delegate pictureCellOnClick:_dict];
+}
+
+- (void) avaterOnClick:(NSNotification *)note {
+    [_delegate avaterImageOnClick:_dict];
 }
 
 #pragma mark === 永久闪烁的动画 ======

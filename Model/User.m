@@ -22,4 +22,9 @@
     return _currentUser;
 }
 
+-(instancetype) initWithId:(int) uid {
+    _uid = uid;
+    return self;
+}
+
 @end

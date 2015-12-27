@@ -8,13 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
+#define UpdateNoticeCountNotification  @"UpdateNoticeCountNotification"
+#define UpdateMsgCountNotification  @"UpdateMsgCountNotification"
+
 @interface AppProfile : NSObject
 
-@property int unreadCount;
+@property int msgUnreadCount;
+@property int noticeUnreadCount;
 
 +(AppProfile *) shareInstace;
 
--(int) getUnreadCount;
--(void) incrUnreadCount:(int) val;
+-(int) getMsgUnreadCount;
+-(void) incrMsgUnreadCount:(int) val;
+
+-(int) getNoticeUnreadCount;
+-(void) incrNoticeUnreadCount:(int) val;
 
 @end

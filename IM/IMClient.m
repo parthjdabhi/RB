@@ -23,7 +23,7 @@
 static IMClient *sharedInstance;
 static ConnectionConfig *config;
 
-+(IMClient *) shareInstace
++(IMClient *) shareInstance
 {
     static BOOL initialized = NO;
 	if (!initialized)
@@ -43,7 +43,7 @@ static ConnectionConfig *config;
 -(id) init
 {
     if(config == nil) {
-        NSLog(@"ERROR:initial IMClient without configuration!");
+        DDLogError(@"ERROR:initial IMClient without configuration!");
         return nil;
     }
     
@@ -119,13 +119,52 @@ static ConnectionConfig *config;
                                         }];
 }
 
--(void) sendGroupMessageToGid:(int) gid content:(NSString *) content
+
+-(void) sendMessageToGid:(int) gid content:(NSString *) content
 {
     Message *message = [[Message alloc] initWithFrom:_uid to:gid target:0 type:2 stamp:[[NSDate date] timeIntervalSince1970]*1000 contentType:1 messageContent:content];
+    [[IMDAO shareInstance] saveSendMessage:message];
     [_connection send:message];
 }
 
-#pragma handle notice
+-(void) sendVoiceToGid:(int) gid path:(NSString *) path duration:(int) duration
+{
+    NSString *url = path;
+    // to do
+    VoiceMessage *message = [[VoiceMessage alloc] initWithFrom:_uid to:gid target:0 type:2 stamp:[[NSDate date] timeIntervalSince1970]*1000 duration: duration url: url];
+    [[IMDAO shareInstance] saveSendMessage:message];
+    
+    path = [[IMFileHelper shareInstance] getPathWithName:path];
+    [[NetWorkManager sharedInstance] uploadFile:path
+                                           type:2
+                                        success:^(NSDictionary *dict) {
+                                            message.url = [dict objectForKey:@"url"];
+                                            [message repack];
+                                            [_connection send:message];
+                                        } fail:^(NSError *error) {
+                                            
+                                        }];
+}
+
+-(void) sendPictureToGid:(int) gid path:(NSString *) path {
+    NSString *url = path;
+    // to do
+    PictureMessage *message = [[PictureMessage alloc] initWithFrom:_uid to:gid target:0 type:2 stamp:[[NSDate date] timeIntervalSince1970]*1000 url: url];
+    [[IMDAO shareInstance] saveSendMessage:message];
+    
+    path = [[IMFileHelper shareInstance] getPathWithName:path];
+    [[NetWorkManager sharedInstance] uploadFile:path
+                                           type:1
+                                        success:^(NSDictionary *dict) {
+                                            message.url = [dict objectForKey:@"url"];
+                                            [message repack];
+                                            [_connection send:message];
+                                        } fail:^(NSError *error) {
+                                            
+                                        }];
+}
+
+#pragma mark handle notice
 -(void) updateConnectionStatus:(NSNotification *)aNotifacation
 {
     if (_connection.status == Connected) {
@@ -155,7 +194,16 @@ static ConnectionConfig *config;
 
 -(void) receiveNotice:(NSNotification *)aNotifacation
 {
-    // TO DO    
+    Message *msg = (Message *)[aNotifacation object];
+    IMNotification *notice = [IMNotification initWithMessage:msg];
+    [notice parseMessageBody];
+    
+    if (_connection.status == Binding) {
+        //消息队列缓存
+        [msgQueue addObject:notice];
+    } else if (_connection.status == Connected){
+        [[IMDAO shareInstance] saveRecvNotification:notice];
+    }
 }
 
 -(void) conflict:(NSNotification *)aNotifacation

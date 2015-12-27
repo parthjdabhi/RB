@@ -10,4 +10,11 @@
 
 @interface FriendSelectController : UIViewController
 
+@property int gid;
+@property (nonatomic, retain) NSArray *friends;
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
+
+- (instancetype) initWithSelectUsers:(NSArray *) users;
+- (instancetype) initWithGid:(int) gid selectUsers:(NSArray *) users;
+
 @end

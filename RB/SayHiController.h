@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface SayHiController : UIViewController
+@property (strong, nonatomic) IBOutlet UITextField *textField;
+
+@property int uid;
 
 @end

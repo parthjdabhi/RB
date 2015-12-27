@@ -12,19 +12,20 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="2AE-CK-s4x">
-                    <rect key="frame" x="18" y="16" width="32" height="32"/>
+                    <rect key="frame" x="8" y="16" width="32" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <animations/>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="6G4-Zl-gls">
-                    <rect key="frame" x="334" y="16" width="32" height="32"/>
+                    <rect key="frame" x="335" y="16" width="32" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <animations/>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Ory-Rl-gJ6">
-                    <rect key="frame" x="48" y="17" width="278" height="30"/>
+                    <rect key="frame" x="48" y="16" width="279" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <animations/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.10005387931034483" colorSpace="calibratedRGB"/>
                     <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     <state key="normal" title="按住 说话"/>
                 </button>

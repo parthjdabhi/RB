@@ -7,6 +7,11 @@
 //
 
 #import "NewFriendListController.h"
+#import "NewFriendCell.h"
+#import "IMDAO.h"
+#import "NetWorkManager.h"
+#import "AppProfile.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface NewFriendListController ()
 
@@ -16,7 +21,45 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    
+    _users = [[IMDAO shareInstance] getMakeFriendRecordsByUid:[User currentUser].uid];
+    
+//    if (_users.count == 0) {
+//        User *u1 = [[User alloc] init];
+//
+//        u1.uid = 101;
+//        u1.nickname = @"Tom";
+//        u1.isFriend = YES;
+//        u1.comment = @"请求加你为好友";
+//        
+//        [[IMDAO shareInstance] saveMakeFriendRecord:u1];
+//        
+//        User *u2 = [[User alloc] init];
+//        
+//        u2.uid = 104;
+//        u2.nickname = @"Lucy";
+//        u2.isFriend = NO;
+//        u2.comment = @"请求加你为好友";
+//        
+//        [[IMDAO shareInstance] saveMakeFriendRecord:u2];
+//    }
+    
+    UINib *nib = [UINib nibWithNibName:@"NewFriendCell" bundle:nil];
+    [_tableView registerNib:nib forCellReuseIdentifier:@"NewFriendCell"];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    UIBarButtonItem *back = [[UIBarButtonItem alloc] initWithTitle:@"返回"
+                                                             style:UIBarButtonItemStylePlain
+                                                            target:self
+                                                            action:@selector(go2PreViewController)];
+    self.navigationItem.leftBarButtonItem = back;
+    
+    int noticeCount = [[AppProfile shareInstace] getNoticeUnreadCount];
+    if (noticeCount > 0) {
+        [[AppProfile shareInstace] incrNoticeUnreadCount:-noticeCount];
+    }
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -24,14 +67,69 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+#pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
 }
-*/
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return _users.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NewFriendCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NewFriendCell" forIndexPath:indexPath];
+    cell.delegate = self;
+    
+    NSUInteger row = [indexPath row];
+    User *u = (User *)[_users objectAtIndex:row];
+    cell.uid = u.uid;
+    cell.nameLabel.text = u.nickname;
+    cell.commentLabel.text = u.comment;
+
+    NSURL *url = [NSURL URLWithString:u.avaterUrl];
+    [cell.imageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"avater_default.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        
+    }];
+    cell.avaterImageView.contentMode = UIViewContentModeScaleAspectFit;
+    
+    if (u.isFriend) {
+        [cell.handleBtn setTitle:@"已添加" forState:UIControlStateNormal];
+        [cell.handleBtn setAdjustsImageWhenHighlighted:NO];
+        cell.handleBtn.enabled = NO;
+    }
+    
+    return cell;
+}
+
+#pragma mark - NewFriendCell delegate
+- (void) btnOnClick:(NSDictionary *) dict {
+    int uid = [[dict objectForKey:@"uid"] integerValue];
+    
+    [[NetWorkManager sharedInstance] passFriendVerifyToUid:uid
+                                                   success:^(NSDictionary *responseObject) {
+                                                       Friend *user = [[Friend alloc] init];
+                                                       user.uid = uid;
+                                                       user.isFriend = YES;
+                                                       user.stamp = [[NSDate date] timeIntervalSince1970] * 1000;
+                                                       [[IMDAO shareInstance] updateMakeFriendRecord:user];
+                                                       [[IMDAO shareInstance] saveFriend:user];
+                                                       
+                                                       _users = [[IMDAO shareInstance] getMakeFriendRecordsByUid:[User currentUser].uid];
+                                                       [_tableView reloadData];
+                                                       
+                                                       IMNotification *n = [[IMNotification alloc] initWithFrom:0 to:0 target:0 type:3 stamp:[[NSDate date] timeIntervalSince1970] * 1000 contentType:2 messageContent:@"你们可以开始聊天了" uid:uid];
+                                                       [[IMDAO shareInstance] saveRecvNotification:n];
+                                                   } fail:^(NSError *error) {
+                                                       
+                                                   }];
+    
+}
+
+#pragma mark navigatorItem handle
+- (void)go2PreViewController {
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 @end

@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MeViewController : UIViewController
+@interface MeViewController : UIViewController<UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+
+@property NSMutableArray *tableCells;
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
 
 @end

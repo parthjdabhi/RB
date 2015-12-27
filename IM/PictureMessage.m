@@ -61,8 +61,8 @@
     vm.from = m.from;
     vm.to = m.to;
     vm.target = m.target;
-    vm.type = m.type;
     vm.stamp = m.stamp;
+    vm.messageType = m.messageType;
     vm.messageBody = m.messageBody;
     vm.contentType = m.contentType;
     [vm parseMessageBody];

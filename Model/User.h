@@ -13,8 +13,16 @@
 @property int uid;
 @property NSString *username;
 @property NSString *nickname;
+@property NSString *avaterUrl;
 @property NSString *accessToken;
+@property int gender;
+@property NSString *signature;
+
+@property BOOL isFriend;
+@property NSString *comment;
+@property int source;
 
 +(User *) currentUser;
+-(instancetype) initWithId:(int) uid;
 
 @end

@@ -39,6 +39,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>SDWebImage.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>UIImage-ResizeMagick.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -47,12 +52,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>0D3E7817523FACF8AF3FDDC57F10DA9A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>1487C961935D6713F54C4EA4CAECF1F0</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>20A98CCFD1AACA08B706E1C74B221524</key>
+		<key>15A544B423AAF62D1607BE14BB039532</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -72,12 +82,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9377F2ECED57E37278532368279E7243</key>
+		<key>C91A46012F8822DFDBAC8BC32FCC9001</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C91A46012F8822DFDBAC8BC32FCC9001</key>
+		<key>DF7186C0592771F15CE1E354C7574376</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -7,7 +7,6 @@
 //
 
 #import "Message.h"
-#import "ByteBuffer.h"
 
 @implementation Message
 
@@ -28,7 +27,7 @@
     _messageType = messageType;
     _contentType = contentType;
     _messageContent = messageContent;
-    _messageBody = [self packMessageBody];;
+    _messageBody = [self packMessageBody];
     self.content = [[[[[[[[[[ByteBuffer alloc] init] string:__id] int32:from] int32:to] int32:target] byte:messageType] int64:stamp] string:_messageBody] pack];
     return self;
     
@@ -59,7 +58,8 @@
 
 -(id) initWithStanza:(Stanza *) stanza
 {
-    NSArray *valueArray = [[[ByteBuffer alloc] initWithContent:stanza.content typeArray:[NSArray arrayWithObjects:@"string", @"int", @"int", @"int", @"byte", @"long", @"string",nil]] unpack];
+    NSArray *valueArray = [[[ByteBuffer alloc] initWithContent:stanza.content
+                                                     typeArray:[NSArray arrayWithObjects:@"string", @"int", @"int", @"int", @"byte", @"long", @"string",nil]] unpack];
     int idx = 0;
     self._id = (NSString *)[valueArray objectAtIndex:idx++];
     _from = [[valueArray objectAtIndex:idx++] intValue];
@@ -81,10 +81,11 @@
 -(NSString *) packMessageBody {
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
                           _messageContent, @"text",
-                          [NSString stringWithFormat:@"%d", _messageType ], @"type", nil];
+                          [NSString stringWithFormat:@"%d", _contentType], @"type", nil];
     NSError *error = nil;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict
-                                    options:NSJSONWritingPrettyPrinted error:&error];
+                                                       options:NSJSONWritingPrettyPrinted
+                                                         error:&error];
     
     if ([jsonData length] > 0 && error == nil){
         return [[NSString alloc] initWithData:jsonData
@@ -96,15 +97,21 @@
 
 -(BOOL) parseMessageBody {
     NSError *error = nil;
-    NSDictionary *contentDict = [NSJSONSerialization JSONObjectWithData:[_messageBody dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableLeaves error:&error];
+    NSDictionary *contentDict = [NSJSONSerialization JSONObjectWithData:[_messageBody dataUsingEncoding:NSUTF8StringEncoding]
+                                                                options:NSJSONReadingMutableLeaves
+                                                                  error:&error];
     
     if (!error) {
         _contentType = [[contentDict objectForKey:@"type"] intValue];
 
-        if (_contentType == 1) {
+        if (_messageType == 3) {
             _messageContent = (NSString *)[contentDict objectForKey:@"text"];
-        } else {
-            _messageContent = _messageBody;
+        } else {            
+            if (_contentType == 1) {
+                _messageContent = (NSString *)[contentDict objectForKey:@"text"];
+            } else {
+                _messageContent = _messageBody;
+            }
         }
         
         return YES;

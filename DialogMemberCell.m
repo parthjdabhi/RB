@@ -6,10 +6,11 @@
 //  Copyright © 2015年 hjc. All rights reserved.
 //
 
-#import "GroupMemberCell.h"
+#import "DialogMemberCell.h"
 #import "User.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
-@implementation GroupMemberCell
+@implementation DialogMemberCell
 
 - (void)awakeFromNib {
     // Initialization code
@@ -21,7 +22,7 @@
     // Configure the view for the selected state
 }
 
-- (void)setGroupMember:(NSArray *) members {
+- (void)setMember:(NSArray *) members {
     int index = 0;
     for (User *user in members) {
         if (index > 5) {
@@ -29,7 +30,11 @@
         }
         
         UIImageView *photo = [[UIImageView alloc]initWithFrame:CGRectMake(10 + 60 * index, 5, 50, 50)];
-        photo.image = [UIImage imageNamed:[NSString stringWithFormat:@"avater_%d.jpg", user.uid]];
+        NSURL *url = [NSURL URLWithString:user.avaterUrl];
+        [photo sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"avater_default.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            
+        }];
+//        photo.image = [UIImage imageNamed:[NSString stringWithFormat:@"avater_%d.jpg", user.uid]];
         [self.contentView addSubview:photo];
         
         index++;

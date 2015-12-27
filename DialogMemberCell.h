@@ -8,15 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GroupMemberCell : UITableViewCell
+@interface DialogMemberCell : UITableViewCell
 
 @property (assign, nonatomic) id delegate;
 
-- (void)setGroupMember:(NSArray *) members;
+- (void)setMember:(NSArray *) members;
 
 @end
 
-@protocol GroupMemberCellDelegate <NSObject>
+@protocol DialogMemberCellDelegate <NSObject>
 
 - (void) go2FriendSelectController;
 

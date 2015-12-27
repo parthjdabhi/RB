@@ -15,18 +15,18 @@
 @property int uid;
 @property (nonatomic, readonly) Connection *connection;
 
-+(IMClient *) shareInstace;
++(IMClient *) shareInstance;
 
 +(void) setConfig:(ConnectionConfig *) config;
 
 -(void) connectWithUid:(int) uid accessToken:(NSString *) accessToken;
 
 -(void) sendMessageToUid:(int) uid content:(NSString *) content;
-
 -(void) sendVoiceToUid:(int) uid path:(NSString *) path duration:(int) duration;
-
 -(void) sendPictureToUid:(int) uid path:(NSString *) path;
 
--(void) sendGroupMessageToGid:(int) gid content:(NSString *) content;
+-(void) sendMessageToGid:(int) gid content:(NSString *) content;
+-(void) sendVoiceToGid:(int) uid path:(NSString *) path duration:(int) duration;
+-(void) sendPictureToGid:(int) uid path:(NSString *) path;
 
 @end

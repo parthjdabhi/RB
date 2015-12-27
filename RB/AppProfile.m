@@ -21,20 +21,34 @@ static AppProfile *sharedInstance;
         initialized = YES;        
         sharedInstance = [[AppProfile alloc] init];
         
-        sharedInstance.unreadCount = 0;
+        sharedInstance.msgUnreadCount = 0;
+        sharedInstance.noticeUnreadCount = 0;
     }
     
     return sharedInstance;  
 }
 
--(int) getUnreadCount {
-    return _unreadCount;
+-(int) getMsgUnreadCount {
+    return _msgUnreadCount;
 }
 
--(void) incrUnreadCount:(int) val {
+-(void) incrMsgUnreadCount:(int) val {
     if (val != 0) {        
-        _unreadCount += val;
-        [[IMDAO shareInstance] setUnreadCount: _unreadCount];
+        _msgUnreadCount += val;
+        [[IMDAO shareInstance] setMsgUnreadCount: _msgUnreadCount];
+        [[NSNotificationCenter defaultCenter] postNotificationName:UpdateMsgCountNotification object:nil];
+    }
+}
+
+-(int) getNoticeUnreadCount {
+    return _noticeUnreadCount;
+}
+
+-(void) incrNoticeUnreadCount:(int) val {
+    if (val != 0) {
+        _noticeUnreadCount += val;
+        [[IMDAO shareInstance] setNoticeUnreadCount: _noticeUnreadCount];
+        [[NSNotificationCenter defaultCenter] postNotificationName:UpdateNoticeCountNotification object:nil];
     }
 }
 

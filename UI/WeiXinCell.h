@@ -25,7 +25,8 @@
 
 @protocol WeiXinCellDelegate <NSObject>
 
-- (void) voiceCellClick:(NSDictionary *) dict cell:(WeiXinCell *) cell;
+- (void) voiceCellOnClick:(NSDictionary *) dict cell:(WeiXinCell *) cell;
 - (void) pictureCellOnClick:(NSDictionary *) dict;
+- (void) avaterImageOnClick:(NSDictionary *) dict;
 
 @end
