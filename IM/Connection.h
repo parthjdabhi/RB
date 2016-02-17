@@ -6,6 +6,7 @@
 //  Copyright (c) 2014年 hjc. All rights reserved.
 //
 
+#define ReceiveStanzaNotification @"ReceiveStanzaNotification"
 #define ReceiveMessageNotification  @"ReceiveMessageNotification"
 #define ReceiveNoticeNotification  @"ReceiveNoticeNotification"
 #define ReceiveConflictNotification  @"ReceiveConflictNotification"
@@ -42,7 +43,7 @@ static const int ddLogLevel = DDLogLevelError;
 
 -(id) initWithConfig:(ConnectionConfig *) config;
 
--(void) connectWithUid:(int) uid withAccessToken:(NSString *) accessToken stamp:(long long) stamp;
+-(void) connectWithUid:(NSInteger) uid withAccessToken:(NSString *) accessToken stamp:(long long) stamp;
 
 //-(void) sendMessageWithContent:(NSString *) content;
 

@@ -26,7 +26,7 @@
     
     NSTimer *keepAliveTimer;
     
-    int _uid;
+    NSInteger _uid;
     NSString *_accessToken;
     long long _sessionStamp;
     long long _activeStamp;
@@ -50,7 +50,7 @@
     return self;
 }
 
--(void) connectWithUid:(int) uid withAccessToken:(NSString *) accessToken stamp:(long long) stamp
+-(void) connectWithUid:(NSInteger) uid withAccessToken:(NSString *) accessToken stamp:(long long) stamp
 {
     if (uid == 0 || accessToken == nil) {
         DDLogError(@"uid and accessToken cannot be null!");
@@ -167,15 +167,15 @@
 -(void) receiveMessage:(Message *) message
 {
     if (message.messageType == 1) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:ReceiveMessageNotification object:message];
+        [[NSNotificationCenter defaultCenter] postNotificationName:ReceiveStanzaNotification object:message];
         _sessionStamp = message.stamp;
         [self send:[[Receipt alloc] initWithId:message._id]];
     } else if (message.messageType == 2) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:ReceiveMessageNotification object:message];
+        [[NSNotificationCenter defaultCenter] postNotificationName:ReceiveStanzaNotification object:message];
         _sessionStamp = message.stamp;
         [self send:[[Receipt alloc] initWithId:message._id]];
     } else if (message.messageType == 3) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:ReceiveNoticeNotification object:message];
+        [[NSNotificationCenter defaultCenter] postNotificationName:ReceiveStanzaNotification object:message];
     }
     
     _activeStamp = [[NSDate date] timeIntervalSince1970];

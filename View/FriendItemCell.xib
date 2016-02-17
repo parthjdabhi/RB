@@ -45,7 +45,7 @@
                 <constraint firstItem="cpQ-pz-vvJ" firstAttribute="leading" secondItem="T6Z-kd-V7Y" secondAttribute="leading" constant="9" id="zYn-XU-R4m"/>
             </constraints>
             <connections>
-                <outlet property="avater" destination="cpQ-pz-vvJ" id="ako-PL-y1W"/>
+                <outlet property="avatar" destination="cpQ-pz-vvJ" id="aPA-Mf-GX0"/>
                 <outlet property="title" destination="lfn-T7-5YU" id="W1u-Qd-UuB"/>
             </connections>
             <point key="canvasLocation" x="-102.5" y="-195.5"/>

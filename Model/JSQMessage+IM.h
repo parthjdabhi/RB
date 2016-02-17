@@ -6,8 +6,10 @@
 //  Copyright © 2016年 hjc. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "JSQMessage.h"
 
-@interface JSQMessage_IM : NSObject
+@interface JSQMessage(IM)
+
+@property BOOL isSendOut;
 
 @end

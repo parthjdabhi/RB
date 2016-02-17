@@ -24,7 +24,7 @@
     return self;
 }
 
--(instancetype) initWithImages:(NSMutableArray*) images index:(NSUInteger) index {
+-(instancetype) initWithImages:(NSMutableArray*) images index:(NSInteger) index {
     
     _imgArr = images;
     _currentIndex = index;
@@ -38,18 +38,16 @@
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dissmissPicture:)]];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    NSMutableDictionary *dict = [_imgArr[_currentIndex] mutableCopy];
-    NSString *path = [dict objectForKey:@"url"];
-    if ([path hasPrefix:@"http"]) {
-        NSString *key = [[path componentsSeparatedByString:@"/"] lastObject];
-        NSString *downloadPath = [[IMFileHelper shareInstance] getThumbPathWithName:key];
-        if (![[NSFileManager defaultManager] fileExistsAtPath:downloadPath]) {
-            [IMFileHelper downloadFile:path path:downloadPath];
-        }
-        path = key;
-    }
-    _imgArr[_currentIndex] = dict;
+- (void)viewWillAppear:(BOOL)animated {
+//    NSString *path = [_imgArr[_currentIndex] mutableCopy];
+//    if ([path hasPrefix:@"http"]) {
+//        NSString *key = [[path componentsSeparatedByString:@"/"] lastObject];
+//        NSString *downloadPath = [[IMFileHelper shareInstance] getThumbPathWithName:key];
+//        if (![[NSFileManager defaultManager] fileExistsAtPath:downloadPath]) {
+//            [IMFileHelper downloadFile:path path:downloadPath];
+//        }
+//        path = key;
+//    }
     [self refreshScrollView];
 }
 
@@ -75,12 +73,11 @@
                 offset--;
             }
             
-            NSLog(@"x:%f", _scrollView.frame.origin.x+_scrollView.frame.size.width*offset);
+//            NSLog(@"x:%f", _scrollView.frame.origin.x+_scrollView.frame.size.width*offset);
             UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(_scrollView.frame.origin.x+_scrollView.frame.size.width*offset, _scrollView.frame.origin.y, _scrollView.frame.size.width, _scrollView.frame.size.height)];
             [imageView setContentMode: UIViewContentModeScaleAspectFit];
-//            NSString *urlStr = [[IMFileHelper shareInstance] getPathWithName:[_imgArr[index] objectForKey:@"url"]];
-//            imageView.image = [UIImage imageWithContentsOfFile:urlStr];
-            NSURL *url = [NSURL URLWithString:[_imgArr[index] objectForKey:@"url"]];
+            
+            NSURL *url = [NSURL URLWithString:_imgArr[index]];
             [imageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"avater_default.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
                 
             }];
@@ -100,8 +97,7 @@
 }
 
 #pragma mark -- 实例化ScrollView
--(void) initScrollView{
-//    _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, _mViewFrame.origin.y, _mViewFrame.size.width, _mViewFrame.size.height)];        _scrollView.backgroundColor = [UIColor grayColor];
+-(void) initScrollView {
     [_scrollView setShowsVerticalScrollIndicator:NO];
     [_scrollView setShowsHorizontalScrollIndicator:NO];
     
@@ -110,7 +106,7 @@
 }
 
 #pragma mark -- scrollView的代理方法
--(void) scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView{
+-(void) scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
     [self scrollViewDidEndDecelerating:scrollView];
 }
 
@@ -132,15 +128,5 @@
     }
     [self refreshScrollView];
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

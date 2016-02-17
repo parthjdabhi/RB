@@ -7,7 +7,7 @@
 //
 
 #import "DialogMemberCell.h"
-#import "User.h"
+#import "MUser.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
 @implementation DialogMemberCell
@@ -24,13 +24,13 @@
 
 - (void)setMember:(NSArray *) members {
     int index = 0;
-    for (User *user in members) {
+    for (MUser *user in members) {
         if (index >= 5) {
             break;
         }
         
         UIImageView *photo = [[UIImageView alloc]initWithFrame:CGRectMake(10 + 60 * index, 5, 50, 50)];
-        NSURL *url = [NSURL URLWithString:user.avaterUrl];
+        NSURL *url = [NSURL URLWithString:user.avatarUrl];
         [photo sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"avater_default.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             
         }];

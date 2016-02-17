@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "User.h"
+#import "MUser.h"
 
-@interface MFriend : User
+@interface MFriend : MUser
 
 @property NSString* commentName;
 @property unsigned long long stamp;

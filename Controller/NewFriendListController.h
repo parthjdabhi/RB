@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "User.h"
+#import "MUser.h"
 
 @interface NewFriendListController : UIViewController
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 
-@property (nonatomic, retain) NSArray<User *> *users;
+@property (nonatomic, retain) NSArray<MUser *> *users;
 
 @end

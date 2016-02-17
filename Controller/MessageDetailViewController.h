@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "WeiXinCell.h"
 #import "NoticeCell.h"
-#import "User.h"
+#import "MUser.h"
 #import "MessageInputBar.h"
 #import "VoiceInputBar.h"
 
@@ -24,7 +24,7 @@
 @property (strong, nonatomic) IBOutlet VoiceInputBar *voiceInputBar;
 
 @property NSInteger uid;
-@property (nonatomic, strong) User *target;
+@property (nonatomic, strong) MUser *target;
 @property NSInteger gid;
 @property (nonatomic, strong) NSMutableArray *resultArray;
 @property (nonatomic, strong) UIImageView *recordingVoiceImg;

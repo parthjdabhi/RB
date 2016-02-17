@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface UserInfoCell : UITableViewCell
-@property (strong, nonatomic) IBOutlet UIImageView *avater;
+@property (strong, nonatomic) IBOutlet UIImageView *avatar;
 @property (strong, nonatomic) IBOutlet UILabel *nicknameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *commentLabel;
 

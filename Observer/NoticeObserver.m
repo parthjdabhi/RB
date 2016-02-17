@@ -62,7 +62,7 @@ static NoticeObserver *sharedInstance;
 -(void) sayHello:(IMNotification *) notice {
     int uid = notice.uid;
     
-    User *user = [[IMDAO shareInstance] getUserWithUid:uid];
+    MUser *user = [[IMDAO shareInstance] getUserWithUid:uid];
     if (user) {
         user.isFriend = NO;
         user.comment = notice.messageContent;
@@ -72,11 +72,13 @@ static NoticeObserver *sharedInstance;
     } else {
         [[NetWorkManager sharedInstance] getUserInfoWithId:uid
                                                    success:^(NSDictionary *dict) {
-                                                       User *user = [[User alloc] init];
+                                                       MUser *user = [[MUser alloc] init];
                                                        user.uid = [[dict objectForKey:@"uid"] integerValue];
                                                        user.nickname = [dict objectForKey:@"nickname"];
                                                        user.signature = [dict objectForKey:@"signature"];
                                                        user.gender = [[dict objectForKey:@"gender"] integerValue];
+                                                       user.avatarUrl = [dict objectForKey:@"avatar_url"];
+                                                       user.avatarThumbUrl = [dict objectForKey:@"avatar_thumb"];
                                                        [[IMDAO shareInstance] saveUser:user];
                                                        
                                                        user.isFriend = NO;
@@ -96,14 +98,14 @@ static NoticeObserver *sharedInstance;
 -(void)becomeFriend:(IMNotification *) notice {
     int uid = notice.uid;
     
-    User *u = [[IMDAO shareInstance] getUserWithUid:uid];
-    Friend *f = [[Friend alloc] init];
+    MUser *u = [[IMDAO shareInstance] getUserWithUid:uid];
+    MFriend *f = [[MFriend alloc] init];
     f.uid = uid;
     f.nickname = u.nickname;
     [[IMDAO shareInstance] saveFriend:f];
     
     NSString *text = [NSString stringWithFormat:@"%@ 通过了你的好友请求，你们可以聊天了", u.nickname];
-    IMNotification *n = [[IMNotification alloc] initWithFrom:0 to:0 target:0 type:3 stamp:[[NSDate date] timeIntervalSince1970] * 1000 contentType:2 messageContent:text uid:uid];
+    IMNotification *n = [[IMNotification alloc] initWithFrom:uid to:[MUser currentUser].uid target:0 type:3 stamp:[[NSDate date] timeIntervalSince1970] * 1000 contentType:2 messageContent:text uid:uid];
     [[IMDAO shareInstance] saveRecvNotification:n];
     [[AppProfile instance] incrMsgUnreadCount:1];
 }

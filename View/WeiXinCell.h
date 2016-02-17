@@ -27,6 +27,6 @@
 
 - (void) voiceCellOnClick:(NSDictionary *) dict cell:(WeiXinCell *) cell;
 - (void) pictureCellOnClick:(NSDictionary *) dict;
-- (void) avaterImageOnClick:(NSDictionary *) dict;
+- (void) avatarImageOnClick:(NSDictionary *) dict;
 
 @end

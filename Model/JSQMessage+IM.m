@@ -8,6 +8,6 @@
 
 #import "JSQMessage+IM.h"
 
-@implementation JSQMessage_IM
+@implementation JSQMessage(IM)
 
 @end

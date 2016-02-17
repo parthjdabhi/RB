@@ -7,7 +7,7 @@
 //
 
 #import "UserInfoController.h"
-#import "MessageDetailViewController.h"
+#import "DialogDetailController.h"
 #import "SayHiController.h"
 #import "PictureViewController.h"
 #import "IMDAO.h"
@@ -104,19 +104,20 @@
     
     if (indexPath.section == 0 && indexPath.row == 0) {
         UserInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UserInfoCell" forIndexPath:indexPath];
-        NSURL *url = [NSURL URLWithString:_target.avaterUrl];
-        [cell.avater sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"avater_default.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        NSURL *url = [NSURL URLWithString:_target.avatarUrl];
+        [cell.avatar sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"avater_default.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             
         }];
-        [cell.avater setUserInteractionEnabled:YES];
-        [cell.avater addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(avaterOnClick:)]];
+        [cell.avatar setUserInteractionEnabled:YES];
+        [cell.avatar addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(avatarOnClick:)]];
         
         cell.nicknameLabel.text = _target.nickname;
         cell.commentLabel.hidden = TRUE;
         return cell;
     } else if (indexPath.section == 2 && indexPath.row == 0) {
         UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
-//        [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.textLabel.text = [contact objectForKey:@"title"];
         cell.detailTextLabel.text = [contact objectForKey:@"detail"];
         return cell;
@@ -147,7 +148,7 @@
     if(section == 0){
         return 10;
     }
-    return 20;
+    return 22;
 }
 
 #pragma mark 设置每行高度（每行高度可以不一样）
@@ -171,22 +172,23 @@
 }
 
 - (IBAction)sendMsgBtnOnClick:(id)sender {
-    MessageDetailViewController *mdvc = [[MessageDetailViewController alloc] init];
-    mdvc.uid = _uid;
+    DialogDetailController *mdvc = [[DialogDetailController alloc] init];
+    mdvc.userId = _uid;
     mdvc.target = _target;
+    mdvc.sender = [MUser currentUser];
 
     mdvc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:mdvc animated:YES];
 }
 
-- (void)avaterOnClick:(NSNotification *)note {
-    if (_target && _target.avaterUrl) {        
+- (void)avatarOnClick:(NSNotification *)note {
+    if (_target && _target.avatarUrl) {
         PictureViewController *pvc = [[PictureViewController alloc] init];
         pvc.imgArr = [[NSMutableArray alloc] init];
-        [pvc.imgArr addObject: @{@"url":_target.avaterUrl}];
+        [pvc.imgArr addObject: _target.avatarUrl];
         
-//        [self presentViewController:pvc animated:YES completion:nil];
         [self.navigationController setNavigationBarHidden:YES animated:NO];
+        pvc.hidesBottomBarWhenPushed = TRUE;
         [self.navigationController pushViewController:pvc animated:YES];
     }
 }

@@ -38,7 +38,7 @@
     _photo.frame = CGRectMake((isHost)?375-50:10, 10, 40, 40);
     _dict = dict;
     _photo.userInteractionEnabled = YES;
-    [_photo addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(avaterOnClick:)]];
+    [_photo addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(avatarOnClick:)]];
     
     if ([[dict objectForKey:@"type"] isEqualToString:@"2"]) {
         [self yuyinView:[[dict objectForKey:@"duration"] intValue] from:isHost withPosition:55 withView:_bubbleView];
@@ -222,8 +222,8 @@
     [_delegate pictureCellOnClick:_dict];
 }
 
-- (void) avaterOnClick:(NSNotification *)note {
-    [_delegate avaterImageOnClick:_dict];
+- (void) avatarOnClick:(NSNotification *)note {
+    [_delegate avatarImageOnClick:_dict];
 }
 
 #pragma mark === 永久闪烁的动画 ======

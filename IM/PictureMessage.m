@@ -17,6 +17,7 @@
                         type:(Byte) messageType
                        stamp:(long long) stamp
                          url:(NSString *) url
+                       thumb:(NSString *) thumb
 {
     self.type = 0x0011;
     self._id = @"";
@@ -27,6 +28,7 @@
     self.messageType = messageType;
     self.contentType = 3;
     self.url = url;
+    self.thumb = thumb;
     self.messageBody = [self packMessageBody];
     self.content = [[[[[[[[[[ByteBuffer alloc] init] string:@""] int32:from] int32:to] int32:target] byte:messageType] int64:stamp] string:self.messageBody] pack];
     return self;
@@ -39,7 +41,8 @@
                     target:(unsigned int) target
                       type:(Byte) messageType
                      stamp:(long long) stamp
-                       url:(NSString *) url;
+                       url:(NSString *) url
+                     thumb:(NSString *) thumb
 {
     self.type = 0x0011;
     self._id = _id;
@@ -50,6 +53,7 @@
     self.messageType = messageType;
     self.contentType = 2;
     self.url = url;
+    self.thumb = thumb;
     self.messageBody = [self packMessageBody];
     self.content = [[[[[[[[[[ByteBuffer alloc] init] string:_id] int32:from] int32:to] int32:target] byte:messageType] int64:stamp] string:self.messageBody] pack];
     return self;
@@ -77,6 +81,7 @@
 -(NSString *) packMessageBody {
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
                           _url, @"url",
+                          _thumb, @"thumb",
                           [NSString stringWithFormat:@"%d", self.contentType], @"type", nil];
     NSError *error = nil;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict
@@ -99,6 +104,7 @@
         
         if (self.contentType == 3) {
             _url = (NSString *)[contentDict objectForKey:@"url"];
+            _thumb = (NSString *)[contentDict objectForKey:@"thumb"];
         } else {
             return NO;
         }

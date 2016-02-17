@@ -27,13 +27,13 @@
                             <constraint firstAttribute="width" constant="216" id="HjR-5T-7Fp"/>
                             <constraint firstAttribute="height" constant="14" id="cNg-DE-tow"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oNI-sW-8T1">
-                        <rect key="frame" x="304" y="15" width="63" height="18"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <rect key="frame" x="304" y="15" width="63" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -45,14 +45,12 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eHS-fG-j67">
-                        <rect key="frame" x="66" y="15" width="216" height="17"/>
+                        <rect key="frame" x="66" y="14" width="216" height="17"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="216" id="C1U-Sl-DFB"/>
                             <constraint firstAttribute="height" constant="17" id="Zap-hI-DnN"/>
-                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="17" id="p1X-UI-Cjm"/>
-                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="216" id="qnQ-xk-fkM"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -60,13 +58,13 @@
                 <constraints>
                     <constraint firstItem="eHS-fG-j67" firstAttribute="leading" secondItem="Upc-dH-LeD" secondAttribute="trailing" constant="9" id="6Tt-ht-aPE"/>
                     <constraint firstItem="kfh-kG-qam" firstAttribute="leading" secondItem="Upc-dH-LeD" secondAttribute="trailing" constant="9" id="9tl-2h-fAY"/>
-                    <constraint firstItem="kfh-kG-qam" firstAttribute="top" secondItem="eHS-fG-j67" secondAttribute="bottom" constant="7" id="RfY-hH-6cc"/>
-                    <constraint firstItem="eHS-fG-j67" firstAttribute="centerY" secondItem="oNI-sW-8T1" secondAttribute="centerY" id="THX-dI-SQK"/>
-                    <constraint firstItem="eHS-fG-j67" firstAttribute="top" secondItem="Tae-x6-S9K" secondAttribute="topMargin" constant="7" id="UDR-Z3-2c3"/>
+                    <constraint firstItem="kfh-kG-qam" firstAttribute="top" secondItem="eHS-fG-j67" secondAttribute="bottom" constant="8" id="RfY-hH-6cc"/>
+                    <constraint firstItem="eHS-fG-j67" firstAttribute="centerY" secondItem="oNI-sW-8T1" secondAttribute="centerY" constant="-0.5" id="THX-dI-SQK"/>
+                    <constraint firstItem="eHS-fG-j67" firstAttribute="top" secondItem="Tae-x6-S9K" secondAttribute="topMargin" constant="6" id="UDR-Z3-2c3"/>
                     <constraint firstItem="oNI-sW-8T1" firstAttribute="leading" secondItem="eHS-fG-j67" secondAttribute="trailing" constant="22" id="a3O-FS-zF6"/>
                     <constraint firstAttribute="bottomMargin" secondItem="Upc-dH-LeD" secondAttribute="bottom" constant="-1" id="av6-Z2-Tqk"/>
                     <constraint firstItem="gxv-Jx-D9A" firstAttribute="top" secondItem="Tae-x6-S9K" secondAttribute="topMargin" constant="25" id="baI-yi-UGT"/>
-                    <constraint firstItem="gxv-Jx-D9A" firstAttribute="baseline" secondItem="kfh-kG-qam" secondAttribute="baseline" id="ffq-gh-u3H"/>
+                    <constraint firstItem="gxv-Jx-D9A" firstAttribute="baseline" secondItem="kfh-kG-qam" secondAttribute="baseline" constant="-1" id="ffq-gh-u3H"/>
                     <constraint firstItem="gxv-Jx-D9A" firstAttribute="leading" secondItem="kfh-kG-qam" secondAttribute="trailing" constant="65" id="olJ-os-ngP"/>
                     <constraint firstItem="eHS-fG-j67" firstAttribute="width" secondItem="kfh-kG-qam" secondAttribute="width" id="xUE-yU-Lij"/>
                 </constraints>
@@ -78,7 +76,7 @@
                 <constraint firstItem="Upc-dH-LeD" firstAttribute="top" secondItem="sSW-ZE-yYd" secondAttribute="top" constant="9" id="pbo-LS-mdf"/>
             </constraints>
             <connections>
-                <outlet property="avater" destination="Upc-dH-LeD" id="eme-eb-Kzb"/>
+                <outlet property="avatar" destination="Upc-dH-LeD" id="xLD-6s-XKR"/>
                 <outlet property="subTitle" destination="kfh-kG-qam" id="AP2-5h-uxw"/>
                 <outlet property="time" destination="oNI-sW-8T1" id="F60-tH-ij2"/>
                 <outlet property="title" destination="eHS-fG-j67" id="4j0-mr-VaK"/>

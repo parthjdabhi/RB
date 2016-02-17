@@ -7,11 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "User.h"
-#import "Friend.h"
-#import "Group.h"
-#import "Dialog.h"
+#import "MUser.h"
+#import "MFriend.h"
+#import "MGroup.h"
+#import "MDialog.h"
 #import "Message.h"
+#import "MMessage.h"
 #import "VoiceMessage.h"
 #import "PictureMessage.h"
 #import "IMNotification.h"
@@ -20,34 +21,38 @@
 
 +(IMDAO *) shareInstance;
 
--(void) saveUser:(User *) user;
+-(void) saveUser:(MUser *) user;
 -(void) saveUsers:(NSArray *) users;
--(NSArray *) getUsersWithUid:(int) uid;
--(User *) getUserWithUid:(int) uid;
+-(NSArray *) getUsersWithUid:(NSInteger) uid;
+-(MUser *) getUserWithUid:(NSInteger) uid;
 
 #pragma mark dialog
--(void) saveDialog:(Dialog *) dialog;
+-(void) saveDialog:(MDialog *) dialog;
 -(void) saveDialogs:(NSArray *) dialogs;
 -(NSArray *) getDialogs;
--(Dialog *) getDiaglogWithUid:(unsigned int) uid;
--(void) updateDiaglog:(Dialog *) dialog;
--(void) deleteDialogWithId:(int) _id;
+-(MDialog *) getDiaglogWithUid:(NSInteger) uid;
+-(void) updateDiaglog:(MDialog *) dialog;
+-(void) deleteDialogWithId:(NSInteger) _id;
 
 #pragma mark message
 -(void) saveRecvMessage:(Message *) message;
 -(void) saveRecvMessages:(NSArray *) messages;
 -(void) saveSendMessage:(Message *) message;
 
--(NSArray *) getMessageWithUid:(int) uid;
--(NSArray *) getMessageWithGid:(int) gid;
+-(void) saveMessage:(MMessage *) message;
+-(void) updateMessage:(MMessage *) message;
+-(void) deleteMessage:(MMessage *) message;
+
+-(NSArray *) getMessageWithUid:(NSInteger) uid;
+-(NSArray *) getMessageWithGid:(NSInteger) gid;
 
 -(void) saveRecvNotification:(IMNotification *) message;
 
 #pragma mark unread message count
--(int) getUnreadCountWithUid:(int) uid;
--(void) clearUnreadCountWithUid:(int) uid;
--(int) getUnreadCountWithGid:(int) gid;
--(void) clearUnreadCountWithGid:(int) gid;
+-(int) getUnreadCountWithUid:(NSInteger) uid;
+-(void) clearUnreadCountWithUid:(NSInteger) uid;
+-(int) getUnreadCountWithGid:(NSInteger) gid;
+-(void) clearUnreadCountWithGid:(NSInteger) gid;
 
 -(int) getMsgUnreadCount;
 -(void) setMsgUnreadCount:(int) count;
@@ -55,23 +60,32 @@
 -(void) setNoticeUnreadCount:(int) count;
 
 #pragma mark friend
--(void) saveFriend:(Friend *) f;
--(void) saveFriends:(NSArray<User *> *) arr;
--(NSArray *) getFriendsWithUid:(int) uid;
--(Friend *) getFriendWithId:(int) uid;
--(void) delFriendWithId:(int) uid;
+-(void) saveFriend:(MFriend *) f;
+-(void) saveFriends:(NSArray<MUser *> *) arr;
+-(NSArray *) getFriendsWithUid:(NSInteger) uid;
+-(MFriend *) getFriendWithId:(NSInteger) uid;
+-(void) delFriendWithId:(NSInteger) uid;
 
 #pragma mark group
--(void) saveGroup:(Group *) f;
--(void) saveGroups:(NSArray<Group *> *) arr;
--(NSArray *) getGroupsWithUid:(int) uid;
--(Group *) getGroupWithId:(int) uid;
--(void) addMembers:(NSArray *) members ToGid:(int) gid;
+-(void) saveGroup:(MGroup *) f;
+-(void) saveGroups:(NSArray<MGroup *> *) arr;
+-(NSArray *) getGroupsWithUid:(NSInteger) uid;
+-(MGroup *) getGroupWithId:(NSInteger) uid;
+-(void) addMembers:(NSArray *) members ToGid:(NSInteger) gid;
+-(void) deleteGroupWithId:(NSInteger) gid;
+-(void) quitGroupWithUid:(NSInteger) uid Gid:(NSInteger) gid;
 
 #pragma mark make friend record
--(void) saveMakeFriendRecord:(User *) user;
--(void) updateMakeFriendRecord:(User *) user;
--(NSArray *) getMakeFriendRecordsByUid:(int) uid;
--(void) delMakeFriendRecordWithId:(int) uid;
+-(void) saveMakeFriendRecord:(MUser *) user;
+-(void) updateMakeFriendRecord:(MUser *) user;
+-(NSArray *) getMakeFriendRecordsByUid:(NSInteger) uid;
+-(void) delMakeFriendRecordWithId:(NSInteger) uid;
+
+#pragma mark account
+-(void) login:(MUser *) user;
+-(MUser *) getLoginUser;
+-(void) logout;
+
+-(void) updateUser:(MUser *) user;
 
 @end

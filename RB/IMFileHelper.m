@@ -7,6 +7,7 @@
 //
 
 #import "IMFileHelper.h"
+#import "NSString+MD5.h"
 
 @implementation IMFileHelper
 
@@ -86,6 +87,33 @@
     [fileManager createDirectoryAtPath:filePath withIntermediateDirectories:YES attributes:nil error:nil];
     return [filePath stringByAppendingFormat:@"/%@", name];
 }
+
+- (NSString *) getPathWithURL: (NSString *) url {
+    NSString *filePath = nil;
+    NSString *urlStr = [self getRootDocument];
+    
+    NSString *hash = [url MD5];
+    int part = 4;
+    long length = hash.length/4;
+    NSMutableArray *pathArray = [[NSMutableArray alloc] init];
+    for (long i=0; i<part-1; i++) {
+        [pathArray addObject:[hash substringWithRange:NSMakeRange(i*length, length)]];
+    }
+    
+    filePath = [urlStr stringByAppendingPathComponent: [pathArray componentsJoinedByString: @"/"]];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    [fileManager createDirectoryAtPath:filePath withIntermediateDirectories:YES attributes:nil error:nil];
+    
+    [pathArray addObject:[hash substringWithRange:NSMakeRange((part-1)*length, length)]];
+    filePath = [urlStr stringByAppendingPathComponent: [pathArray componentsJoinedByString: @"/"]];
+    NSArray *prefixArray = [url componentsSeparatedByString:@"."];
+    if (prefixArray.count > 1) {
+        filePath = [NSString stringWithFormat:@"%@.%@", filePath, [prefixArray lastObject]];
+    }
+    
+    return filePath;
+}
+
 
 - (NSString *) getThumbPathWithName: (NSString *) name {
     return [[self getPathWithName:name] stringByAppendingString:@".thumb"];

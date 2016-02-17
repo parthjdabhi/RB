@@ -16,7 +16,7 @@
 @property int msgUnreadCount;
 @property int noticeUnreadCount;
 
-+(AppProfile *) shareInstace;
++(AppProfile *) instance;
 
 -(int) getMsgUnreadCount;
 -(void) incrMsgUnreadCount:(int) val;

@@ -68,7 +68,7 @@
 
         NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                          [NSString stringWithFormat:@"%d", msg.from], @"name",
-                                         msg.from == [User currentUser].uid ? @"1":@"0", @"mine",
+                                         msg.from == [MUser currentUser].uid ? @"1":@"0", @"mine",
                                          [NSString stringWithFormat:@"%d", msg.messageType], @"category",
                                          [NSString stringWithFormat:@"%d", msg.contentType], @"type",
                                          [NSString stringWithFormat:@"%lld", msg.stamp], @"stamp",
@@ -240,7 +240,7 @@
         
         UIImage *image = nil;
         BOOL isHost = [[dict objectForKey:@"mine"] isEqualToString:@"1"];
-        image = [UIImage imageNamed:[NSString stringWithFormat:@"avater_%ld.jpg", (long)(isHost? [[User currentUser] uid]:_uid)]];
+        image = [UIImage imageNamed:[NSString stringWithFormat:@"avater_%ld.jpg", (long)(isHost? [[MUser currentUser] uid]:_uid)]];
         if (!image) {
             image = [UIImage imageNamed:@"photo.png"];
         }
@@ -322,9 +322,9 @@
 
 - (void)go2UserInfoOperationController {
     UserInfoOperationController *uioc = [[UserInfoOperationController alloc] init];
-    uioc.uid = _uid;
+    uioc.userId = _uid;
     uioc.user = _target;
-    uioc.gid = _gid;
+    uioc.groupId = _gid;
     [self.navigationController pushViewController:uioc animated:YES];
 }
 
@@ -350,7 +350,7 @@
         [[SDImageCache sharedImageCache] storeImage:thumb forKey:thumbUrl];
         
         NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
-                              [NSString stringWithFormat:@"%ld", (long)[User currentUser].uid], @"name",
+                              [NSString stringWithFormat:@"%ld", (long)[MUser currentUser].uid], @"name",
                               url, @"url",
                               thumbUrl, @"thumb",
                               @"3", @"type",
@@ -455,7 +455,7 @@
     }
 }
 
-- (void) avaterImageOnClick:(NSDictionary *) dict {
+- (void) avatarImageOnClick:(NSDictionary *) dict {
     UserInfoController *uic = [[UserInfoController alloc] init];
     uic.uid = [[dict objectForKey:@"name"] integerValue];
     uic.target = [[IMDAO shareInstance] getUserWithUid:uic.uid];
@@ -592,7 +592,7 @@
     }
     
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
-            [NSString stringWithFormat:@"%ld", (long)[User currentUser].uid], @"name",
+            [NSString stringWithFormat:@"%ld", (long)[MUser currentUser].uid], @"name",
             [NSString stringWithFormat:@"%f", audioDurationSeconds], @"duration",
             voicePath, @"url",
             @"2", @"type",
@@ -612,7 +612,7 @@
 
 - (void) sendMessage:(UITextField *)textField {
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
-                          [NSString stringWithFormat:@"%ld", (long)[User currentUser].uid], @"name",
+                          [NSString stringWithFormat:@"%ld", (long)[MUser currentUser].uid], @"name",
                           [NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]], @"stamp",
                           _messageInputBar.msgTextField.text, @"content", @"1", @"mine", nil];
     [self add2ListTailWithDict:dict];
@@ -671,7 +671,7 @@
                 [NSString stringWithFormat:@"%d", voiceMsg.duration], @"duration",
                 @"2", @"type",
                 voiceMsg.url, @"url",
-                msg.from == [User currentUser].uid ? @"1":@"0", @"mine",
+                msg.from == [MUser currentUser].uid ? @"1":@"0", @"mine",
                 nil];
     } else if (msg.contentType == 3) {
         PictureMessage *pictureMsg = [PictureMessage initWithMessage:msg];
@@ -679,10 +679,10 @@
                 [NSString stringWithFormat:@"%d", pictureMsg.from], @"name",
                 @"3", @"type",
                 pictureMsg.url, @"url",
-                msg.from == [User currentUser].uid ? @"1":@"0", @"mine",
+                msg.from == [MUser currentUser].uid ? @"1":@"0", @"mine",
                 nil];
     } else {
-        dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d",msg.from], @"name", msg.messageContent, @"content", msg.from == [User currentUser].uid ? @"1":@"0", @"mine", nil];
+        dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d",msg.from], @"name", msg.messageContent, @"content", msg.from == [MUser currentUser].uid ? @"1":@"0", @"mine", nil];
     }
     
     [self add2ListTailWithDict:dict];

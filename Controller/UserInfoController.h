@@ -7,14 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "User.h"
-#import "Friend.h"
+#import "MUser.h"
+#import "MFriend.h"
 
 @interface UserInfoController : UIViewController
 
 @property NSInteger uid;
-@property (nonatomic, strong) User *target;
-@property (nonatomic, strong) Friend *friendInfo;
+@property (nonatomic, strong) MUser *target;
+@property (nonatomic, strong) MFriend *friendInfo;
 
 @property NSMutableArray *tableCells;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;

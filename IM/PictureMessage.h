@@ -11,13 +11,15 @@
 @interface PictureMessage : Message
 
 @property NSString* url;
+@property NSString* thumb;
 
 -(instancetype) initWithFrom:(unsigned int) from
                           to:(unsigned int) to
                       target:(unsigned int) target
                         type:(Byte) messageType
                        stamp:(long long) stamp
-                         url:(NSString *) url;
+                         url:(NSString *) url
+                         thumb:(NSString *) thumb;
 
 
 -(instancetype) initWithId:(NSString *) _id
@@ -26,7 +28,8 @@
                     target:(unsigned int) target
                       type:(Byte) messageType
                      stamp:(long long) stamp
-                       url:(NSString *) url;
+                       url:(NSString *) url
+                     thumb:(NSString *) thumb;
 
 +(instancetype) initWithMessage:(Message *) message;
 

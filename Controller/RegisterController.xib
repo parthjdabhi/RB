@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RegisterController">
@@ -21,50 +21,83 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="uname" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zLL-XN-Abv">
-                    <rect key="frame" x="112" y="85" width="150" height="30"/>
-                    <animations/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="uname" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zLL-XN-Abv">
+                    <rect key="frame" x="97" y="151" width="180" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                 </textField>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="passport" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WBG-Ft-t1Z">
-                    <rect key="frame" x="112" y="140" width="150" height="30"/>
-                    <animations/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="passport" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WBG-Ft-t1Z">
+                    <rect key="frame" x="97" y="206" width="180" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES"/>
                 </textField>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="byW-I8-KCc">
-                    <rect key="frame" x="126" y="294" width="123" height="30"/>
-                    <animations/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="byW-I8-KCc">
+                    <rect key="frame" x="97" y="368" width="180" height="30"/>
+                    <color key="backgroundColor" red="0.1845789146" green="0.76862745099999996" blue="0.1273067715" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="180" id="FYw-uX-B5V"/>
+                    </constraints>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <state key="normal" title="Register"/>
                     <connections>
                         <action selector="registerBtnClick:" destination="-1" eventType="touchUpInside" id="Kwd-FN-T84"/>
                     </connections>
                 </button>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="nickname" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ebJ-zh-O2Z">
-                    <rect key="frame" x="112" y="250" width="150" height="30"/>
-                    <animations/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="nickname" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ebJ-zh-O2Z">
+                    <rect key="frame" x="97" y="316" width="180" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                 </textField>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rfW-hl-1vs">
-                    <rect key="frame" x="169" y="339" width="38" height="30"/>
-                    <animations/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rfW-hl-1vs">
+                    <rect key="frame" x="97" y="417" width="180" height="30"/>
+                    <color key="backgroundColor" red="0.1845789146" green="0.76862745099999996" blue="0.1273067715" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <state key="normal" title="Login"/>
                     <connections>
                         <action selector="loginBtnClick:" destination="-1" eventType="touchUpInside" id="5Jn-xO-6Yw"/>
                     </connections>
                 </button>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="confirm passport" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LtW-eg-HY7">
-                    <rect key="frame" x="114" y="195" width="149" height="30"/>
-                    <animations/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="confirm passport" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LtW-eg-HY7">
+                    <rect key="frame" x="97" y="261" width="180" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES"/>
                 </textField>
             </subviews>
-            <animations/>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="byW-I8-KCc" secondAttribute="trailing" constant="83" id="5Px-hh-1Vu"/>
+                <constraint firstItem="byW-I8-KCc" firstAttribute="leading" secondItem="zLL-XN-Abv" secondAttribute="leading" id="7fB-bx-8Kd"/>
+                <constraint firstItem="byW-I8-KCc" firstAttribute="leading" secondItem="WBG-Ft-t1Z" secondAttribute="leading" id="9cm-vH-nBK"/>
+                <constraint firstItem="LtW-eg-HY7" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="E33-Sy-A1U"/>
+                <constraint firstItem="rfW-hl-1vs" firstAttribute="top" secondItem="byW-I8-KCc" secondAttribute="bottom" constant="19" id="Ic1-BA-i6r"/>
+                <constraint firstItem="ebJ-zh-O2Z" firstAttribute="top" secondItem="LtW-eg-HY7" secondAttribute="bottom" constant="25" id="K4r-kd-BqV"/>
+                <constraint firstItem="ebJ-zh-O2Z" firstAttribute="width" secondItem="zLL-XN-Abv" secondAttribute="width" id="Kcp-Jo-7Tc"/>
+                <constraint firstItem="LtW-eg-HY7" firstAttribute="width" secondItem="zLL-XN-Abv" secondAttribute="width" id="LJj-96-d32"/>
+                <constraint firstItem="byW-I8-KCc" firstAttribute="width" secondItem="zLL-XN-Abv" secondAttribute="width" id="LLd-55-Vgi"/>
+                <constraint firstItem="LtW-eg-HY7" firstAttribute="leading" secondItem="WBG-Ft-t1Z" secondAttribute="leading" id="NL7-jn-vXe"/>
+                <constraint firstItem="rfW-hl-1vs" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="NTu-hJ-awc"/>
+                <constraint firstItem="WBG-Ft-t1Z" firstAttribute="width" secondItem="zLL-XN-Abv" secondAttribute="width" id="Xwd-RL-w2S"/>
+                <constraint firstItem="byW-I8-KCc" firstAttribute="leading" secondItem="rfW-hl-1vs" secondAttribute="leading" id="Y2b-9P-bPA"/>
+                <constraint firstItem="WBG-Ft-t1Z" firstAttribute="top" secondItem="zLL-XN-Abv" secondAttribute="bottom" constant="25" id="Yki-pE-v0B"/>
+                <constraint firstItem="rfW-hl-1vs" firstAttribute="trailing" secondItem="ebJ-zh-O2Z" secondAttribute="trailing" id="a7B-3q-hR1"/>
+                <constraint firstItem="rfW-hl-1vs" firstAttribute="trailing" secondItem="byW-I8-KCc" secondAttribute="trailing" id="e2I-hx-qjr"/>
+                <constraint firstItem="LtW-eg-HY7" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="261" id="eSd-v2-k5U"/>
+                <constraint firstItem="byW-I8-KCc" firstAttribute="leading" secondItem="ebJ-zh-O2Z" secondAttribute="leading" id="gwH-5B-oQS"/>
+                <constraint firstItem="rfW-hl-1vs" firstAttribute="leading" secondItem="byW-I8-KCc" secondAttribute="leading" id="mtP-qH-3Yr"/>
+                <constraint firstItem="rfW-hl-1vs" firstAttribute="width" secondItem="zLL-XN-Abv" secondAttribute="width" id="o4A-83-zvH"/>
+                <constraint firstItem="LtW-eg-HY7" firstAttribute="top" secondItem="WBG-Ft-t1Z" secondAttribute="bottom" constant="25" id="pE9-L5-1QW"/>
+                <constraint firstItem="byW-I8-KCc" firstAttribute="top" secondItem="ebJ-zh-O2Z" secondAttribute="bottom" constant="22" id="xK8-qO-Nsa"/>
+            </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="5Px-hh-1Vu"/>
+                    <exclude reference="LLd-55-Vgi"/>
+                    <exclude reference="Y2b-9P-bPA"/>
+                    <exclude reference="NTu-hJ-awc"/>
+                    <exclude reference="o4A-83-zvH"/>
+                </mask>
+            </variation>
         </view>
     </objects>
 </document>

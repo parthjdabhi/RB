@@ -12,7 +12,8 @@
 #import "MeViewController.h"
 #import "LoginController.h"
 #import "NetWorkManager.h"
-#import "User.h"
+#import "IMDAO.h"
+#import "MUser.h"
 
 @interface AppDelegate ()
 
@@ -23,30 +24,41 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    if (![User currentUser].uid) {
-        [User currentUser].uid = 104;
-        [User currentUser].accessToken = @"MTAxADEwMQAxNjVCNkQ2QTU5QTJDNDY4QzU5MDdCNDBEREE5RkYzQmUzOWM";
-        [[NetWorkManager sharedInstance] getUserInfoWithId:[User currentUser].uid
-                                                   success:^(NSDictionary *dict) {
-                                                       [User currentUser].uid = [[dict objectForKey:@"uid"] integerValue];
-                                                       [User currentUser].nickname = [dict objectForKey:@"nickname"];
-                                                       [User currentUser].signature = [dict objectForKey:@"signature"];
-                                                       [User currentUser].gender = [[dict objectForKey:@"gender"] integerValue];
-                                                   } fail:^(NSError *error) {
-                                                       
-                                                   }];
-    }
+//    if (![User currentUser].uid) {
+//        [User currentUser].uid = 104;
+//        [User currentUser].accessToken = @"MTAxADEwMQAxNjVCNkQ2QTU5QTJDNDY4QzU5MDdCNDBEREE5RkYzQmUzOWM";
+//        [[NetWorkManager sharedInstance] getUserInfoWithId:[User currentUser].uid
+//                                                   success:^(NSDictionary *dict) {
+//                                                       [User currentUser].uid = [[dict objectForKey:@"uid"] integerValue];
+//                                                       [User currentUser].nickname = [dict objectForKey:@"nickname"];
+//                                                       [User currentUser].signature = [dict objectForKey:@"signature"];
+//                                                       [User currentUser].gender = [[dict objectForKey:@"gender"] integerValue];
+//                                                   } fail:^(NSError *error) {
+//                                                       
+//                                                   }];
+//    }
     
-    if ([User currentUser].uid > 0) {
+    MUser *user = [[IMDAO shareInstance] getLoginUser];
+    
+    if (user) {        
         FriendListController *flc = [[FriendListController alloc] init];
         MessageListController *mlc = [[MessageListController alloc] init];
         MeViewController *mvc = [[MeViewController alloc] init];
-        
+
+        UINavigationController *n1 = [[UINavigationController alloc] initWithRootViewController:mlc];
+        UINavigationController *n2 = [[UINavigationController alloc] initWithRootViewController:flc];
+        UINavigationController *n3 = [[UINavigationController alloc] initWithRootViewController:mvc];
+
         UITabBarController *tabBarController = [[UITabBarController alloc] init];
-        tabBarController.viewControllers = @[mlc, flc, mvc];
+        tabBarController.viewControllers = @[n1, n2, n3];
         
-        UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:tabBarController];
-        self.window.rootViewController = navController;
+//        [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
+//        [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];        
+        [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:125.0/255 green:194.0/255 blue:52.0/255 alpha:1]];
+        [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+        [[UINavigationBar appearance] setTitleTextAttributes:@{UITextAttributeTextColor : [UIColor whiteColor]}];
+        
+        self.window.rootViewController = tabBarController;
     } else {
         
         LoginController *loginController = [[LoginController alloc] init];
@@ -77,7 +89,7 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     // Saves changes in the application's managed object context before the application terminates.
-    [self saveContext];
+//    [self saveContext];
 }
 
 #pragma mark - Core Data stack

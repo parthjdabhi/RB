@@ -89,8 +89,12 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods/CocoaLumberjack.framework"
   install_framework "Pods/FMDB.framework"
   install_framework "Pods/Haneke.framework"
+  install_framework "Pods/JSQMessagesViewController.framework"
+  install_framework "Pods/JSQSystemSoundPlayer.framework"
+  install_framework "Pods/MBProgressHUD.framework"
   install_framework "Pods/MRProgress.framework"
   install_framework "Pods/SDWebImage.framework"
+  install_framework "Pods/Toast.framework"
   install_framework "Pods/UIImage_ResizeMagick.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
@@ -99,7 +103,11 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods/CocoaLumberjack.framework"
   install_framework "Pods/FMDB.framework"
   install_framework "Pods/Haneke.framework"
+  install_framework "Pods/JSQMessagesViewController.framework"
+  install_framework "Pods/JSQSystemSoundPlayer.framework"
+  install_framework "Pods/MBProgressHUD.framework"
   install_framework "Pods/MRProgress.framework"
   install_framework "Pods/SDWebImage.framework"
+  install_framework "Pods/Toast.framework"
   install_framework "Pods/UIImage_ResizeMagick.framework"
 fi

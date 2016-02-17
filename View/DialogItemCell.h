@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface DialogItemCell : UITableViewCell
-@property (strong, nonatomic) IBOutlet UIImageView *avater;
+@property (strong, nonatomic) IBOutlet UIImageView *avatar;
 @property (strong, nonatomic) IBOutlet UILabel *title;
 @property (strong, nonatomic) IBOutlet UILabel *subTitle;
 @property (strong, nonatomic) IBOutlet UILabel *time;

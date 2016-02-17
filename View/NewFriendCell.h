@@ -12,7 +12,7 @@
 
 @property NSInteger uid;
 
-@property (strong, nonatomic) IBOutlet UIImageView *avaterImageView;
+@property (strong, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *commentLabel;
 @property (strong, nonatomic) IBOutlet UIButton *handleBtn;

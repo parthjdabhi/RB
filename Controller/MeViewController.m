@@ -11,6 +11,7 @@
 #import "IMImageStore.h"
 #import "UIImage+ResizeMagick.h"
 #import "IMFileHelper.h"
+#import "NetWorkManager.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "PictureViewController.h"
 #import "LoginController.h"
@@ -21,12 +22,11 @@
 
 @implementation MeViewController
 
-
 -(instancetype) init {
     self = [super init];
     if (self) {
-        self.tabBarItem.title = @"我";
-        UIImage *i = [UIImage imageNamed:@"iconfont-contact.png"];
+        self.tabBarItem.title = @"更多";
+        UIImage *i = [UIImage imageNamed:@"tabbarMore"];
         self.tabBarItem.image = i;
     }
     
@@ -88,18 +88,19 @@
     
     if (indexPath.section == 0 && indexPath.row == 0) {
         UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-        NSURL *url = [NSURL URLWithString:[User currentUser].avaterUrl];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        NSURL *url = [NSURL URLWithString:[MUser currentUser].avatarThumbUrl];
         [cell.imageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"avater_default.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             
         }];
         [cell.imageView setUserInteractionEnabled:YES];
-        [cell.imageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(avaterOnClick:)]];
+        [cell.imageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(avatarOnClick:)]];
         
-        cell.textLabel.text = [User currentUser].nickname;
+        cell.textLabel.text = [MUser currentUser].nickname;
         return cell;
     } else if (indexPath.section == 2 && indexPath.row == 0) {
         UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
-        //        [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.textLabel.text = [contact objectForKey:@"title"];
         cell.detailTextLabel.text = [contact objectForKey:@"detail"];
         return cell;
@@ -146,26 +147,12 @@
     }
 }
 
-#pragma mark 返回每组头标题名称
--(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    //    NSLog(@"生成组（组%li）名称",(long)section);
-    //    NSMutableDictionary *group= _tableCells[indexPath.section];
-    return nil;
-}
-
-#pragma mark 返回每组尾部说明
-//-(NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section{
-//    NSLog(@"生成尾部（组%li）详情",(long)section);
-////    KCContactGroup *group=_contacts[section];
-//    return @" ";
-//}
-
 #pragma mark 设置分组标题内容高度
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if(section == 0){
         return 10;
     }
-    return 10;
+    return 22;
 }
 
 #pragma mark 设置每行高度（每行高度可以不一样）
@@ -181,15 +168,17 @@
     return 0;
 }
 
-- (void)avaterOnClick:(NSNotification *)note {
-    if ([User currentUser] && [User currentUser].avaterUrl) {
+- (void)avatarOnClick:(NSNotification *)note {
+    if ([MUser currentUser] && [MUser currentUser].avatarUrl) {
         PictureViewController *pvc = [[PictureViewController alloc] init];
         pvc.imgArr = [[NSMutableArray alloc] init];
-        [pvc.imgArr addObject: @{@"url":[User currentUser].avaterUrl}];
+        [pvc.imgArr addObject:[MUser currentUser].avatarUrl];
+
+        [self.navigationController setNavigationBarHidden:YES animated:NO];
+        pvc.hidesBottomBarWhenPushed = TRUE;
         [self.navigationController pushViewController:pvc animated:YES];
     }
 }
-
 
 #pragma mark imagepicker delegate
 
@@ -199,14 +188,18 @@
     NSString *key = [[[NSUUID alloc] init] UUIDString];
     [[IMImageStore shareStore] setImage:image forKey:key];
     
-    key = [NSString stringWithFormat:@"%@.png", key];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *path = [[IMFileHelper shareInstance] getPathWithName:key];
-    [fileManager createFileAtPath:path contents:[self getNSDataFromImage:image] attributes:nil];
-    
-    UIImage *thumb = [image resizedImageWithMaximumSize:CGSizeMake(320, 320)];
-    NSString *thumbPath = [[IMFileHelper shareInstance] getThumbPathWithName:key];
-    [fileManager createFileAtPath:thumbPath contents:[self getNSDataFromThumb:thumb] attributes:nil];
+    [[NetWorkManager sharedInstance] uploadAvatarWithImage:image uid:[MUser currentUser].uid success:^(NSDictionary *responseObject) {
+        NSString *url = [responseObject objectForKey:@"url"];
+        NSString *thumbUrl = [responseObject objectForKey:@"thumb"];
+        [[MUser currentUser] setAvatarUrl:url];
+        [[MUser currentUser] setAvatarThumbUrl:thumbUrl];
+        [[IMDAO shareInstance] updateUser:[MUser currentUser]];
+        
+        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+        cell.imageView.image = image;
+    } fail:^(NSError *error) {
+        
+    }];
     
     [picker dismissViewControllerAnimated:YES completion:nil];
 }

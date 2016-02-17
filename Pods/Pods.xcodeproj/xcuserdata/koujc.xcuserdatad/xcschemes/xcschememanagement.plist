@@ -29,6 +29,21 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>JSQMessagesViewController.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>JSQSystemSoundPlayer.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>MBProgressHUD.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>MRProgress.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -44,6 +59,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Toast.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>UIImage-ResizeMagick.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -52,7 +72,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0D3E7817523FACF8AF3FDDC57F10DA9A</key>
+		<key>12F9064D65ECC59DECF02DA15EC8965C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -62,12 +82,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>15A544B423AAF62D1607BE14BB039532</key>
+		<key>23CF27B2BA6AC7125EFFEDA8C5AA819F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>23CF27B2BA6AC7125EFFEDA8C5AA819F</key>
+		<key>28F6594AAA3376076F58328EE491071A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -77,7 +97,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>75BE13F8849BD08AB63F672111506BB4</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>8A2E8FED01C8A6BC8ADFCF3C3B78368F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>95DB89A8BFC5FF0BF98458651D0163CD</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B9A545B207B381B5448652D0321CB477</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -87,7 +122,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>DF7186C0592771F15CE1E354C7574376</key>
+		<key>E61CE3B6DFA1FE6B3E296965C76C0E10</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EDA125ADA52355B7CA6DF7BA96918357</key>
 		<dict>
 			<key>primary</key>
 			<true/>

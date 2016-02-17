@@ -53,11 +53,11 @@ static ConnectionConfig *config;
                                             selector:@selector(updateConnectionStatus:)
                                                 name:UpdateConnectionStatusNotification object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self
-                                            selector:@selector(receiveMessage:)
-                                                name:ReceiveMessageNotification object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self
-                                            selector:@selector(receiveNotice:)
-                                                name:ReceiveNoticeNotification object:nil];
+                                            selector:@selector(receiveStanza:)
+                                                name:ReceiveStanzaNotification object:nil];
+//    [[NSNotificationCenter defaultCenter]addObserver:self
+//                                            selector:@selector(receiveNotice:)
+//                                                name:ReceiveNoticeNotification object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self
                                             selector:@selector(conflict:)
                                                 name:ReceiveConflictNotification object:nil];
@@ -69,99 +69,116 @@ static ConnectionConfig *config;
     return self;
 }
 
--(void) connectWithUid:(int) uid accessToken:(NSString *) accessToken
+-(void) connectWithUid:(NSInteger) uid accessToken:(NSString *) accessToken
 {
     _uid = uid;
     [_connection connectWithUid:uid withAccessToken:accessToken stamp:0];
 }
 
--(void) sendMessageToUid:(int) uid content:(NSString *) content
+-(void) sendMessageToUid:(NSInteger) uid content:(NSString *) content
 {
     Message *message = [[Message alloc] initWithFrom:_uid to:uid target:0 type:1 stamp:[[NSDate date] timeIntervalSince1970]*1000 contentType:1 messageContent:content];
     [[IMDAO shareInstance] saveSendMessage:message];
     [_connection send:message];
 }
 
--(void) sendVoiceToUid:(int) uid path:(NSString *) path duration:(int) duration
+-(void) sendVoiceToUid:(NSInteger) uid url:(NSString *) url duration:(int) duration
 {
-    NSString *url = path;
-    // to do
     VoiceMessage *message = [[VoiceMessage alloc] initWithFrom:_uid to:uid target:0 type:1 stamp:[[NSDate date] timeIntervalSince1970]*1000 duration: duration url: url];
     [[IMDAO shareInstance] saveSendMessage:message];
-    
-    path = [[IMFileHelper shareInstance] getPathWithName:path];    
-    [[NetWorkManager sharedInstance] uploadFile:path
-                                           type:2
-                                        success:^(NSDictionary *dict) {
-                                            message.url = [dict objectForKey:@"url"];
-                                            [message repack];
-                                            [_connection send:message];
-                                        } fail:^(NSError *error) {
-        
-                                        }];
+
+    [_connection send:message];
 }
 
--(void) sendPictureToUid:(int) uid path:(NSString *) path {
-    NSString *url = path;
-    // to do
-    PictureMessage *message = [[PictureMessage alloc] initWithFrom:_uid to:uid target:0 type:1 stamp:[[NSDate date] timeIntervalSince1970]*1000 url: url];
+-(void) sendPictureToUid:(NSInteger) uid url:(NSString *) url {
+    PictureMessage *message = [[PictureMessage alloc] initWithFrom:_uid
+                                                                to:uid
+                                                            target:0
+                                                              type:1
+                                                             stamp:[[NSDate date] timeIntervalSince1970]*1000
+                                                               url: url
+                                                             thumb:@""
+                               ];
     [[IMDAO shareInstance] saveSendMessage:message];
-    
-    path = [[IMFileHelper shareInstance] getPathWithName:path];
-    [[NetWorkManager sharedInstance] uploadFile:path
-                                           type:1
-                                        success:^(NSDictionary *dict) {
-                                            message.url = [dict objectForKey:@"url"];
-                                            [message repack];                                            
-                                            [_connection send:message];
-                                        } fail:^(NSError *error) {
-        
-                                        }];
+
+    [_connection send:message];
 }
 
 
--(void) sendMessageToGid:(int) gid content:(NSString *) content
+-(void) sendMessageToGid:(NSInteger) gid content:(NSString *) content
 {
     Message *message = [[Message alloc] initWithFrom:_uid to:gid target:0 type:2 stamp:[[NSDate date] timeIntervalSince1970]*1000 contentType:1 messageContent:content];
     [[IMDAO shareInstance] saveSendMessage:message];
     [_connection send:message];
 }
 
--(void) sendVoiceToGid:(int) gid path:(NSString *) path duration:(int) duration
+-(void) sendVoiceToGid:(NSInteger) uid url:(NSString *) path duration:(int) duration
 {
-    NSString *url = path;
-    // to do
-    VoiceMessage *message = [[VoiceMessage alloc] initWithFrom:_uid to:gid target:0 type:2 stamp:[[NSDate date] timeIntervalSince1970]*1000 duration: duration url: url];
-    [[IMDAO shareInstance] saveSendMessage:message];
     
-    path = [[IMFileHelper shareInstance] getPathWithName:path];
-    [[NetWorkManager sharedInstance] uploadFile:path
-                                           type:2
-                                        success:^(NSDictionary *dict) {
-                                            message.url = [dict objectForKey:@"url"];
-                                            [message repack];
-                                            [_connection send:message];
-                                        } fail:^(NSError *error) {
-                                            
-                                        }];
+}
+-(void) sendPictureToGid:(NSInteger) uid url:(NSString *) path
+{
+    
 }
 
--(void) sendPictureToGid:(int) gid path:(NSString *) path {
-    NSString *url = path;
-    // to do
-    PictureMessage *message = [[PictureMessage alloc] initWithFrom:_uid to:gid target:0 type:2 stamp:[[NSDate date] timeIntervalSince1970]*1000 url: url];
-    [[IMDAO shareInstance] saveSendMessage:message];
+
+-(void) sendPictureToUid:(NSInteger) uid
+                   image:(UIImage *) image
+                 success:(void (^)(NSString *url, NSString *thumb))success
+                    fail:(void (^)(NSError *))fail {
     
-    path = [[IMFileHelper shareInstance] getPathWithName:path];
-    [[NetWorkManager sharedInstance] uploadFile:path
-                                           type:1
-                                        success:^(NSDictionary *dict) {
-                                            message.url = [dict objectForKey:@"url"];
-                                            [message repack];
-                                            [_connection send:message];
-                                        } fail:^(NSError *error) {
-                                            
-                                        }];
+    void (^successBlock)(NSDictionary *) = ^(NSDictionary *responseObject) {
+        NSString *url = [responseObject objectForKey:@"url"];
+        NSString *thumbUrl = [responseObject objectForKey:@"thumb"];
+        
+        PictureMessage *message = [[PictureMessage alloc] initWithFrom:_uid
+                                                                    to:uid
+                                                                target:0
+                                                                  type:1
+                                                                 stamp:[[NSDate date] timeIntervalSince1970]*1000
+                                                                   url: url
+                                                                 thumb:thumbUrl];
+        [[IMDAO shareInstance] saveSendMessage:message];
+        [_connection send:message];
+        
+        success(url, thumbUrl);
+    };
+    
+    [[NetWorkManager sharedInstance] uploadWithImage:image
+                                                name:@"file"
+                                                type:1
+                                             success:successBlock
+                                                fail:^(NSError *error) {
+                                                    fail(error);
+                                                }];
+};
+
+-(void) sendVoiceToUid:(NSInteger) uid
+                  url:(NSString *) path
+              duration:(int) duration
+               success:(void (^)(NSString *url))success
+                  fail:(void (^)(NSError *error))fail {
+    void (^successBlock)(NSDictionary *) = ^(NSDictionary *responseObject) {
+        NSString *url = [responseObject objectForKey:@"url"];
+        
+        VoiceMessage *message = [[VoiceMessage alloc] initWithFrom:_uid
+                                                                to:uid
+                                                            target:0
+                                                              type:1
+                                                             stamp:[[NSDate date] timeIntervalSince1970]*1000
+                                                          duration: duration
+                                                               url: url];
+        [[IMDAO shareInstance] saveSendMessage:message];
+        [_connection send:message];
+        
+        success(url);
+    };
+    [[NetWorkManager sharedInstance] uploadWithPath:path
+                                               type:1
+                                            success:successBlock
+                                               fail:^(NSError *error) {
+                                                   fail(error);
+                                               }];
 }
 
 #pragma mark handle notice
@@ -173,9 +190,20 @@ static ConnectionConfig *config;
     
 }
 
--(void) receiveMessage:(NSNotification *)aNotifacation
+-(void) receiveStanza:(NSNotification *)aNotification
 {
-    Message *message = (Message *)[aNotifacation object];
+    Message *message = (Message *)[aNotification object];
+    if (message.messageType <= 2) {
+        [self receiveMessage:message];
+        [[NSNotificationCenter defaultCenter] postNotificationName:ReceiveMessageNotification object:message];
+    } else if (message.messageType == 3){
+        [self receiveNotice:message];
+        [[NSNotificationCenter defaultCenter] postNotificationName:ReceiveNoticeNotification object:message];
+    }
+}
+
+-(void) receiveMessage:(Message *)message
+{
     [message parseMessageBody];
     if (message.contentType == 2) {
         message = (VoiceMessage *) message;
@@ -192,9 +220,8 @@ static ConnectionConfig *config;
     }
 }
 
--(void) receiveNotice:(NSNotification *)aNotifacation
+-(void) receiveNotice:(Message *)msg
 {
-    Message *msg = (Message *)[aNotifacation object];
     IMNotification *notice = [IMNotification initWithMessage:msg];
     [notice parseMessageBody];
     

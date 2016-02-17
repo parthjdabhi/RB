@@ -8,15 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "DialogMemberCell.h"
-#import "User.h"
-#import "Group.h"
+#import "MUser.h"
+#import "MGroup.h"
 
 @interface UserInfoOperationController : UIViewController<DialogMemberCellDelegate>
 
-@property NSInteger uid;
-@property NSInteger gid;
-@property (nonatomic, strong) User *user;
-@property (nonatomic, strong) Group *group;
+@property NSInteger userId;
+@property NSInteger groupId;
+@property (nonatomic, strong) MUser *user;
+@property (nonatomic, strong) MGroup *group;
 @property NSMutableArray *tableCells;
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;

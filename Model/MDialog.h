@@ -10,8 +10,8 @@
 
 @interface MDialog : NSObject
 
-@property unsigned int uid;
-@property unsigned int type;
+@property NSInteger uid;
+@property NSInteger type;
 @property NSString *name;
 @property NSString *avatar;
 @property NSString *desc;

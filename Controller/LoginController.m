@@ -13,7 +13,7 @@
 #import "MeViewController.h"
 #import "NetWorkManager.h"
 #import "IMDAO.h"
-#import "User.h"
+#import "MUser.h"
 #import "UIView+Toast.h"
 
 @interface LoginController ()
@@ -44,23 +44,32 @@
                                              NSDictionary *userDict = [responseObject objectForKey:@"info"];
                                              NSString *sk = [responseObject objectForKey:@"sk"];
                                              
-                                             User *user = [[User alloc] init];
+                                             MUser *user = [[MUser alloc] init];
                                              user.uid = [[userDict objectForKey:@"uid"] integerValue];
                                              user.nickname = [userDict objectForKey:@"nickname"];
+                                             user.avatarUrl = [userDict objectForKey:@"avatar_url"];
+                                             user.avatarThumbUrl = [userDict objectForKey:@"avatar_thumb"];
                                              user.accessToken = sk;
+                                             
                                              [[IMDAO shareInstance] login:user];
                                              
-                                             [User setCurrentUser:user];
+
                                              
                                              FriendListController *flc = [[FriendListController alloc] init];
                                              MessageListController *mlc = [[MessageListController alloc] init];
                                              MeViewController *mvc = [[MeViewController alloc] init];
                                              
-                                             UITabBarController *tabBarController = [[UITabBarController alloc] init];
-                                             tabBarController.viewControllers = @[mlc, flc, mvc];
+                                             UINavigationController *n1 = [[UINavigationController alloc] initWithRootViewController:mlc];
+                                             UINavigationController *n2 = [[UINavigationController alloc] initWithRootViewController:flc];
+                                             UINavigationController *n3 = [[UINavigationController alloc] initWithRootViewController:mvc];
                                              
-                                             UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:tabBarController];
-                                             [self presentViewController:navController animated:YES completion:nil];
+                                             UITabBarController *tabBarController = [[UITabBarController alloc] init];
+                                             tabBarController.viewControllers = @[n1, n2, n3];
+                                             
+                                             [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
+                                             [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+                                             
+                                             [self presentViewController:tabBarController animated:YES completion:nil];
                                          } fail:^(NSError *error) {
                                              [self.view makeToast:[NSString stringWithFormat:@"error:%ld", (long)error.code]];
                                          }];

@@ -10,13 +10,16 @@
 #import "IMClient.h"
 #import "AppProfile.h"
 #import "ConnectionConfig.h"
-#import "User.h"
-#import "Dialog.h"
+#import "MUser.h"
+#import "MDialog.h"
+#import "MMessage.h"
 #import "IMDAO.h"
 #import "NoticeObserver.h"
 #import "DialogItemCell.h"
 #import "MessageDetailViewController.h"
 #import "DialogDetailController.h"
+
+#import <SDWebImage/UIImageView+WebCache.h>
 
 #if TARGET_OS_IPHONE
 
@@ -41,7 +44,7 @@
     self = [super init];
     if (self) {
         self.tabBarItem.title = @"消息";
-        UIImage *i = [UIImage imageNamed:@"iconfont-message.png"];
+        UIImage *i = [UIImage imageNamed:@"tabbarMessage"];
         self.tabBarItem.image = i;        
     }
     
@@ -62,6 +65,7 @@
     
     UINib *nib = [UINib nibWithNibName:@"DialogItemCell" bundle:nil];
     [self.tableView registerNib:nib forCellReuseIdentifier:@"DialogItemCell"];
+    [self.tableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
     
     _dialogs = [[IMDAO shareInstance] getDialogs];
     [self connectIM];
@@ -85,7 +89,7 @@
     ConnectionConfig *config = [[ConnectionConfig alloc] initWithIp:IM_SERVER_IP port:10101 appVersion:@"golo/5.0"];
     [IMClient setConfig:config];
     client = [IMClient shareInstance];
-    [client connectWithUid:[User currentUser].uid accessToken: [User currentUser].accessToken];
+    [client connectWithUid:[MUser currentUser].uid accessToken: [MUser currentUser].accessToken];
     [NoticeObserver shareInstance];
 }
 
@@ -100,14 +104,12 @@
 {
     DialogItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DialogItemCell" forIndexPath:indexPath];
     NSUInteger row = [indexPath row];
-    Dialog *dialog = (Dialog *)[_dialogs objectAtIndex:row];
+    MDialog *dialog = (MDialog *)[_dialogs objectAtIndex:row];
     cell.title.text = dialog.name;
-    //    avater.image = [UIImage imageNamed:dialog.avater];
     
-    cell.avater.image = [UIImage imageNamed:[NSString stringWithFormat:@"avater_%d.jpg", dialog.uid]];
-    if (!cell.avater.image) {
-        cell.avater.image = [UIImage imageNamed:@"photo.png"];
-    }
+    MUser *user = [[IMDAO shareInstance] getUserWithUid:dialog.uid];
+    NSURL *url = [NSURL URLWithString:user.avatarUrl];
+    [cell.avatar sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"avater_default.png"] completed:nil];
     cell.subTitle.text = dialog.desc;
     [cell setUnreadCount:dialog.unreadCount];
     
@@ -145,32 +147,22 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Dialog *dialog = (Dialog *)[_dialogs objectAtIndex:indexPath.row];
+    MDialog *dialog = (MDialog *)[_dialogs objectAtIndex:indexPath.row];
     [[IMDAO shareInstance] deleteDialogWithId: dialog.uid];
     _dialogs = [[IMDAO shareInstance] getDialogs];
     [tableView reloadData];
 }
 
-//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-//    if ([segue.identifier isEqualToString:@"showMessageController"]) {
-//        NSIndexPath *indexPath = [[self.view.subviews objectAtIndex:0] indexPathForCell:sender];
-//        Dialog *dialog = (Dialog *)[_dialogs objectAtIndex:indexPath.row];
-//        MessageDetailViewController *messageController = segue.destinationViewController;
-////        messageController.uid = dialog.uid;
-////        NSLog(@"push MessageController dialog with:%d", dialog.uid);
-//    }
-//}
-
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 //    MessageDetailViewController *mdvc = [[MessageDetailViewController alloc] init];
     DialogDetailController *mdvc = [[DialogDetailController alloc] init];
-    Dialog *dialog = (Dialog *)[_dialogs objectAtIndex:indexPath.row];
+    MDialog *dialog = (MDialog *)[_dialogs objectAtIndex:indexPath.row];
     
-    mdvc.sender = [User currentUser];
+    mdvc.sender = [MUser currentUser];
     if (dialog.type == 2) {
-        mdvc.gid = dialog.uid;
+        mdvc.groupId = dialog.uid;
     } else {
-        mdvc.uid = dialog.uid;
+        mdvc.userId = dialog.uid;
         mdvc.target = [[IMDAO shareInstance] getUserWithUid:dialog.uid];
     }
 
@@ -181,13 +173,25 @@
 #pragma mark notification
 
 -(void) onReceivedMsgNotification:(NSNotification *)aNotification {
-
-    [[AppProfile instance] incrMsgUnreadCount:1];
-    [self updateMsgCount];
+    Message *rawMessage = (Message *)[aNotification object];
     
+    MMessage *message = [[MMessage alloc] init];
+    message.senderId = rawMessage.from;
+    message.receiverId = rawMessage.to;
+    message.isOutput = FALSE;
+    message.type = rawMessage.messageType;
+    message.rawContent = rawMessage.messageBody;
+    message.stamp = rawMessage.stamp / 1000;
+    [[IMDAO shareInstance] saveMessage:message];
+    
+    [[AppProfile instance] incrMsgUnreadCount:1];
+
     if(self.isViewLoaded && self.view.window) {
-        _dialogs = [[IMDAO shareInstance] getDialogs];
-        [self.tableView reloadData];
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [self updateMsgCount];
+            _dialogs = [[IMDAO shareInstance] getDialogs];
+            [self.tableView reloadData];
+        });
     }
 
 }

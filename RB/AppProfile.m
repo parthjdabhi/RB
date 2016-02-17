@@ -13,7 +13,7 @@
 
 static AppProfile *sharedInstance;
 
-+(AppProfile *) shareInstace
++(AppProfile *) instance
 {
     static BOOL initialized = NO;
     if (!initialized)

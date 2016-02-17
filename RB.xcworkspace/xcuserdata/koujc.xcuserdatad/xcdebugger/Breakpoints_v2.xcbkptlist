@@ -2,4 +2,70 @@
 <Bucket
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Model/JSQVoiceMediaItem.m"
+            timestampString = "475570999.255393"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "102"
+            endingLineNumber = "102"
+            landmarkName = "-mediaView"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Pods/JSQMessagesViewController/JSQMessagesViewController/Factories/JSQMessagesBubbleImageFactory.m"
+            timestampString = "477057430.833385"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "96"
+            endingLineNumber = "96"
+            landmarkName = "-jsq_messagesBubbleImageWithColor:flippedForIncoming:"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[JSQMessagesBubbleImageFactory jsq_messagesBubbleImageWithColor:flippedForIncoming:]"
+                  moduleName = "JSQMessagesViewController"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/koujc/Documents/workspace/RB/Pods/JSQMessagesViewController/JSQMessagesViewController/Factories/JSQMessagesBubbleImageFactory.m"
+                  timestampString = "477057430.908096"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "97"
+                  endingLineNumber = "97"
+                  offsetFromSymbolStart = "64">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[JSQMessagesBubbleImageFactory jsq_messagesBubbleImageWithColor:flippedForIncoming:]"
+                  moduleName = "JSQMessagesViewController"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/koujc/Documents/workspace/RB/Pods/JSQMessagesViewController/JSQMessagesViewController/Factories/JSQMessagesBubbleImageFactory.m"
+                  timestampString = "477057430.908384"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "97"
+                  endingLineNumber = "97"
+                  offsetFromSymbolStart = "85">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

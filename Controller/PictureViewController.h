@@ -45,8 +45,8 @@
  
  */
 
-@property (nonatomic,assign) NSUInteger currentIndex;
+@property (nonatomic,assign) NSInteger currentIndex;
 
--(instancetype) initWithImages:(NSMutableArray*) images index:(NSUInteger) index;
+-(instancetype) initWithImages:(NSMutableArray*) images index:(NSInteger) index;
 
 @end

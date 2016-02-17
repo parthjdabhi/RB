@@ -9,7 +9,19 @@
 #import "NetWorkManager.h"
 #import "AFNetworking.h"
 #import "IMFileHelper.h"
-#import "User.h"
+#import "MUser.h"
+
+#if TARGET_OS_IPHONE
+
+#define IM_SERVER_HOST @"http://ec2-54-88-205-144.compute-1.amazonaws.com/im"
+#define FILE_SERVER_HOST @"http://ec2-54-88-205-144.compute-1.amazonaws.com/im"
+
+#else
+
+#define IM_SERVER_HOST @"http://192.168.0.121/im"
+#define FILE_SERVER_HOST @"http://192.168.0.121/im"
+
+#endif
 
 @implementation NetWorkManager
 
@@ -27,37 +39,79 @@ static NetWorkManager *sharedInstance;
     return sharedInstance;
 }
 
--(NSString *) uploadFile:(NSString *) path type:(int) type success:(void (^)(NSDictionary *responseObject))success fail:(void (^)(NSError *error))fail {
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL fileURLWithPath:path]];
-    NSString *contentType = [[IMFileHelper shareInstance] contentTypeForImageData:data];
-    NSString *filename = [[path componentsSeparatedByString:@"/"] lastObject];
-    [self uploadFileWithUrl:@"http://localhost/lk/?action=file_service.upload"
-                       data:data
-                   fileName:filename
-                contentType:contentType
-                       type:type
-                    success:^(id responseObject) {
-                        if ([[responseObject objectForKey:@"type"] intValue] == 0) {
-                            success([responseObject objectForKey:@"data"]);
-                        }
-
-                    }
-                    failure:^(NSError *error) {
+-(void) loginWithUn:(NSString *) un
+                pwd:(NSString *) pwd
+            success:(void (^)(NSDictionary *responseObject))success
+               fail:(void (^)(NSError *error))fail
+{
+    NSDictionary *data = @{@"un": un, @"pwd":pwd};
+    [self postJSONWithUrl:@"/?action=passport_service.login"
+              parameters:data
+                 success:^(id responseObject) {
+                     if ([[responseObject objectForKey:@"code"] intValue] == 0) {
+                         success([responseObject objectForKey:@"data"]);
+                     } else {
+                         fail([NSError errorWithDomain:@"response data error" code:[[responseObject objectForKey:@"code"] intValue] userInfo:responseObject]);
+                     }
+                 }
+                    fail:^(NSError *error) {
                         fail(error);
                     }];
-    return nil;
 }
 
--(void) getUserInfoWithId:(int) uid
+-(void) registerWithUn:(NSString *) un
+                   pwd:(NSString *) pwd
+              nickname:(NSString *) nickname
+               success:(void (^)(NSDictionary *responseObject))success
+                  fail:(void (^)(NSError *error))fail
+{
+    NSDictionary *data = @{@"un": un, @"pwd":pwd, @"nickname":nickname};
+    [self postJSONWithUrl:@"/?action=passport_service.register"
+               parameters:data
+                  success:^(id responseObject) {
+                      if ([[responseObject objectForKey:@"code"] intValue] == 0) {
+                          success([responseObject objectForKey:@"data"]);
+                      } else {
+                          fail([NSError errorWithDomain:@"response data error" code:500 userInfo:responseObject]);
+                      }
+                  }
+                     fail:^(NSError *error) {
+                         fail(error);
+                     }];
+    
+}
+
+-(void) checkUnWithUn:(NSString *) un
+              success:(void (^)(NSDictionary *responseObject))success
+                 fail:(void (^)(NSError *error))fail
+{
+    NSDictionary *data = @{@"un": un};
+    [self getJSONWithUrl:@"/?action=passport_service.before_register"
+               parameters:data
+                  success:^(id responseObject) {
+                      if ([[responseObject objectForKey:@"code"] intValue] == 0) {
+                          success([responseObject objectForKey:@"data"]);
+                      } else {
+                          fail([NSError errorWithDomain:@"response data error" code:500 userInfo:responseObject]);
+                      }
+                  }
+                     fail:^(NSError *error) {
+                         fail(error);
+                     }];
+    
+}
+
+
+-(void) getUserInfoWithId:(NSInteger) uid
                   success:(void (^)(NSDictionary *responseObject))success
                      fail:(void (^)(NSError *error))fail
 {
-    NSDictionary *data = @{@"uid": [NSNumber numberWithInt:uid]};
-    [self getJSONWithUrl:@"http://localhost/im/?action=user_info_service.get"
+    NSDictionary *data = @{@"uid": [NSNumber numberWithInteger:uid]};
+    [self getJSONWithUrl:@"/?action=user_info_service.get"
               parameters:data
                  success:^(id responseObject) {
 
-                     if ([[responseObject objectForKey:@"type"] intValue] == 0) {
+                     if ([[responseObject objectForKey:@"code"] intValue] == 0) {
                          success([responseObject objectForKey:@"data"]);
                      } else {
                          fail([NSError errorWithDomain:@"response data error" code:500 userInfo:responseObject]);
@@ -68,16 +122,16 @@ static NetWorkManager *sharedInstance;
                     }];
 }
 
--(void) getFriendListWithUid:(int) uid
+-(void) getFriendListWithUid:(NSInteger) uid
                      success:(void (^)(NSDictionary *responseObject))success
                         fail:(void (^)(NSError *error))fail;
 {
-    NSDictionary *data = @{@"uid": [NSNumber numberWithInt:uid]};
-    [self getJSONWithUrl:@"http://localhost/im/?action=friend_service.my_list"
+    NSDictionary *data = @{@"uid": [NSNumber numberWithInteger:uid]};
+    [self getJSONWithUrl:@"/?action=friend_service.my_list"
               parameters:data
                  success:^(id responseObject) {
                      
-                     if ([[responseObject objectForKey:@"type"] intValue] == 0) {
+                     if ([[responseObject objectForKey:@"code"] intValue] == 0) {
                          success([responseObject objectForKey:@"data"]);
                      } else {
                          fail([NSError errorWithDomain:@"response data error" code:500 userInfo:responseObject]);
@@ -88,17 +142,17 @@ static NetWorkManager *sharedInstance;
                     }];
 }
 
--(void) sayHelloToUid:(int) uid
+-(void) sayHelloToUid:(NSInteger) uid
               content:(NSString *) content
               success:(void (^)(NSDictionary *responseObject))success
                  fail:(void (^)(NSError *error))fail
 {
-    NSDictionary *data = @{@"uid": [NSNumber numberWithInt:[User currentUser].uid], @"target": [NSNumber numberWithInt:uid], @"conntent": content};
-    [self getJSONWithUrl:@"http://localhost/im/?action=friend_service.say_hello"
+    NSDictionary *data = @{@"uid": [NSNumber numberWithInteger:[MUser currentUser].uid], @"target": [NSNumber numberWithInteger:uid], @"conntent": content};
+    [self getJSONWithUrl:@"/?action=friend_service.say_hello"
               parameters:data
                  success:^(id responseObject) {
                      
-                     if ([[responseObject objectForKey:@"type"] intValue] == 0) {
+                     if ([[responseObject objectForKey:@"code"] intValue] == 0) {
                          success([responseObject objectForKey:@"data"]);
                      } else {
                          fail([NSError errorWithDomain:@"response data error" code:500 userInfo:responseObject]);
@@ -109,16 +163,16 @@ static NetWorkManager *sharedInstance;
                     }];
 }
 
--(void) passFriendVerifyToUid:(int) uid
+-(void) passFriendVerifyToUid:(NSInteger) uid
                       success:(void (^)(NSDictionary *responseObject))success
                          fail:(void (^)(NSError *error))fail
 {
-    NSDictionary *data = @{@"uid": [NSNumber numberWithInt:[User currentUser].uid], @"pass_uid": [NSNumber numberWithInt:uid]};
-    [self getJSONWithUrl:@"http://localhost/im/?action=friend_service.request_pass"
+    NSDictionary *data = @{@"uid": [NSNumber numberWithInteger:[MUser currentUser].uid], @"pass_uid": [NSNumber numberWithInteger:uid]};
+    [self getJSONWithUrl:@"/?action=friend_service.request_pass"
               parameters:data
                  success:^(id responseObject) {
                      
-                     if ([[responseObject objectForKey:@"type"] intValue] == 0) {
+                     if ([[responseObject objectForKey:@"code"] intValue] == 0) {
                          success([responseObject objectForKey:@"data"]);
                      } else {
                          fail([NSError errorWithDomain:@"response data error" code:500 userInfo:responseObject]);
@@ -129,16 +183,16 @@ static NetWorkManager *sharedInstance;
                     }];
 }
 
--(void) delFriendWithUid:(int) uid
+-(void) delFriendWithUid:(NSInteger) uid
                  success:(void (^)(NSDictionary *responseObject))success
                     fail:(void (^)(NSError *error))fail
 {
-    NSDictionary *data = @{@"uid": [NSNumber numberWithInt:[User currentUser].uid], @"del_uid": [NSNumber numberWithInt:uid]};
-    [self getJSONWithUrl:@"http://localhost/im/?action=friend_service.del"
+    NSDictionary *data = @{@"uid": [NSNumber numberWithInteger:[MUser currentUser].uid], @"del_uid": [NSNumber numberWithInteger:uid]};
+    [self getJSONWithUrl:@"/?action=friend_service.del"
               parameters:data
                  success:^(id responseObject) {
                      
-                     if ([[responseObject objectForKey:@"type"] intValue] == 0) {
+                     if ([[responseObject objectForKey:@"code"] intValue] == 0) {
                          success([responseObject objectForKey:@"data"]);
                      } else {
                          fail([NSError errorWithDomain:@"response data error" code:500 userInfo:responseObject]);
@@ -154,10 +208,10 @@ static NetWorkManager *sharedInstance;
                          fail:(void (^)(NSError *error))fail
 {
     NSDictionary *data = @{@"kw": keyword};
-    [self getJSONWithUrl:@"http://localhost/im/?action=user_info_service.search"
+    [self getJSONWithUrl:@"/?action=user_info_service.search"
               parameters:data
                  success:^(id responseObject) {
-                     if ([[responseObject objectForKey:@"type"] intValue] == 0) {
+                     if ([[responseObject objectForKey:@"code"] intValue] == 0) {
                          success([responseObject objectForKey:@"data"]);
                      } else {
                          fail([NSError errorWithDomain:@"response data error" code:500 userInfo:responseObject]);
@@ -171,11 +225,11 @@ static NetWorkManager *sharedInstance;
 -(void) getGroupListSuccess:(void (^)(NSArray *responseObject))success
                        fail:(void (^)(NSError *error))fail
 {
-    NSDictionary *data = @{@"uid":[NSNumber numberWithInt:[User currentUser].uid]};
-    [self getJSONWithUrl:@"http://localhost/im/?action=group_service.list"
+    NSDictionary *data = @{@"uid":[NSNumber numberWithInteger:[MUser currentUser].uid]};
+    [self getJSONWithUrl:@"/?action=group_service.list"
               parameters:data
                  success:^(id responseObject) {
-                     if ([[responseObject objectForKey:@"type"] intValue] == 0) {
+                     if ([[responseObject objectForKey:@"code"] intValue] == 0) {
                          success([responseObject objectForKey:@"data"]);
                      } else {
                          fail([NSError errorWithDomain:@"response data error" code:500 userInfo:responseObject]);
@@ -190,11 +244,11 @@ static NetWorkManager *sharedInstance;
                     success:(void (^)(NSDictionary *responseObject))success
                        fail:(void (^)(NSError *error))fail
 {
-    NSDictionary *data = @{@"ids":[uids componentsJoinedByString:@","], @"uid":[NSNumber numberWithInt:[User currentUser].uid]};
-    [self getJSONWithUrl:@"http://localhost/im/?action=group_service.add_member"
+    NSDictionary *data = @{@"ids":[uids componentsJoinedByString:@","], @"uid":[NSNumber numberWithInteger:[MUser currentUser].uid]};
+    [self getJSONWithUrl:@"/?action=group_service.add_member"
               parameters:data
                  success:^(id responseObject) {
-                     if ([[responseObject objectForKey:@"type"] intValue] == 0) {
+                     if ([[responseObject objectForKey:@"code"] intValue] == 0) {
                          success([responseObject objectForKey:@"data"]);
                      } else {
                          fail([NSError errorWithDomain:@"response data error" code:500 userInfo:responseObject]);
@@ -205,16 +259,16 @@ static NetWorkManager *sharedInstance;
                     }];
 }
 
--(void) addGroupMemberWithGid:(int) gid
+-(void) addGroupMemberWithGid:(NSInteger) gid
                          Uids:(NSArray *) uids
                       success:(void (^)(NSDictionary *responseObject))success
                          fail:(void (^)(NSError *error))fail
 {
-    NSDictionary *data = @{@"gid":[NSString stringWithFormat:@"%d", gid], @"ids": [uids componentsJoinedByString:@","], @"uid":[NSNumber numberWithInt:[User currentUser].uid]};
-    [self getJSONWithUrl:@"http://localhost/im/?action=group_service.add_member"
+    NSDictionary *data = @{@"gid":[NSString stringWithFormat:@"%ld", (long)gid], @"ids": [uids componentsJoinedByString:@","], @"uid":[NSNumber numberWithInteger:[MUser currentUser].uid]};
+    [self getJSONWithUrl:@"/?action=group_service.add_member"
               parameters:data
                  success:^(id responseObject) {
-                     if ([[responseObject objectForKey:@"type"] intValue] == 0) {
+                     if ([[responseObject objectForKey:@"code"] intValue] == 0) {
                          success([responseObject objectForKey:@"data"]);
                      } else {
                          fail([NSError errorWithDomain:@"response data error" code:500 userInfo:responseObject]);
@@ -224,16 +278,53 @@ static NetWorkManager *sharedInstance;
                         fail(error);
                     }];
 }
+
+-(void) quitGroupWithGid:(NSInteger) gid
+                 success:(void (^)(void))success
+                    fail:(void (^)(NSError *error))fail {
+    NSDictionary *data = @{@"uid":@([MUser currentUser].uid), @"gid":@(gid)};
+    [self getJSONWithUrl:@"/?action=group_service.quit"
+              parameters:data
+                 success:^(id responseObject) {
+                     if ([[responseObject objectForKey:@"code"] intValue] == 0) {
+                         success();
+                     } else {
+                         fail([NSError errorWithDomain:@"response data error" code:500 userInfo:responseObject]);
+                     }
+                 }
+                    fail:^(NSError *error) {
+                        fail(error);
+                    }];
+}
+
+-(void) delGroupWithGid:(NSInteger) gid
+                success:(void (^)(void))success
+                   fail:(void (^)(NSError *error))fail {
+    NSDictionary *data = @{@"uid":@([MUser currentUser].uid), @"gid":@(gid)};
+    [self getJSONWithUrl:@"/?action=group_service.delete"
+              parameters:data
+                 success:^(id responseObject) {
+                     if ([[responseObject objectForKey:@"code"] intValue] == 0) {
+                         success();
+                     } else {
+                         fail([NSError errorWithDomain:@"response data error" code:500 userInfo:responseObject]);
+                     }
+                 }
+                    fail:^(NSError *error) {
+                        fail(error);
+                    }];
+}
+
 
 #pragma mark - JSON方式post提交数据
 - (void) postJSONWithUrl:(NSString *)urlStr parameters:(id)parameters success:(void (^)(id responseObject))success fail:(void (^)())fail
 {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     // 设置请求格式
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+//    manager.requestSerializer = [AFJSONRequestSerializer serializer];
     // 设置返回格式
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    [manager POST:urlStr
+    [manager POST:[NSString stringWithFormat:@"%@%@", IM_SERVER_HOST, urlStr]
        parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
               //查看返回数据
@@ -250,14 +341,17 @@ static NetWorkManager *sharedInstance;
           }];
 }
 
-- (void) getJSONWithUrl:(NSString *)urlStr parameters:(id)parameters success:(void (^)(id responseObject))success fail:(void (^)())fail
+- (void) getJSONWithUrl:(NSString *)urlStr
+             parameters:(id)parameters
+                success:(void (^)(id responseObject))success
+                   fail:(void (^)())fail
 {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     // 设置请求格式
 //    manager.requestSerializer = [AFJSONRequestSerializer serializer];
     // 设置返回格式
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    [manager GET:urlStr parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager GET:[NSString stringWithFormat:@"%@%@", IM_SERVER_HOST, urlStr] parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         //查看返回数据
 //        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
 //        NSLog(@"%@", result);
@@ -272,22 +366,95 @@ static NetWorkManager *sharedInstance;
     }];
 }
 
+#pragma mark upload file
+-(void) uploadAvatarWithImage:(UIImage *) image
+                          uid:(NSInteger) uid
+                      success:(void (^)(NSDictionary *responseObject))success
+                         fail:(void (^)(NSError *error))fail {
+    NSData *data = UIImagePNGRepresentation(image);
+    if (data == nil) {
+        data = UIImageJPEGRepresentation(image, 1);
+    }
+    [self uploadFileWithUrl:[NSString stringWithFormat:@"/?action=me_service.upload_avatar&uid=%ld", (long)uid]
+                       data:data
+                    success:^(id responseObject) {
+                        if ([[responseObject objectForKey:@"code"] intValue] == 0) {
+                            success([responseObject objectForKey:@"data"]);
+                        }
+                        
+                    }
+                    failure:^(NSError *error) {
+                        fail(error);
+                    }];
+}
+
+
+-(void) uploadWithImage:(UIImage *) image
+                   name:(NSString *) filename
+                   type:(int) type
+                success:(void (^)(NSDictionary *responseObject))success
+                   fail:(void (^)(NSError *error))fail {
+    NSData *data = UIImagePNGRepresentation(image);
+    if (data == nil) {
+        data = UIImageJPEGRepresentation(image, 1);
+    }
+    [self uploadFileWithUrl:@"/?action=file_service.upload"
+                       data:data
+                   fileName:filename
+                       type:type
+                    success:^(id responseObject) {
+                        if ([[responseObject objectForKey:@"code"] intValue] == 0) {
+                            success([responseObject objectForKey:@"data"]);
+                        }
+                        
+                    }
+                    failure:^(NSError *error) {
+                        fail(error);
+                    }];
+}
+
+-(void) uploadWithPath:(NSString *) path
+                  type:(int) type
+               success:(void (^)(NSDictionary *responseObject))success
+                  fail:(void (^)(NSError *error))fail {
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL fileURLWithPath:path]];
+    NSString *filename = [[path componentsSeparatedByString:@"/"] lastObject];
+
+    [self uploadFileWithUrl:@"/?action=file_service.upload"
+                       data:data
+                   fileName:filename
+                       type:type
+                    success:^(id responseObject) {
+                        if ([[responseObject objectForKey:@"code"] intValue] == 0) {
+                            success([responseObject objectForKey:@"data"]);
+                        }
+                    }
+                    failure:^(NSError *error) {
+                        fail(error);
+                    }];
+}
+
 - (void) uploadFileWithUrl:(NSString *) urlStr
                       data:(NSData *) data
                   fileName:filename
-               contentType:(NSString *) contentType
                       type:(int) type
                    success:(void (^)(id responseObject))success
                    failure:(void (^)(NSError *error))failure {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
-    [manager POST:urlStr parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    filename = filename?:@"file";
+    NSString *contentType = [[IMFileHelper shareInstance] contentTypeForImageData:data];
+    
+    [manager POST:[NSString stringWithFormat:@"%@%@", FILE_SERVER_HOST, urlStr] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         [formData appendPartWithFileData:data
                                     name:@"file"
                                 fileName:filename
                                 mimeType:contentType];
-//        [formData appendPartWithFormData:data name:@"file"];
-        [formData appendPartWithFormData:[[NSString stringWithFormat:@"%d", type] dataUsingEncoding:NSUTF8StringEncoding] name:@"type"];
+        
+        if (type > 0) {
+            [formData appendPartWithFormData:[[NSString stringWithFormat:@"%d", type] dataUsingEncoding:NSUTF8StringEncoding] name:@"type"];
+        }
+
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"Response: %@", responseObject);
         success(responseObject);
@@ -295,6 +462,13 @@ static NetWorkManager *sharedInstance;
         NSLog(@"Error: %@", error);
         failure(error);
     }];
+}
+
+- (void) uploadFileWithUrl:(NSString *) urlStr
+                      data:(NSData *) data
+                   success:(void (^)(id responseObject))success
+                   failure:(void (^)(NSError *error))failure {
+    [self uploadFileWithUrl:urlStr data:data fileName:nil type:0 success:success failure:failure];
 }
 
 #pragma mark 判断网络状况
