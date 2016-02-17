@@ -6,8 +6,8 @@
 //  Copyright (c) 2014年 hjc. All rights reserved.
 //
 
-#import "Dialog.h"
+#import "MDialog.h"
 
-@implementation Dialog
+@implementation MDialog
 
 @end

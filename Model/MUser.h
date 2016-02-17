@@ -8,21 +8,25 @@
 
 #import <Foundation/Foundation.h>
 
-@interface User : NSObject
+@interface MUser : NSObject
 
-@property int uid;
+@property NSInteger uid;
 @property NSString *username;
 @property NSString *nickname;
-@property NSString *avaterUrl;
+@property NSString *avatarUrl;
+@property NSString *avatarThumbUrl;
 @property NSString *accessToken;
-@property int gender;
+@property NSInteger gender;
 @property NSString *signature;
 
 @property BOOL isFriend;
 @property NSString *comment;
 @property int source;
 
-+(User *) currentUser;
--(instancetype) initWithId:(int) uid;
++(MUser *) currentUser;
++(void) setCurrentUser:(MUser *) user;
+
+-(instancetype) initWithId:(NSInteger) uid;
+
 
 @end

@@ -6,8 +6,8 @@
 //  Copyright © 2015年 hjc. All rights reserved.
 //
 
-#import "Friend.h"
+#import "MFriend.h"
 
-@implementation Friend
+@implementation MFriend
 
 @end

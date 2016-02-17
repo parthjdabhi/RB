@@ -8,12 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Dialog : NSObject
+@interface MDialog : NSObject
 
 @property unsigned int uid;
 @property unsigned int type;
 @property NSString *name;
-@property NSString *avater;
+@property NSString *avatar;
 @property NSString *desc;
 @property unsigned long long stamp;
 @property unsigned int unreadCount;
