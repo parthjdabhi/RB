@@ -314,7 +314,7 @@ static NSMutableSet *jsqMessagesCollectionViewCellActions = nil;
 
     [mediaView setTranslatesAutoresizingMaskIntoConstraints:NO];
     mediaView.frame = self.messageBubbleContainerView.bounds;
-    self.messageBubbleContainerView.backgroundColor = [UIColor blackColor];
+//    self.messageBubbleContainerView.backgroundColor = [UIColor blackColor];
 
     [self.messageBubbleContainerView addSubview:mediaView];
     [self.messageBubbleContainerView jsq_pinAllEdgesOfSubview:mediaView];

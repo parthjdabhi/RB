@@ -17,17 +17,17 @@
 -(ByteBuffer *) byte:(Byte) val;
 
 
--(ByteBuffer *) short:(short) val;
+-(ByteBuffer *) short:(int16_t) val;
 
--(ByteBuffer *) ushort:(short) val;
+-(ByteBuffer *) ushort:(int16_t) val;
 
--(ByteBuffer *) int32:(int) val;
+-(ByteBuffer *) int32:(int32_t) val;
 
--(ByteBuffer *) uint32:(int) val;
+-(ByteBuffer *) uint32:(int32_t) val;
 
 -(ByteBuffer *) string:(NSString *) val;
 
--(ByteBuffer *) int64:(long long) val;
+-(ByteBuffer *) int64:(int64_t) val;
 
 -(ByteBuffer *) float:(float) val;
 

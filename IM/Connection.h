@@ -6,12 +6,6 @@
 //  Copyright (c) 2014年 hjc. All rights reserved.
 //
 
-#define ReceiveStanzaNotification @"ReceiveStanzaNotification"
-#define ReceiveMessageNotification  @"ReceiveMessageNotification"
-#define ReceiveNoticeNotification  @"ReceiveNoticeNotification"
-#define ReceiveConflictNotification  @"ReceiveConflictNotification"
-#define UpdateConnectionStatusNotification  @"UpdateConnectionStatusNotification"
-
 //#define Connecting 1
 //#define Binding 2
 //#define Connected 3
@@ -25,10 +19,14 @@ enum ConnectStatus{
 };
 
 #import <Foundation/Foundation.h>
-#import "GCDAsyncSocket.h"
+
+#import "IMNotificationConstants.h"
 #import "ConnectionConfig.h"
 #import "Stanza.h"
+
+#import "GCDAsyncSocket.h"
 #import <CocoaLumberjack/CocoaLumberjack.h>
+
 #ifdef DEBUG
 static const int ddLogLevel = DDLogLevelVerbose;
 #else

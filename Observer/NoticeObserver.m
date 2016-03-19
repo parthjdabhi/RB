@@ -7,7 +7,8 @@
 //
 
 #import "NoticeObserver.h"
-#import "Connection.h"
+
+#import "IMNotificationConstants.h"
 #import "IMDAO.h"
 #import "NetWorkManager.h"
 #import "AppProfile.h"
@@ -16,7 +17,7 @@
 
 static NoticeObserver *sharedInstance;
 
-+(NoticeObserver *) shareInstance
++(NoticeObserver *) instance
 {
     static BOOL initialized = NO;
     if (!initialized)
@@ -96,7 +97,7 @@ static NoticeObserver *sharedInstance;
 // 同意加好友
 // 好友表增加记录，生成会话
 -(void)becomeFriend:(IMNotification *) notice {
-    int uid = notice.uid;
+    int32_t uid = notice.uid;
     
     MUser *u = [[IMDAO shareInstance] getUserWithUid:uid];
     MFriend *f = [[MFriend alloc] init];
@@ -105,7 +106,7 @@ static NoticeObserver *sharedInstance;
     [[IMDAO shareInstance] saveFriend:f];
     
     NSString *text = [NSString stringWithFormat:@"%@ 通过了你的好友请求，你们可以聊天了", u.nickname];
-    IMNotification *n = [[IMNotification alloc] initWithFrom:uid to:[MUser currentUser].uid target:0 type:3 stamp:[[NSDate date] timeIntervalSince1970] * 1000 contentType:2 messageContent:text uid:uid];
+    IMNotification *n = [[IMNotification alloc] initWithFrom:uid to:@([MUser currentUser].uid).intValue target:0 type:3 stamp:[[NSDate date] timeIntervalSince1970] * 1000 contentType:2 messageContent:text uid:uid];
     [[IMDAO shareInstance] saveRecvNotification:n];
     [[AppProfile instance] incrMsgUnreadCount:1];
 }

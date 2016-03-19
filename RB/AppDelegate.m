@@ -7,13 +7,13 @@
 //
 
 #import "AppDelegate.h"
-#import "FriendListController.h"
-#import "MessageListController.h"
-#import "MeViewController.h"
+
+#import "MPMainTabBarController.h"
 #import "LoginController.h"
 #import "NetWorkManager.h"
 #import "IMDAO.h"
 #import "MUser.h"
+#import "RBIMClient.h"
 
 @interface AppDelegate ()
 
@@ -22,7 +22,6 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
 //    if (![User currentUser].uid) {
 //        [User currentUser].uid = 104;
@@ -38,30 +37,31 @@
 //                                                   }];
 //    }
     
+    //        [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
+    //        [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:62.0/255 green:68.0/255 blue:79.0/255 alpha:1]];
+//    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:125.0/255 green:194.0/255 blue:52.0/255 alpha:1]];
+    [[UINavigationBar appearance] setTranslucent:NO];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{UITextAttributeTextColor : [UIColor whiteColor]}];
+    
+    MUser *demoUser = [[IMDAO shareInstance] getDemoUser];
+    [[RBIMClient instance] connectIM];
+    return true;
+    
     MUser *user = [[IMDAO shareInstance] getLoginUser];
     
     if (user) {        
-        FriendListController *flc = [[FriendListController alloc] init];
-        MessageListController *mlc = [[MessageListController alloc] init];
-        MeViewController *mvc = [[MeViewController alloc] init];
-
-        UINavigationController *n1 = [[UINavigationController alloc] initWithRootViewController:mlc];
-        UINavigationController *n2 = [[UINavigationController alloc] initWithRootViewController:flc];
-        UINavigationController *n3 = [[UINavigationController alloc] initWithRootViewController:mvc];
-
-        UITabBarController *tabBarController = [[UITabBarController alloc] init];
-        tabBarController.viewControllers = @[n1, n2, n3];
+        MPMainTabBarController *tabBarController = [[MPMainTabBarController alloc] init];
         
-//        [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
-//        [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];        
-        [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:125.0/255 green:194.0/255 blue:52.0/255 alpha:1]];
-        [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-        [[UINavigationBar appearance] setTitleTextAttributes:@{UITextAttributeTextColor : [UIColor whiteColor]}];
-        
+        self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
         self.window.rootViewController = tabBarController;
+        
+        [[RBIMClient instance] connectIM];
     } else {
         
         LoginController *loginController = [[LoginController alloc] init];
+        self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
         self.window.rootViewController = loginController;
     }
     

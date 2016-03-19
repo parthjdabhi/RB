@@ -11,7 +11,7 @@
 @interface FriendSelectController : UIViewController
 
 @property NSInteger groupId;
-@property (nonatomic, retain) NSArray *friends;
+//@property (nonatomic, retain) NSArray *friends;
 @property (strong, nonatomic) IBOutlet UIView *selectedUsersView;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 

@@ -165,9 +165,9 @@
         return cell;
     } else {
         FriendItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FriendItemCell" forIndexPath:indexPath];
-        NSString *key = _friendNameKeys[indexPath.section-1];
-        MFriend *f = (MFriend *)[_friendDict[key] objectAtIndex:[indexPath row]];
-        cell.title.text = f.nickname;
+        NSString *friendNameKey = _friendNameKeys[indexPath.section-1];
+        MFriend *f = (MFriend *)[_friendDict[friendNameKey] objectAtIndex:[indexPath row]];
+        cell.title.text = f.displayName;
         
         //        cell.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"avater_%d.jpg", f.uid]];
         NSURL *url = [NSURL URLWithString:f.avatarUrl];
@@ -207,7 +207,6 @@
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UITableViewHeaderFooterView *headerView = [[UITableViewHeaderFooterView alloc] init];
     UILabel *label = [[UILabel alloc] init];
     [label setFrame:CGRectMake(12, 0, 100, [self tableView:self.friendTableView heightForHeaderInSection:section])];
     [label setBackgroundColor:[UIColor clearColor]];
@@ -217,7 +216,9 @@
         [label setTextColor:[UIColor grayColor]];
     }
     
+    UITableViewHeaderFooterView *headerView = [[UITableViewHeaderFooterView alloc] init];
     [headerView addSubview:label];
+    
     return headerView;
 }
 
@@ -289,10 +290,10 @@
 #pragma mark notification
 
 -(void) updateNoticeCount:(NSNotification *)aNotification {
-    int badgeValue = [[AppProfile instance] getNoticeUnreadCount];
+    NSInteger badgeValue = [[AppProfile instance] getNoticeUnreadCount];
     UITabBarItem *tabBarItem = [self.tabBarController.tabBar.items objectAtIndex:1];
     if (badgeValue > 0) {
-        tabBarItem.badgeValue = [NSString stringWithFormat:@"%d", badgeValue];
+        tabBarItem.badgeValue = [NSString stringWithFormat:@"%ld", (long)badgeValue];
     } else {
         tabBarItem.badgeValue = nil;
     }    

@@ -3,6 +3,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UserInfoController">
@@ -18,26 +20,20 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" scrollEnabled="NO" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="QIg-2X-pRP">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="342"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                    <connections>
-                        <outlet property="dataSource" destination="-1" id="2np-7w-OoQ"/>
-                        <outlet property="delegate" destination="-1" id="azT-Xz-zhs"/>
-                    </connections>
-                </tableView>
-                <button contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xOs-P5-Yok">
-                    <rect key="frame" x="13" y="366" width="348" height="42"/>
+                <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xOs-P5-Yok">
+                    <rect key="frame" x="13" y="340" width="348" height="42"/>
                     <color key="backgroundColor" red="0.1845789146" green="0.76862745099999996" blue="0.1273067715" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="42" id="hS6-Hj-ClT"/>
+                    </constraints>
                     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <state key="normal" title="发消息"/>
                     <connections>
                         <action selector="sendMsgBtnOnClick:" destination="-1" eventType="touchUpInside" id="nap-yX-SMi"/>
                     </connections>
                 </button>
-                <button contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YUN-xe-7Nd">
-                    <rect key="frame" x="13" y="366" width="348" height="42"/>
+                <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YUN-xe-7Nd">
+                    <rect key="frame" x="13" y="340" width="348" height="42"/>
                     <color key="backgroundColor" red="0.18457891459536119" green="0.7686274509803922" blue="0.12730677152595984" alpha="1" colorSpace="calibratedRGB"/>
                     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <state key="normal" title="加好友"/>
@@ -45,8 +41,33 @@
                         <action selector="friendBtnOnClick:" destination="-1" eventType="touchUpInside" id="Gfg-mh-5Bh"/>
                     </connections>
                 </button>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="QIg-2X-pRP">
+                    <rect key="frame" x="0.0" y="55" width="375" height="264"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="264" id="Orc-qw-azl"/>
+                    </constraints>
+                    <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="2np-7w-OoQ"/>
+                        <outlet property="delegate" destination="-1" id="azT-Xz-zhs"/>
+                    </connections>
+                </tableView>
             </subviews>
             <color key="backgroundColor" red="0.95686274509803926" green="0.95686274509803926" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="xOs-P5-Yok" firstAttribute="baseline" secondItem="YUN-xe-7Nd" secondAttribute="firstBaseline" id="338-xq-HVn"/>
+                <constraint firstItem="QIg-2X-pRP" firstAttribute="centerX" secondItem="YUN-xe-7Nd" secondAttribute="centerX" id="4AP-oY-pwX"/>
+                <constraint firstAttribute="trailing" secondItem="QIg-2X-pRP" secondAttribute="trailing" id="4Sc-td-q59"/>
+                <constraint firstItem="QIg-2X-pRP" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="79L-nm-dOy"/>
+                <constraint firstItem="QIg-2X-pRP" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="55" id="HVU-nE-nMS"/>
+                <constraint firstItem="xOs-P5-Yok" firstAttribute="firstBaseline" secondItem="YUN-xe-7Nd" secondAttribute="baseline" id="Rfj-Oy-OZ0"/>
+                <constraint firstItem="xOs-P5-Yok" firstAttribute="top" secondItem="YUN-xe-7Nd" secondAttribute="top" id="XLM-L5-3no"/>
+                <constraint firstItem="xOs-P5-Yok" firstAttribute="leading" secondItem="YUN-xe-7Nd" secondAttribute="leading" id="YKI-Yl-WOj"/>
+                <constraint firstAttribute="bottom" secondItem="xOs-P5-Yok" secondAttribute="bottom" constant="285" id="qIa-0F-kel"/>
+                <constraint firstItem="QIg-2X-pRP" firstAttribute="centerX" secondItem="xOs-P5-Yok" secondAttribute="centerX" id="txV-Pq-f7e"/>
+                <constraint firstItem="xOs-P5-Yok" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="13" id="wv7-RS-iOA"/>
+            </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
             <point key="canvasLocation" x="115.5" y="188.5"/>
         </view>

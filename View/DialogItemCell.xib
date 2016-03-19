@@ -82,7 +82,7 @@
                 <outlet property="title" destination="eHS-fG-j67" id="4j0-mr-VaK"/>
                 <outlet property="unreadLabel" destination="gxv-Jx-D9A" id="xeu-Sq-x8y"/>
             </connections>
-            <point key="canvasLocation" x="421.5" y="470.5"/>
+            <point key="canvasLocation" x="538.5" y="440.5"/>
         </tableViewCell>
     </objects>
 </document>

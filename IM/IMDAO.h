@@ -64,6 +64,7 @@
 -(void) saveFriends:(NSArray<MUser *> *) arr;
 -(NSArray *) getFriendsWithUid:(NSInteger) uid;
 -(MFriend *) getFriendWithId:(NSInteger) uid;
+-(void) updateFriend:(MFriend *) f;
 -(void) delFriendWithId:(NSInteger) uid;
 
 #pragma mark group
@@ -87,5 +88,7 @@
 -(void) logout;
 
 -(void) updateUser:(MUser *) user;
+
+-(MUser *) getDemoUser;
 
 @end

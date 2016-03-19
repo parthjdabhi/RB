@@ -20,14 +20,8 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-//    UINavigationItem *navigationItem = [[self.navigationController.viewControllers firstObject] navigationItem];
-    UINavigationItem *navigationItem = self.navigationItem;
-//    UIBarButtonItem *back = [[UIBarButtonItem alloc] initWithTitle:@"取消"
-//                                                             style:UIBarButtonItemStylePlain
-//                                                            target:self
-//                                                            action:nil];
-//    navigationItem.leftBarButtonItem = back;
 
+    UINavigationItem *navigationItem = self.navigationItem;
     UIBarButtonItem *submit = [[UIBarButtonItem alloc] initWithTitle:@"发送"
                                                              style:UIBarButtonItemStylePlain
                                                             target:self
@@ -36,9 +30,6 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    UINavigationItem *navigationItem = [[self.navigationController.viewControllers firstObject] navigationItem];
-//    navigationItem.leftBarButtonItem = nil;
-    navigationItem.rightBarButtonItem = nil;
 }
 
 - (void)didReceiveMemoryWarning {

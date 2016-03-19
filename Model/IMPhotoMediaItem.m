@@ -72,8 +72,7 @@
     }
     
     if (self.image != nil) {
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:self.image];
-        
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 210, 150)];        
         imageView.contentMode = UIViewContentModeScaleAspectFill;
         imageView.image = [self.image resizedImageWithMaximumSize:CGSizeMake(210.0f, 150.0f)];
 //        [imageView setBackgroundColor:[UIColor blackColor]];
@@ -90,11 +89,31 @@
         self.cachedImageView = imageView;
         
     } else if (self.thumbURL) {
-        UIImageView *imageView = [[UIImageView alloc] init];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 210, 150)];
         imageView.contentMode = UIViewContentModeScaleAspectFill;
         [imageView sd_setImageWithURL:[NSURL URLWithString:self.thumbURL.absoluteString]
                             completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {                    
                                 self.image = [image resizedImageWithMaximumSize:CGSizeMake(210.0f, 150.0f)];
+                                
+//                                CGSize size = CGSizeMake(210.0f, 150.0f);
+//                                int width = self.image.size.width;
+//                                int height = self.image.size.height;
+//                                
+//                                if (height > size.height) {
+//                                    width = size.height / self.image.size.height * self.image.size.width;
+//                                    height = size.height;
+//                                }
+//                                
+//                                if (width > size.width) {
+//                                    height = size.width / self.image.size.width * self.image.size.height;
+//                                    width = size.width;
+//                                }
+//                                
+//                                int x = self.appliesMediaViewMaskAsOutgoing?size.width-width:0;
+//                                imageView.frame = CGRectMake(x, 0, width, height);
+//                                imageView.bounds = CGRectMake(x, 0, width, height);
+//                                imageView.contentMode = UIViewContentModeScaleAspectFit;
+                                
                                 [JSQMessagesMediaViewBubbleImageMasker applyBubbleImageMaskToMediaView:imageView isOutgoing:self.appliesMediaViewMaskAsOutgoing];
                             }];
         

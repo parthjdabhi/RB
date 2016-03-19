@@ -11,7 +11,7 @@
 
 @interface MFriend : MUser
 
-@property NSString* commentName;
+@property(nonatomic) NSString* commentName;
 @property unsigned long long stamp;
 
 @end

@@ -10,7 +10,7 @@
 #import "MUser.h"
 #import "MFriend.h"
 
-@interface UserInfoController : UIViewController
+@interface UserInfoController : UIViewController<UIAlertViewDelegate>
 
 @property NSInteger uid;
 @property (nonatomic, strong) MUser *target;

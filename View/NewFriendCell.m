@@ -20,7 +20,7 @@
     // Configure the view for the selected state
 }
 - (IBAction)handleBtnOnClick:(id)sender {
-    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d", _uid], @"uid", nil];
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%ld", (long)_uid], @"uid", nil];
     [self.delegate btnOnClick:dict];
 }
 

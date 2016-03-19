@@ -294,7 +294,6 @@ static IMDAO *sharedInstance;
 
 -(void) saveRecvMessages:(NSArray *) messages
 {
-    
 }
 
 -(void) saveSendMessage:(Message *) message
@@ -720,8 +719,12 @@ static IMDAO *sharedInstance;
     return nil;
 }
 
+-(void) updateFriend:(MFriend *) f {
+    [userDB executeUpdate:@"UPDATE friend set comment_name=? WHERE uid=?", f.commentName, @(f.uid)];
+}
+
 -(void) delFriendWithId:(NSInteger) uid {
-    [userDB executeUpdate:@"DELETE FROM friend WHERE uid=?", [NSNumber numberWithInteger:uid]];
+    [userDB executeUpdate:@"DELETE FROM friend WHERE uid=?", @(uid)];
 }
 
 #pragma mark group
@@ -865,7 +868,8 @@ static IMDAO *sharedInstance;
     }
     
     sql = @"INSERT INTO newfriend (uid, nickname, comment, source, is_friend, stamp) VALUES (?,?,?,?,?,?)";
-    [userDB executeUpdate:sql, [NSNumber numberWithInteger:u.uid], u.nickname, u.comment, [NSNumber numberWithUnsignedInt:u.source], [NSNumber numberWithUnsignedInt:u.isFriend], [NSNumber numberWithUnsignedLongLong:[[NSDate date] timeIntervalSince1970]]];
+    [userDB executeUpdate:sql, @(u.uid), u.nickname, u.comment
+     , [NSNumber numberWithUnsignedInt:u.source], [NSNumber numberWithUnsignedInt:u.isFriend], [NSNumber numberWithUnsignedLongLong:[[NSDate date] timeIntervalSince1970]]];
 }
 
 -(void) updateMakeFriendRecord:(MUser *) u {
@@ -965,4 +969,29 @@ static IMDAO *sharedInstance;
         [commonDB executeUpdate:sql, jsonStr];
     }
 }
+
+-(MUser *) getDemoUser {
+    MUser *u = [self getInitDemoUserData];
+    
+    if (u == nil) {
+        u = [self getInitDemoUserData];
+    }
+    
+    [MUser setCurrentUser:u];
+    [self initUserDB];
+    return u;
+}
+
+-(MUser *) getInitDemoUserData {
+    MUser *user = [[MUser alloc] init];
+    user.uid = 101;
+    user.nickname = @"test";
+    user.avatarUrl = @"http://ec2-54-88-205-144.compute-1.amazonaws.com/res/face/10/101.jpg";
+    user.avatarThumbUrl = @"http://ec2-54-88-205-144.compute-1.amazonaws.com/res/face/10/101.jpg";
+    user.accessToken = @"101_64744254081454207531_0672fd1141";
+    [self saveUser:user];
+    
+    return user;
+}
+
 @end

@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #define UpdateNoticeCountNotification  @"UpdateNoticeCountNotification"
-#define UpdateMsgCountNotification  @"UpdateMsgCountNotification"
+//#define UpdateMsgCountNotification  @"UpdateMsgCountNotification"
 
 @interface AppProfile : NSObject
 
@@ -18,10 +18,10 @@
 
 +(AppProfile *) instance;
 
--(int) getMsgUnreadCount;
--(void) incrMsgUnreadCount:(int) val;
+-(NSInteger) getMsgUnreadCount;
+-(void) incrMsgUnreadCount:(NSInteger) val;
 
--(int) getNoticeUnreadCount;
--(void) incrNoticeUnreadCount:(int) val;
+-(NSInteger) getNoticeUnreadCount;
+-(void) incrNoticeUnreadCount:(NSInteger) val;
 
 @end

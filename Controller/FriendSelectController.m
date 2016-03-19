@@ -17,6 +17,10 @@
 {
     NSMutableDictionary *selectedDict;
     NSMutableDictionary *selectedUids;
+    
+    NSArray *_friends;
+    NSArray *_friendNameKeys;
+    NSDictionary *_friendDict;
 }
 @end
 
@@ -29,6 +33,7 @@
     
     selectedUids = [[NSMutableDictionary alloc] init];
     selectedDict = [[NSMutableDictionary alloc] init];
+    
     for (MUser *u in users) {
         NSString *key = [NSString stringWithFormat:@"%ld", (long)u.uid];
         [selectedUids setObject:key forKey:key];
@@ -67,12 +72,33 @@
     self.title = @"选择联系人";
     
     _friends = [[IMDAO shareInstance] getFriendsWithUid: [MUser currentUser].uid];
+    
+    NSMutableSet *keys = [[NSMutableSet alloc] init];
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+    
+    for (MFriend *f in _friends) {
+        
+        if (f.nickname) {
+            NSString *key = [self firstCharactor:f.nickname];
+            [keys addObject:key];
+            
+            if (!dict[key]) {
+                dict[key] = [[NSMutableArray alloc] init];
+            }
+            [dict[key] addObject:f];
+        }
+    }
+    
+    _friendNameKeys = [[keys allObjects] sortedArrayUsingSelector:@selector(compare:)];
+    _friendDict = dict;
+    
     [_tableView reloadData];
-    [self displayMembers];
+    [self displaySelectedPanel];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     int index = 0;
+    
     for (MUser *u in _friends) {
         if ([selectedUids objectForKey:[NSString stringWithFormat:@"%ld", (long)u.uid]]) {
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
@@ -94,28 +120,34 @@
 
 #pragma mark - Table view data source
 
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 22;
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return _friendNameKeys.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _friends.count;
+    NSString *key = _friendNameKeys[section];
+    NSArray *friends = _friendDict[key];
+    return friends.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     FriendItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FriendItemCell"];
-    NSUInteger row = [indexPath row];
-    MFriend *f = (MFriend *)[_friends objectAtIndex:row];
-    cell.title.text = f.nickname;
-    //    NSLog(@"avater_%d.jpg", f.uid);
-    
-    //        cell.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"avater_%d.jpg", f.uid]];
+
+    NSString *friendNameKey = _friendNameKeys[indexPath.section];
+    MFriend *f = (MFriend *)[_friendDict[friendNameKey] objectAtIndex:[indexPath row]];
+    cell.title.text = f.displayName;
+
     NSURL *url = [NSURL URLWithString:f.avatarUrl];
     [cell.avatar sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"avater_default.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
     }];
     
     if ([selectedUids objectForKey:[NSString stringWithFormat:@"%ld", (long)f.uid]]) {
         [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+        
     } else {
         [tableView deselectRowAtIndexPath:indexPath animated:NO];
     }
@@ -123,17 +155,34 @@
     return cell;
 }
 
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UILabel *label = [[UILabel alloc] init];
+    [label setFrame:CGRectMake(12, 0, 100, [self tableView:self.tableView heightForHeaderInSection:section])];
+    [label setBackgroundColor:[UIColor clearColor]];
+    [label setText:_friendNameKeys[section]];
+    [label setTextColor:[UIColor grayColor]];
+
+    UITableViewHeaderFooterView *headerView = [[UITableViewHeaderFooterView alloc] init];
+    [headerView addSubview:label];
+    
+    return headerView;
+}
+
 //添加一项
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    MFriend *f = (MFriend *)[_friends objectAtIndex:indexPath.row];
+    NSString *friendNameKey = _friendNameKeys[indexPath.section];
+    MFriend *f = (MFriend *)[_friendDict[friendNameKey] objectAtIndex:[indexPath row]];
+    
     NSString *key = [NSString stringWithFormat:@"%ld", (long)f.uid];
     [selectedDict setObject:key forKey:key];
-    [self displayMembers];
+    [self displaySelectedPanel];
 }
 
 //取消一项
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
-    MFriend *f = (MFriend *)[_friends objectAtIndex:indexPath.row];
+    NSString *friendNameKey = _friendNameKeys[indexPath.section];
+    MFriend *f = (MFriend *)[_friendDict[friendNameKey] objectAtIndex:[indexPath row]];
+    
     NSString *key = [NSString stringWithFormat:@"%ld", (long)f.uid];
     
     if ([selectedUids objectForKey:key]) {
@@ -142,11 +191,11 @@
     }
     
     [selectedDict removeObjectForKey:key];
-    [self displayMembers];
+    [self displaySelectedPanel];
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 10;
+-(NSArray *)sectionIndexTitlesForTableView:(UITableView *) tableView {
+    return _friendNameKeys;
 }
 
 #pragma mark navigatorItem handle
@@ -169,12 +218,14 @@
         
         NSMutableArray *members = [[NSMutableArray alloc] init];
         [group.members addObject:[MUser currentUser]];
+        
         for (NSString *memberUid in selectedDict.allKeys) {
             [members addObject:[[MUser alloc] initWithId:[memberUid intValue]]];
         }
         
         if (_groupId > 0) {
             [[IMDAO shareInstance] addMembers:members ToGid:group._id];
+            
         } else {
             group.members = [[NSMutableArray alloc] init];
             [group.members addObjectsFromArray:members];
@@ -186,6 +237,7 @@
         mdvc.title = group.name;
         mdvc.groupId = group._id;
         mdvc.sender = [MUser currentUser];
+        
         [self.navigationController pushViewController:mdvc animated:YES];
     };
     
@@ -222,7 +274,7 @@
     return false;
 }
 
-- (void)displayMembers {
+- (void)displaySelectedPanel {
     for (UIView *view in _selectedUsersView.subviews) {
         [view removeFromSuperview];
     }
@@ -243,16 +295,37 @@
         
         int uid = [[uids objectAtIndex:(i-1)] intValue];
         MUser *user = [[IMDAO shareInstance] getUserWithUid:uid];
+        
         UIImageView *photo = [[UIImageView alloc]initWithFrame:CGRectMake(10 + 60 * index, 5, 50, 50)];
         NSURL *url = [NSURL URLWithString:user.avatarUrl];
+        
         [photo sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"avater_default.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             
         }];
-        //        photo.image = [UIImage imageNamed:[NSString stringWithFormat:@"avater_%d.jpg", user.uid]];
+        
         [_selectedUsersView addSubview:photo];
         
         index++;
     }
+}
+
+//获取拼音首字母(传入汉字字符串, 返回大写拼音首字母)
+- (NSString *)firstCharactor:(NSString *)aString
+{
+    if (!aString || [aString isEqualToString:@""]) {
+        return @"";
+    }
+    
+    //转成了可变字符串
+    NSMutableString *str = [NSMutableString stringWithString:aString];
+    //先转换为带声调的拼音
+    CFStringTransform((CFMutableStringRef)str,NULL, kCFStringTransformMandarinLatin,NO);
+    //再转换为不带声调的拼音
+    CFStringTransform((CFMutableStringRef)str,NULL, kCFStringTransformStripDiacritics,NO);
+    //转化为大写拼音
+    NSString *pinYin = [str capitalizedString];
+    //获取并返回首字母
+    return [pinYin substringToIndex:1];
 }
 
 @end

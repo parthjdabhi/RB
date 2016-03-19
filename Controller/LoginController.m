@@ -14,6 +14,7 @@
 #import "NetWorkManager.h"
 #import "IMDAO.h"
 #import "MUser.h"
+#import "RBIMClient.h"
 #import "UIView+Toast.h"
 
 @interface LoginController ()
@@ -52,9 +53,7 @@
                                              user.accessToken = sk;
                                              
                                              [[IMDAO shareInstance] login:user];
-                                             
 
-                                             
                                              FriendListController *flc = [[FriendListController alloc] init];
                                              MessageListController *mlc = [[MessageListController alloc] init];
                                              MeViewController *mvc = [[MeViewController alloc] init];
@@ -70,6 +69,8 @@
                                              [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
                                              
                                              [self presentViewController:tabBarController animated:YES completion:nil];
+                                             
+                                             [[RBIMClient instance] connectIM];
                                          } fail:^(NSError *error) {
                                              [self.view makeToast:[NSString stringWithFormat:@"error:%ld", (long)error.code]];
                                          }];

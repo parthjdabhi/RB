@@ -21,7 +21,7 @@
  
  */
 
-@property (nonatomic,strong) NSMutableArray *imgArr;
+@property (nonatomic,strong) NSArray *imgArr;
 
 /**
  

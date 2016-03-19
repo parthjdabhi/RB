@@ -30,7 +30,9 @@
     NSString *_accessToken;
     long long _sessionStamp;
     long long _activeStamp;
-    int _connectFailure;
+
+    int _connectFailureCount;
+    BOOL _reconnect;
 }
 @end
 
@@ -41,7 +43,8 @@
 -(id) initWithConfig:(ConnectionConfig *) config
 {
     _authenticate = false;
-    _connectFailure = 0;
+    _connectFailureCount = 0;
+    _reconnect = TRUE;
     _config = config;
     
     imQueue = dispatch_queue_create("imQueue", NULL);
@@ -96,7 +99,7 @@
     [self updateStatus:Binding];
 //    NSTimeInterval time=[[NSDate date] timeIntervalSince1970]*1000;
 //    _sessionStamp = 1234567891234;
-    _connectFailure = 0;
+    _connectFailureCount = 0;
     Session *session = [[Session alloc] initWithStep:1 stamp:_sessionStamp];
     [self send:session];
     DDLogInfo(@"接收离线消息");
@@ -137,7 +140,16 @@
 -(void) reconnect
 {
     [self end];
-    _connectFailure++;
+    _connectFailureCount++;
+    
+    if (_connectFailureCount >= 50) {
+        _reconnect = FALSE;
+    }
+    
+    if (!_reconnect) {
+        return;
+    }
+    
     int sleepInterval = [self getSleepInterval];
     DDLogInfo(@"在 %d 秒后重连", sleepInterval);
 
@@ -148,9 +160,9 @@
 
 -(int) getSleepInterval
 {
-    if (_connectFailure < 3) {
+    if (_connectFailureCount < 3) {
         return 1;
-    } else if (_connectFailure < 5) {
+    } else if (_connectFailureCount < 5) {
         return 5;
     } else {
         return 30;
@@ -194,9 +206,11 @@
 
 -(void) receiveConflict
 {
-    [self end];
-    [[NSNotificationCenter defaultCenter] postNotificationName:ReceiveConflictNotification object:nil];
     DDLogWarn(@"账号冲突！");
+    
+    [self end];
+    _reconnect = FALSE;
+    [[NSNotificationCenter defaultCenter] postNotificationName:ReceiveConflictNotification object:nil];
 }
 
 -(void) receiveEnd

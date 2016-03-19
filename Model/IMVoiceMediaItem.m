@@ -107,7 +107,7 @@
 {
     if (!_cachedVoiceImageView) {
         CGSize size = [self mediaViewDisplaySize];
-        UIImage *playIcon = [UIImage imageNamed:self.appliesMediaViewMaskAsOutgoing?@"SenderVoiceNodePlaying":@"ReceiverVoiceNodePlaying"];
+        UIImage *playIcon = [UIImage imageNamed:self.appliesMediaViewMaskAsOutgoing?@"VoicePlaySender":@"VoicePlayReceiver"];
         _playIconView = [[UIImageView alloc] initWithImage:playIcon];
         _playIconView.frame = CGRectMake(self.appliesMediaViewMaskAsOutgoing?size.width-playIcon.size.width-20.0f:20.0f, (size.height-playIcon.size.height)/2, playIcon.size.width, playIcon.size.height);
 //        _playIconView.contentMode = UIViewContentModeCenter;

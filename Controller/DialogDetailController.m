@@ -537,8 +537,6 @@
             NSURL *url = [NSURL URLWithString:message.thumbUrl];
             IMPhotoMediaItem *photoMediaItem = [[IMPhotoMediaItem alloc] initWithThumbURL:url];
             photoMediaItem.fileURL = [NSURL URLWithString:message.imageUrl];
-            
-//            JSQPhotoMediaItem *photoMediaItem = [[JSQPhotoMediaItem alloc] initWithImage:[[UIImage alloc] initWithContentsOfFile:picMsg.thumb]];
             jsqMsg = [[JSQMessage alloc] initWithSenderId:senderId
                                         senderDisplayName:senderDisplayName
                                                      date:[NSDate dateWithTimeIntervalSince1970:message.stamp]
@@ -771,17 +769,6 @@
     [JSQSystemSoundPlayer jsq_playMessageSentSound];
     
     UIImage *image = info[UIImagePickerControllerOriginalImage];
-//    UIImage *thumbImage = [image resizedImageWithMaximumSize:CGSizeMake(210.0f, 150.0f)];
-//    JSQPhotoMediaItem *photoMediaItem = [[JSQPhotoMediaItem alloc] initWithImage:image];
-    IMPhotoMediaItem *photoMediaItem = [[IMPhotoMediaItem alloc] initWithImage:image isUploading:YES];
-    photoMediaItem.appliesMediaViewMaskAsOutgoing = YES;
-    JSQMessage *jsqMessage = [[JSQMessage alloc] initWithSenderId:self.senderId
-                                             senderDisplayName:self.senderDisplayName
-                                                          date:[NSDate date]
-                                                         media:photoMediaItem];
-    [self.jsqMsgs addObject:jsqMessage];
-    
-    [self finishSendingMessageAnimated:YES];
     
     MMessage *message = [[MMessage alloc] init];
     message.senderId = self.sender.uid;
@@ -802,6 +789,19 @@
 //    [[SDImageCache sharedImageCache] storeImage:thumbImage forKey:thumbPath];
     [[IMDAO shareInstance] saveMessage:message];
     
+    IMPhotoMediaItem *photoMediaItem = [[IMPhotoMediaItem alloc] initWithImage:image isUploading:YES];
+    photoMediaItem.fileURL = [NSURL URLWithString:message.imageUrl];
+    photoMediaItem.appliesMediaViewMaskAsOutgoing = YES;
+    JSQMessage *jsqMessage = [[JSQMessage alloc] initWithSenderId:self.senderId
+                                                senderDisplayName:self.senderDisplayName
+                                                             date:[NSDate date]
+                                                            media:photoMediaItem];
+    [self.jsqMsgs addObject:jsqMessage];
+    
+    [_imageArray addObject:message.imageUrl];
+    
+    [self finishSendingMessageAnimated:YES];
+    
     void (^successBlock)(NSString *, NSString *) = ^(NSString *url, NSString *thumbUrl) {
         [photoMediaItem didFinishUpload];
         
@@ -812,19 +812,19 @@
     };
     
     if (_dialogType == DIALOG_TYPE_GROUP) {
-        //            [[IMClient shareInstance] sendPictureToUid:_gid
-        //                                                 image:image
-        //                                               success:successBlock
-        //                                                  fail:^(NSError *error) {
-        //
-        //                                                  }];
+        [[IMClient instance] sendPictureToGid:_groupId
+                                        image:image
+                                      success:successBlock
+                                         fail:^(NSError *error) {
+                                             
+                                         }];
     } else {
-//        [[IMClient shareInstance] sendPictureToUid:_userId
-//                                             image:image
-//                                           success:successBlock
-//                                              fail:^(NSError *error) {
-//                                                  
-//                                              }];
+        [[IMClient instance] sendPictureToUid:_userId
+                                        image:image
+                                      success:successBlock
+                                         fail:^(NSError *error) {
+                                             
+                                         }];
     }
     
 }
@@ -1065,21 +1065,21 @@
     };
     
     if (_dialogType == DIALOG_TYPE_GROUP) {
-        [[IMClient shareInstance] sendVoiceToUid:_groupId
-                                             url:recorder.url.path
-                                        duration:audioDurationSeconds
-                                         success:successBlock
-                                            fail:^(NSError *error) {
-                                                
-                                            }];
+        [[IMClient instance] sendVoiceToUid:_groupId
+                                        url:recorder.url.path
+                                   duration:audioDurationSeconds
+                                    success:successBlock
+                                       fail:^(NSError *error) {
+                                           
+                                       }];
     } else {
-        [[IMClient shareInstance] sendVoiceToUid:_userId
-                                             url:recorder.url.path
-                                        duration:audioDurationSeconds
-                                         success:successBlock
-                                            fail:^(NSError *error) {
-                                                
-                                            }];
+        [[IMClient instance] sendVoiceToUid:_userId
+                                        url:recorder.url.path
+                                   duration:audioDurationSeconds
+                                    success:successBlock
+                                       fail:^(NSError *error) {
+                                           
+                                       }];
     }
 }
 
@@ -1203,10 +1203,10 @@
     [[IMDAO shareInstance] saveMessage:message];
     
     if (_dialogType == DIALOG_TYPE_GROUP) {
-        [[IMClient shareInstance] sendMessageToGid:_groupId content:text];
+        [[IMClient instance] sendMessageToGid:_groupId content:text];
         
     } else {
-        [[IMClient shareInstance] sendMessageToUid:_userId content:text];
+        [[IMClient instance] sendMessageToUid:_userId content:text];
     }
 }
 

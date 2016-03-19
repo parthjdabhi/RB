@@ -23,8 +23,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    _searchTextField.returnKeyType = UIReturnKeyGo;
-    [_searchTextField addTarget:self action:@selector(searchData:) forControlEvents:UIControlEventEditingDidEndOnExit];
+    _searchBar.delegate = self;
+    _searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    [_searchBar becomeFirstResponder];
     
     [_resultTableView setHidden:YES];
     
@@ -45,56 +46,54 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void) searchData:(UITextField *)textField {
-    NSString *searchContent = _searchTextField.text;
+#pragma mark - SearchBar delegate
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    NSString *searchContent = searchBar.text;
+    
+    void (^successBlock)(NSArray *) = ^(NSArray *responseObject) {
+        _resultArray = [[NSMutableArray alloc] init];
+        for (NSDictionary *dict in responseObject) {
+            MUser *user = [[MUser alloc] init];
+            user.uid = [[dict objectForKey:@"uid"] integerValue];
+            user.nickname = [dict objectForKey:@"nickname"];
+            user.avatarUrl = [dict objectForKey:@"avatar_url"];
+            user.avatarThumbUrl = [dict objectForKey:@"avatar_thumb"];
+            user.signature = [dict objectForKey:@"signature"];
+            user.gender = [[dict objectForKey:@"gender"] integerValue];
+            
+            [[IMDAO shareInstance] saveUser:user];
+            [_resultArray addObject:user];
+            [_resultTableView setHidden:NO];
+            [_resultTableView reloadData];
+        }
+        
+    };
     
     [[NetWorkManager sharedInstance] searchUserWithKeyword:searchContent
-                                                   success:^(NSArray *responseObject) {
-                                                       _resultArray = [[NSMutableArray alloc] init];
-                                                       for (NSDictionary *dict in responseObject) {
-                                                           MUser *user = [[MUser alloc] init];
-                                                           user.uid = [[dict objectForKey:@"uid"] integerValue];
-                                                           user.nickname = [dict objectForKey:@"nickname"];
-                                                           user.avatarUrl = [dict objectForKey:@"avatar_url"];
-                                                           user.avatarThumbUrl = [dict objectForKey:@"avatar_thumb"];
-                                                           user.signature = [dict objectForKey:@"signature"];
-                                                           user.gender = [[dict objectForKey:@"gender"] integerValue];
-                                                           
-                                                           [[IMDAO shareInstance] saveUser:user];
-                                                           [_resultArray addObject:user];
-                                                           [_resultTableView setHidden:NO];
-                                                           [_resultTableView reloadData];
-                                                       }
-        
-                                                   } fail:^(NSError *error) {
+                                                   success:successBlock
+                                                      fail:^(NSError *error) {
         
                                                    }];
 }
 
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 #pragma mark tableview delegate
-
-//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-//{
-//    return 1;
-//}
-
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return _resultArray.count;
 }
 
-//-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    return 60;
-//}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     FriendItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FriendItemCell" forIndexPath:indexPath];
+    
     NSUInteger row = [indexPath row];
     MUser *u = (MUser *)[_resultArray objectAtIndex:row];
     cell.title.text = u.nickname;
-    //    NSLog(@"avater_%d.jpg", f.uid);
-//    cell.avater.image = [UIImage imageNamed:[NSString stringWithFormat:@"avater_%d.jpg", u.uid]];
+    
     NSURL *url = [NSURL URLWithString:u.avatarUrl];
     [cell.avatar sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"avater_default.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         
@@ -105,6 +104,7 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UserInfoController *uic = [[UserInfoController alloc] init];
+    
     MUser *u = (MUser *)[_resultArray objectAtIndex:[indexPath row]];
     uic.uid = u.uid;
     uic.target = u;
@@ -112,7 +112,4 @@
     [self.navigationController pushViewController:uic animated:YES];
 }
 
-- (IBAction)cancelBtnClick:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
-}
 @end

@@ -28,14 +28,9 @@
     [_tableView registerNib:nib forCellReuseIdentifier:@"NewFriendCell"];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-//    UIBarButtonItem *back = [[UIBarButtonItem alloc] initWithTitle:@"返回"
-//                                                             style:UIBarButtonItemStylePlain
-//                                                            target:self
-//                                                            action:@selector(go2PreViewController)];
-//    self.navigationItem.leftBarButtonItem = back;
+- (void)viewWillAppear:(BOOL)animated {    
+    NSInteger noticeCount = [[AppProfile instance] getNoticeUnreadCount];
     
-    int noticeCount = [[AppProfile instance] getNoticeUnreadCount];
     if (noticeCount > 0) {
         [[AppProfile instance] incrNoticeUnreadCount:-noticeCount];
     }
@@ -49,10 +44,6 @@
 
 
 #pragma mark - Table view data source
-
-//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-//    return 1;
-//}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return _users.count;
@@ -72,6 +63,7 @@
     [cell.avatarImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"avater_default.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         
     }];
+    
     cell.avatarImageView.contentMode = UIViewContentModeScaleAspectFit;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
@@ -86,22 +78,25 @@
 
 #pragma mark - NewFriendCell delegate
 - (void) btnOnClick:(NSDictionary *) dict {
-    NSInteger uid = [[dict objectForKey:@"uid"] integerValue];
+    NSInteger uid = [[dict objectForKey:@"uid"] intValue];
     
     [[NetWorkManager sharedInstance] passFriendVerifyToUid:uid
                                                    success:^(NSDictionary *responseObject) {
+                                                      
                                                        MFriend *user = [[MFriend alloc] init];
                                                        user.uid = uid;
                                                        user.isFriend = YES;
                                                        user.stamp = [[NSDate date] timeIntervalSince1970] * 1000;
+                                                       
                                                        [[IMDAO shareInstance] updateMakeFriendRecord:user];
                                                        [[IMDAO shareInstance] saveFriend:user];
                                                        
                                                        _users = [[IMDAO shareInstance] getMakeFriendRecordsByUid:[MUser currentUser].uid];
                                                        [_tableView reloadData];
                                                        
-                                                       IMNotification *n = [[IMNotification alloc] initWithFrom:0 to:0 target:0 type:3 stamp:[[NSDate date] timeIntervalSince1970] * 1000 contentType:2 messageContent:@"你们可以开始聊天了" uid:uid];
+                                                       IMNotification *n = [[IMNotification alloc] initWithFrom:0 to:0 target:0 type:3 stamp:[[NSDate date] timeIntervalSince1970] * 1000 contentType:2 messageContent:@"你们可以开始聊天了" uid:@(uid).intValue];
                                                        [[IMDAO shareInstance] saveRecvNotification:n];
+                                                       
                                                    } fail:^(NSError *error) {
                                                        
                                                    }];

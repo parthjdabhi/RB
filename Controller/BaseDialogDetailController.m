@@ -398,9 +398,9 @@ JSQMessagesKeyboardControllerDelegate, EMChatToolbarDelegate, UINavigationContro
     [self.collectionView.collectionViewLayout invalidateLayoutWithContext:[JSQMessagesCollectionViewFlowLayoutInvalidationContext context]];
     [self.collectionView reloadData];
     
-    if (self.automaticallyScrollsToMostRecentMessage && ![self jsq_isMenuVisible]) {
+//    if (self.automaticallyScrollsToMostRecentMessage && ![self jsq_isMenuVisible]) {
         [self scrollToBottomAnimated:animated];
-    }
+//    }
 }
 
 - (void)scrollToBottomAnimated:(BOOL)animated

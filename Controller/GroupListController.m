@@ -21,13 +21,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.title = @"群组";
     UINib *nib = [UINib nibWithNibName:@"FriendItemCell" bundle:nil];
     [self.tableView registerNib:nib forCellReuseIdentifier:@"FriendItemCell"];
     
     _resultArray = [[IMDAO shareInstance] getGroupsWithUid:[MUser currentUser].uid];
     if (_resultArray.count == 0) {
         
-        [[NetWorkManager sharedInstance] getGroupListSuccess:^(NSArray *responseObject) {
+        void (^successBlock)(NSArray *) = ^(NSArray *responseObject) {
             for (NSDictionary *groupObj in responseObject) {
                 NSDictionary *groupInfo = [groupObj objectForKey:@"info"];
                 NSArray *groupMembers = [groupObj objectForKey:@"members"];
@@ -40,6 +41,7 @@
                 
                 NSMutableArray *members = [[NSMutableArray alloc] init];
                 for (NSDictionary *userObj in groupMembers) {
+                    
                     MUser *user = [[MUser alloc] init];
                     user.uid = [[userObj objectForKey:@"uid"] integerValue];
                     user.nickname = [userObj objectForKey:@"nickname"];
@@ -54,7 +56,9 @@
                 group.members = members;
                 [[IMDAO shareInstance] saveGroup:group];
             }
-        }
+        };
+        
+        [[NetWorkManager sharedInstance] getGroupListSuccess:successBlock
                                                         fail:^(NSError *error) {
                                                         }];
     }
@@ -62,11 +66,6 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-//    UIBarButtonItem *back = [[UIBarButtonItem alloc] initWithTitle:@"返回"
-//                                                             style:UIBarButtonItemStylePlain
-//                                                            target:self
-//                                                            action:@selector(go2PreViewController)];
-//    self.navigationItem.leftBarButtonItem = back;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -94,10 +93,12 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     DialogDetailController *mdvc = [[DialogDetailController alloc] init];
+    
     MGroup *g = (MGroup *)[_resultArray objectAtIndex:[indexPath row]];
     mdvc.groupId = g._id;
     mdvc.sender = [MUser currentUser];
     mdvc.title = g.name;
+    
     [self.navigationController pushViewController:mdvc animated:YES];
 }
 

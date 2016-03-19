@@ -32,5 +32,4 @@ __strong static MUser *_currentUser;
     return self;
 }
 
-
 @end

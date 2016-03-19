@@ -10,17 +10,18 @@
 
 @interface MUser : NSObject
 
-@property NSInteger uid;
-@property NSString *username;
-@property NSString *nickname;
-@property NSString *avatarUrl;
-@property NSString *avatarThumbUrl;
-@property NSString *accessToken;
-@property NSInteger gender;
-@property NSString *signature;
+@property(nonatomic) NSInteger uid;
+@property(nonatomic) NSString *username;
+@property(nonatomic) NSString *nickname;
+@property(nonatomic) NSString *displayName;
+@property(nonatomic) NSString *avatarUrl;
+@property(nonatomic) NSString *avatarThumbUrl;
+@property(nonatomic) NSString *accessToken;
+@property(nonatomic) NSInteger gender;
+@property(nonatomic) NSString *signature;
 
 @property BOOL isFriend;
-@property NSString *comment;
+@property(nonatomic) NSString *comment;
 @property int source;
 
 +(MUser *) currentUser;

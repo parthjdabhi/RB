@@ -8,13 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SearchAccountController : UIViewController
+@interface SearchAccountController : UIViewController<UISearchBarDelegate>
 
-@property (strong, nonatomic) IBOutlet UITextField *searchTextField;
+@property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (strong, nonatomic) IBOutlet UITableView *resultTableView;
-@property (strong, nonatomic) IBOutlet UIButton *cancelBtn;
 
 @property (nonatomic, strong) NSMutableArray *resultArray;
-- (IBAction)cancelBtnClick:(id)sender;
 
 @end

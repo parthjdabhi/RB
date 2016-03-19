@@ -10,7 +10,7 @@
 
 @interface UserInfoCell : UITableViewCell
 @property (strong, nonatomic) IBOutlet UIImageView *avatar;
+@property (strong, nonatomic) IBOutlet UILabel *displayNameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *nicknameLabel;
-@property (strong, nonatomic) IBOutlet UILabel *commentLabel;
 
 @end

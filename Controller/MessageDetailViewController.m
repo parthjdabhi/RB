@@ -375,7 +375,7 @@
         //
         //                                                  }];
     } else {
-        [[IMClient shareInstance] sendPictureToUid:_uid
+        [[IMClient instance] sendPictureToUid:_uid
                                              image:image
                                            success:successBlock
                                               fail:^(NSError *error) {
@@ -602,11 +602,11 @@
 
     [self add2ListTailWithDict:dict];
     
-    if (_gid > 0) {
-        [[IMClient shareInstance] sendVoiceToUid:_gid url: voicePath duration:audioDurationSeconds];
-    } else {
-        [[IMClient shareInstance] sendVoiceToUid:_uid url: voicePath duration:audioDurationSeconds];
-    }
+//    if (_gid > 0) {
+//        [[IMClient shareInstance] sendVoiceToUid:_gid url: voicePath duration:audioDurationSeconds];
+//    } else {
+//        [[IMClient shareInstance] sendVoiceToUid:_uid url: voicePath duration:audioDurationSeconds];
+//    }
     [self refreshMessageList];
 }
 
@@ -618,9 +618,9 @@
     [self add2ListTailWithDict:dict];
     
     if (_gid > 0) {
-        [[IMClient shareInstance] sendMessageToGid:_gid content:_messageInputBar.msgTextField.text];
+        [[IMClient instance] sendMessageToGid:_gid content:_messageInputBar.msgTextField.text];
     } else {
-        [[IMClient shareInstance] sendMessageToUid:_uid content:_messageInputBar.msgTextField.text];
+        [[IMClient instance] sendMessageToUid:_uid content:_messageInputBar.msgTextField.text];
     }
     [self refreshMessageList];
     _messageInputBar.msgTextField.text = nil;

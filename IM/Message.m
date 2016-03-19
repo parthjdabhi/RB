@@ -10,14 +10,13 @@
 
 @implementation Message
 
--(id) initWithFrom:(unsigned int) from
-                to:(unsigned int) to
-            target:(unsigned int) target
+-(id) initWithFrom:(int32_t) from
+                to:(int32_t) to
+            target:(int32_t) target
               type:(Byte) messageType
-             stamp:(long long) stamp
-       contentType:(unsigned int) contentType
-    messageContent:(NSString *) messageContent;
-{
+             stamp:(int64_t) stamp
+       contentType:(int32_t) contentType
+    messageContent:(NSString *) messageContent {
     self.type = 0x0011;
     __id = @"";
     _from = from;
@@ -34,14 +33,13 @@
 }
 
 -(id) initWithId:(NSString *) _id
-            from:(unsigned int) from
-              to:(unsigned int) to
-          target:(unsigned int) target
+            from:(int32_t) from
+              to:(int32_t) to
+          target:(int32_t) target
             type:(Byte) messageType
-           stamp:(long long) stamp
-     contentType:(unsigned int) contentType
-  messageContent:(NSString *) messageContent;
-{
+           stamp:(int64_t) stamp
+     contentType:(int32_t) contentType
+  messageContent:(NSString *) messageContent {
     self.type = 0x0011;
     __id = _id;
     _from = from;

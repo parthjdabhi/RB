@@ -12,32 +12,32 @@
 
 @interface Message : Stanza
 
-@property NSString* _id;
-@property unsigned int from;
-@property unsigned int to;
-@property unsigned int target;
+@property(nonatomic) NSString* _id;
+@property(nonatomic, assign) int32_t from;
+@property(nonatomic, assign) int32_t to;
+@property(nonatomic, assign) int32_t target;
 @property Byte messageType;
-@property long long stamp;
-@property NSString* messageBody;
-@property unsigned int contentType;
-@property NSString* messageContent;
+@property(nonatomic, assign) int64_t stamp;
+@property(nonatomic) NSString* messageBody;
+@property(nonatomic, assign) int32_t contentType;
+@property(nonatomic) NSString* messageContent;
 
--(id) initWithFrom:(unsigned int) from
-                to:(unsigned int) to
-            target:(unsigned int) target
+-(id) initWithFrom:(int32_t) from
+                to:(int32_t) to
+            target:(int32_t) target
               type:(Byte) messageType
-             stamp:(long long) stamp
-       contentType:(unsigned int) contentType
+             stamp:(int64_t) stamp
+       contentType:(int32_t) contentType
     messageContent:(NSString *) messageContent;
 
 
 -(id) initWithId:(NSString *) _id
-            from:(unsigned int) from
-              to:(unsigned int) to
-          target:(unsigned int) target
+            from:(int32_t) from
+              to:(int32_t) to
+          target:(int32_t) target
             type:(Byte) messageType
-           stamp:(long long) stamp
-     contentType:(unsigned int) contentType
+           stamp:(int64_t) stamp
+     contentType:(int32_t) contentType
   messageContent:(NSString *) messageContent;
 
 -(BOOL) parseMessageBody;

@@ -48,40 +48,23 @@
 -(void)initData {
     _tableCells = [[NSMutableArray alloc] init];
     
-    
-    NSMutableArray *cs = [NSMutableArray arrayWithObjects: [NSMutableDictionary dictionaryWithObjectsAndKeys: @"1", @"name",nil], nil];
-    [_tableCells addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:cs, @"cells", nil]];
-    
-    NSMutableDictionary *cell1 = [NSMutableDictionary dictionaryWithObjectsAndKeys: @"设置备注", @"title", nil];
-    //    NSMutableDictionary *cell2 = [NSMutableDictionary dictionaryWithObjectsAndKeys: @"2", @"title",nil];
-    NSMutableDictionary *group1 = [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSMutableArray arrayWithObjects:cell1, nil], @"cells", nil];
-    [_tableCells addObject:group1];
-    
-    NSMutableDictionary *cell3 = [NSMutableDictionary dictionaryWithObjectsAndKeys: @"地区", @"title", @"深圳", @"detail", nil];
-    NSMutableDictionary *cell4 = [NSMutableDictionary dictionaryWithObjectsAndKeys: @"更多", @"title",nil];
-    NSMutableDictionary *group2 = [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSMutableArray arrayWithObjects:cell3, cell4, nil], @"cells", nil];
-    [_tableCells addObject:group2];
+    [_tableCells addObject:@{@"cells":@[@{@"title":@"用户信息"}]}];
+    [_tableCells addObject:@{@"cells":@[@{@"title":@"地区", @"detail":@"深圳"}]}];
+    [_tableCells addObject:@{@"cells":@[@{@"title":@"设置"}]}];
 }
 
 #pragma mark - 数据源方法
-#pragma mark 返回分组数
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    //    NSLog(@"计算分组数 %lu", (unsigned long)_tableCells.count);
     return _tableCells.count;
 }
 
-#pragma mark 返回每组行数
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    //    NSLog(@"计算每组(组%li)行数",(long)section);
     NSMutableDictionary *group = _tableCells[section];
     NSMutableArray * cells = (NSMutableArray *)[group objectForKey:@"cells"];
     return cells.count;
 }
 
-#pragma mark返回每行的单元格
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    //NSIndexPath是一个结构体，记录了组和行信息
-    //    NSLog(@"生成单元格(组：%li,行%li)",(long)indexPath.section,(long)indexPath.row);
     NSMutableDictionary *group = _tableCells[indexPath.section];
     NSMutableArray *cells = (NSMutableArray *)[group objectForKey:@"cells"];
     NSMutableDictionary *contact = cells[indexPath.row];
@@ -89,6 +72,7 @@
     if (indexPath.section == 0 && indexPath.row == 0) {
         UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
         NSURL *url = [NSURL URLWithString:[MUser currentUser].avatarThumbUrl];
         [cell.imageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"avater_default.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             
@@ -97,13 +81,16 @@
         [cell.imageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(avatarOnClick:)]];
         
         cell.textLabel.text = [MUser currentUser].nickname;
+        
         return cell;
-    } else if (indexPath.section == 2 && indexPath.row == 0) {
+        
+    } else if (indexPath.section == 1 && indexPath.row == 0) {
         UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.textLabel.text = [contact objectForKey:@"title"];
         cell.detailTextLabel.text = [contact objectForKey:@"detail"];
         return cell;
+        
     } else {
         UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
         [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
@@ -113,16 +100,8 @@
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+
     if (indexPath.section == 0 && indexPath.row == 0) {
-//        UIActionSheet *actionSheet = [[UIActionSheet alloc]
-//                                      initWithTitle:nil
-//                                      delegate:self
-//                                      cancelButtonTitle:nil
-//                                      destructiveButtonTitle:nil
-//                                      otherButtonTitles:@"相册", @"拍照",nil];
-//        actionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
-//        [actionSheet showInView:self.view];
-        
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
                                                                                  message:nil
                                                                           preferredStyle:UIAlertControllerStyleActionSheet];
@@ -133,21 +112,23 @@
             [self getPhotoFromCamera:nil];
         }];
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+        
         [alertController addAction:cancelAction];
         [alertController addAction:deleteAction];
         [alertController addAction:archiveAction];
         
         UIPopoverPresentationController *popover = alertController.popoverPresentationController;
+        
         if (popover){
             popover.sourceView = self.view;
             popover.sourceRect = self.view.bounds;
             popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
         }
+        
         [self presentViewController:alertController animated:YES completion:nil];
     }
 }
 
-#pragma mark 设置分组标题内容高度
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if(section == 0){
         return 10;
@@ -155,7 +136,6 @@
     return 22;
 }
 
-#pragma mark 设置每行高度（每行高度可以不一样）
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if(indexPath.section == 0 && indexPath.row == 0){
         return 60;
@@ -163,19 +143,14 @@
     return 45;
 }
 
-#pragma mark 设置尾部说明内容高度
--(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    return 0;
-}
-
 - (void)avatarOnClick:(NSNotification *)note {
     if ([MUser currentUser] && [MUser currentUser].avatarUrl) {
-        PictureViewController *pvc = [[PictureViewController alloc] init];
-        pvc.imgArr = [[NSMutableArray alloc] init];
-        [pvc.imgArr addObject:[MUser currentUser].avatarUrl];
-
         [self.navigationController setNavigationBarHidden:YES animated:NO];
+        
+        PictureViewController *pvc = [[PictureViewController alloc] init];
+        pvc.imgArr = @[[MUser currentUser].avatarUrl];
         pvc.hidesBottomBarWhenPushed = TRUE;
+        
         [self.navigationController pushViewController:pvc animated:YES];
     }
 }
@@ -210,6 +185,7 @@
 
 -(NSData *) getNSDataFromImage:(UIImage *) image {
     NSData *data = UIImagePNGRepresentation(image);
+
     if (data == nil) {
         data = UIImageJPEGRepresentation(image, 1);
     }
@@ -218,6 +194,7 @@
 
 -(NSData *) getNSDataFromThumb:(UIImage *) image {
     NSData *data = data = UIImageJPEGRepresentation(image, 0.1);
+    
     if (data == nil) {
         UIImagePNGRepresentation(image);
     }
@@ -228,13 +205,16 @@
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
     imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     imagePicker.delegate = self;
+    
     [self presentViewController:imagePicker animated:YES completion:nil];
 }
 
 - (void) getPhotoFromCamera:(id)sender {
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        
     } else {
         imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     }

@@ -12,6 +12,7 @@
 #import "PictureViewController.h"
 #import "IMDAO.h"
 #import "UserInfoCell.h"
+
 #import <SDWebImage/UIImageView+WebCache.h>
 
 @interface UserInfoController ()
@@ -26,9 +27,11 @@
     if (!_friendInfo) {
         _friendInfo = [[IMDAO shareInstance] getFriendWithId:_uid];
     }
+    
     if (!_friendInfo) {
         [_sendMsgBtn setHidden:YES];
         [_friendBtn setHidden:NO];
+    
     } else {
         [_sendMsgBtn setHidden:NO];
         [_friendBtn setHidden:YES];
@@ -41,18 +44,7 @@
 }
 
 - (void) viewWillAppear:(BOOL)animated {
-    UINavigationItem *item = self.navigationItem;
-//    UIBarButtonItem *back = [[UIBarButtonItem alloc] initWithTitle:@"返回"
-//                                                             style:UIBarButtonItemStylePlain
-//                                                            target:self
-//                                                            action:nil];
-//    navigationItem.backBarButtonItem = back;
-    item.title = @"详细资料";
-}
-
-- (void) viewWillDisappear:(BOOL)animated {
-//    UINavigationItem *navigationItem = [[self.navigationController.viewControllers firstObject] navigationItem];
-//    navigationItem.backBarButtonItem = nil;
+    self.navigationItem.title = @"详细资料";
 }
 
 - (void)didReceiveMemoryWarning {
@@ -63,41 +55,25 @@
 #pragma mark 加载数据
 -(void)initData {
     _tableCells = [[NSMutableArray alloc] init];
-
     
-    NSMutableArray *cs = [NSMutableArray arrayWithObjects: [NSMutableDictionary dictionaryWithObjectsAndKeys: @"1", @"name",nil], nil];
-    [_tableCells addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:cs, @"cells", nil]];
-    
-    NSMutableDictionary *cell1 = [NSMutableDictionary dictionaryWithObjectsAndKeys: @"设置备注", @"title", nil];
-//    NSMutableDictionary *cell2 = [NSMutableDictionary dictionaryWithObjectsAndKeys: @"2", @"title",nil];
-    NSMutableDictionary *group1 = [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSMutableArray arrayWithObjects:cell1, nil], @"cells", nil];
-    [_tableCells addObject:group1];
-
-    NSMutableDictionary *cell3 = [NSMutableDictionary dictionaryWithObjectsAndKeys: @"地区", @"title", @"深圳", @"detail", nil];
-    NSMutableDictionary *cell4 = [NSMutableDictionary dictionaryWithObjectsAndKeys: @"更多", @"title",nil];
-    NSMutableDictionary *group2 = [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSMutableArray arrayWithObjects:cell3, cell4, nil], @"cells", nil];
-    [_tableCells addObject:group2];
+    [_tableCells addObject:@{@"cells":@[@{@"title":@"用户信息"}]}];
+    [_tableCells addObject:@{@"cells":@[@{@"title":@"设置备注"}]}];
+    [_tableCells addObject:@{@"cells":@[@{@"title":@"地区", @"detail":@"深圳"}, @{@"title":@"更多"}]}];
 }
 
 #pragma mark - 数据源方法
-#pragma mark 返回分组数
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
 //    NSLog(@"计算分组数 %lu", (unsigned long)_tableCells.count);
     return _tableCells.count;
 }
 
-#pragma mark 返回每组行数
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-//    NSLog(@"计算每组(组%li)行数",(long)section);
     NSMutableDictionary *group = _tableCells[section];
     NSMutableArray * cells = (NSMutableArray *)[group objectForKey:@"cells"];
     return cells.count;
 }
 
-#pragma mark返回每行的单元格
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    //NSIndexPath是一个结构体，记录了组和行信息
-//    NSLog(@"生成单元格(组：%li,行%li)",(long)indexPath.section,(long)indexPath.row);
     NSMutableDictionary *group = _tableCells[indexPath.section];
     NSMutableArray *cells = (NSMutableArray *)[group objectForKey:@"cells"];
     NSMutableDictionary *contact = cells[indexPath.row];
@@ -105,45 +81,57 @@
     if (indexPath.section == 0 && indexPath.row == 0) {
         UserInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UserInfoCell" forIndexPath:indexPath];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
         NSURL *url = [NSURL URLWithString:_target.avatarUrl];
         [cell.avatar sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"avater_default.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             
         }];
+        
         [cell.avatar setUserInteractionEnabled:YES];
         [cell.avatar addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(avatarOnClick:)]];
         
-        cell.nicknameLabel.text = _target.nickname;
-        cell.commentLabel.hidden = TRUE;
+        if (_friendInfo) {
+            cell.displayNameLabel.text = _friendInfo.displayName;
+            
+            if (_friendInfo.commentName) {
+                cell.nicknameLabel.text = [NSString stringWithFormat:@"昵称：%@", _friendInfo.nickname];
+            } else {
+                cell.nicknameLabel.hidden = TRUE;
+            }
+            
+        } else {
+            cell.displayNameLabel.text = _target.nickname;
+            cell.nicknameLabel.hidden = TRUE;
+        }
+
+
         return cell;
+        
     } else if (indexPath.section == 2 && indexPath.row == 0) {
         UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.textLabel.text = [contact objectForKey:@"title"];
         cell.detailTextLabel.text = [contact objectForKey:@"detail"];
+        
         return cell;
+        
     } else {
         UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
         cell.textLabel.text = [contact objectForKey:@"title"];
+        
         return cell;
     }
 }
 
-#pragma mark 返回每组头标题名称
--(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-//    NSLog(@"生成组（组%li）名称",(long)section);
-//    NSMutableDictionary *group= _tableCells[indexPath.section];
-    return nil;
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    if (indexPath.section == 1 && indexPath.row == 0) {
+        [self commentNameOnClick];
+    }
 }
 
-//#pragma mark 返回每组尾部说明
-//-(NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section{
-//    NSLog(@"生成尾部（组%li）详情",(long)section);
-////    KCContactGroup *group=_contacts[section];
-//    return @" ";
-//}
-
-#pragma mark 设置分组标题内容高度
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if(section == 0){
         return 10;
@@ -151,17 +139,11 @@
     return 22;
 }
 
-#pragma mark 设置每行高度（每行高度可以不一样）
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if(indexPath.section == 0 && indexPath.row == 0){
-        return 84;
+        return 83;
     }
     return 42;
-}
-
-#pragma mark 设置尾部说明内容高度
--(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    return 0;
 }
 
 - (IBAction)friendBtnOnClick:(id)sender {
@@ -182,14 +164,39 @@
 }
 
 - (void)avatarOnClick:(NSNotification *)note {
+    
     if (_target && _target.avatarUrl) {
-        PictureViewController *pvc = [[PictureViewController alloc] init];
-        pvc.imgArr = [[NSMutableArray alloc] init];
-        [pvc.imgArr addObject: _target.avatarUrl];
-        
+
         [self.navigationController setNavigationBarHidden:YES animated:NO];
+        
+        PictureViewController *pvc = [[PictureViewController alloc] init];
+        pvc.imgArr = @[_target.avatarUrl];
         pvc.hidesBottomBarWhenPushed = TRUE;
+        
         [self.navigationController pushViewController:pvc animated:YES];
+    }
+}
+
+-(void)commentNameOnClick {
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请输入备注名称" message:nil delegate:self cancelButtonTitle:@"保存" otherButtonTitles:@"取消",nil];
+    [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
+    
+    if (self.friendInfo.commentName) {
+        UITextField *tf = [alertView textFieldAtIndex:0];
+        tf.text = self.friendInfo.commentName;
+    }
+
+//    [[dialog textFieldAtIndex:0] setKeyboardType:UIKeyboardTypeNumberPad];
+    [alertView show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    UITextField *tf = [alertView textFieldAtIndex:0];
+    
+    if (buttonIndex == 0 && tf.text) {
+        self.friendInfo.commentName = tf.text;
+        [[IMDAO shareInstance] updateFriend:self.friendInfo];
+        [self.tableView reloadData];
     }
 }
 

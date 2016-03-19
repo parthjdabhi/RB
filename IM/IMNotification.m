@@ -10,15 +10,14 @@
 
 @implementation IMNotification
 
--(instancetype) initWithFrom:(unsigned int) from
-                          to:(unsigned int) to
-                      target:(unsigned int) target
+-(instancetype) initWithFrom:(int32_t) from
+                          to:(int32_t) to
+                      target:(int32_t) target
                         type:(Byte) messageType
-                       stamp:(long long) stamp
-                 contentType:(unsigned int) contentType
+                       stamp:(int64_t) stamp
+                 contentType:(int32_t) contentType
               messageContent:(NSString *) messageContent
-                         uid:(unsigned int)uid
-{
+                         uid:(int32_t) uid {
     self.type = 0x0011;
     self._id = @"";
     self.from = from;
@@ -35,15 +34,14 @@
     
 }
 
--(instancetype) initWithFrom:(unsigned int) from
-                          to:(unsigned int) to
-                      target:(unsigned int) target
+-(instancetype) initWithFrom:(int32_t) from
+                          to:(int32_t) to
+                      target:(int32_t) target
                         type:(Byte) messageType
-                       stamp:(long long) stamp
-                 contentType:(unsigned int) contentType
+                       stamp:(int64_t) stamp
+                 contentType:(int32_t) contentType
               messageContent:(NSString *) messageContent
-                         gid:(unsigned int)gid
-{
+                         gid:(int32_t) gid {
     self.type = 0x0011;
     self._id = @"";
     self.from = from;
@@ -104,9 +102,9 @@
         //        self.contentType = [[contentDict objectForKey:@"type"] intValue];
         
         if (self.contentType >= 10) {
-            _gid = [[contentDict objectForKey:@"gid"] integerValue];
+            _gid = [[contentDict objectForKey:@"gid"] intValue];
         } else {
-            _uid = [[contentDict objectForKey:@"uid"] integerValue];
+            _uid = [[contentDict objectForKey:@"uid"] intValue];
         }
         self.messageContent = [contentDict objectForKey:@"text"];
         

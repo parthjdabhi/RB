@@ -1,0 +1,468 @@
+{
+    "api": "mtop.film.mtopshowapi.getextendshowbyid",
+    "v": "5.4",
+    "ret": ["SUCCESS::调用成功"],
+    "data": {
+        "returnCode": "0",
+        "returnValue": {
+            "id": "187271",
+            "showName": "疯狂动物城",
+            "showNameEn": "Zootopia",
+            "director": "拜恩·霍华德, 杰拉德·布什, 里奇·摩尔",
+            "leadingRole": "金妮弗·古德温,杰森·贝特曼,J·K·西蒙斯,珍妮·斯蕾特,雷蒙德·S·珀斯,莫利斯·拉马谢,艾伦·图代克,凯蒂·洛斯,夏奇拉,伊德瑞斯·艾尔巴,内特·托伦斯",
+            "type": "动画 动作 冒险",
+            "distributor": "中国电影股份有限公司北京电影发行分公司（甲区） 华夏电影发行有限责任公司（乙区）",
+            "country": "美国",
+            "language": "英语 汉语普通话",
+            "duration": "109",
+            "openDay": "2016-03-04 00:00:00",
+            "poster": "i2/TB1t7E_LpXXXXbQXpXXXXXXXXXX_.jpg",
+            "posterMeta": {
+                "width": "1000",
+                "height": "1413",
+                "size": "536859"
+            },
+            "description": "影片故事发生在欣欣向荣的动物乌托邦，在这里各种动物和平共处。尼克·王尔德是只说话速度特别溜、有着宏图伟愿的狐狸，然而他却被栽赃嫁祸，不得不踏上亡命之旅，兔警官朱迪上尉负责追捕他。当两人同时卷入意想不到的阴谋时，他们不得不联手合作成为战友。两位天敌是否能成为最好的朋友呢？",
+            "remark": "9.6",
+            "orderCount": "0",
+            "supportType": "SEAT",
+            "preview": [{
+                        "title": "疯狂动物城 中文版预告片2",
+                        "coverUrl": "http://img1.tbcdn.cn/tfscom/TB1PSxeLVXXXXX4aXXXXXXXXXXX.jpg",
+                        "videoId": "34413312",
+                        "duration": "146",
+                        "uploadTime": "2016-02-02 01:06:39",
+                        "ipadUrl": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/6/t/1/d/hd/34413312.mp4",
+                        "iphoneUrl": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/6/t/1/d/hd/34413312.mp4",
+                        "androidPhoneV23Url": {
+                        "ld": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/6/t/1/d/ld/34413312.mp4",
+                        "sd": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/6/t/1/d/sd/34413312.mp4",
+                        "hd": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/6/t/1/d/hd/34413312.mp4",
+                        "ud": ""
+                        }
+                        }, {
+                        "title": "疯狂动物城 中文版IMAX预告片2",
+                        "coverUrl": "http://img1.tbcdn.cn/tfscom/http://img02.taobaocdn.com/bao/uploaded/TB1SW8ELVXXXXbjXFXXXXXXXXXX.jpg",
+                        "uploaderId": "1745440806",
+                        "description": "疯狂动物城 中文版IMAX预告片2",
+                        "videoId": "35192236",
+                        "duration": "158",
+                        "uploadTime": "2016-03-03 01:15:48",
+                        "features": "{\"keyframe\":1}",
+                        "state": "6",
+                        "webUrl": "<script src=\"http://api.video.taobao.com/video/getPlayerJS\"></script><script src=\"http://api.video.taobao.com/video/embedVideo?vid=35192236&uid=1745440806&tid=1&autoplay=true\"></script>",
+                        "flashUrl": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/1/t/1/35192236.swf",
+                        "ipadUrl": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/6/t/1/d/hd/35192236.mp4",
+                        "iphoneUrl": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/6/t/1/d/hd/35192236.mp4",
+                        "androidPadUrl": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/4/t/1/35192236.m3u8",
+                        "androidPhoneUrl": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/5/t/1/35192236.m3u8",
+                        "androidPadV23Url": {
+                        "ld": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/7/t/1/d/ld/35192236.mp4",
+                        "sd": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/7/t/1/d/sd/35192236.mp4",
+                        "hd": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/7/t/1/d/hd/35192236.mp4",
+                        "ud": ""
+                        },
+                        "androidPhoneV23Url": {
+                        "ld": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/6/t/1/d/ld/35192236.mp4",
+                        "sd": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/6/t/1/d/sd/35192236.mp4",
+                        "hd": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/6/t/1/d/hd/35192236.mp4",
+                        "ud": ""
+                        }
+                        }, {
+                        "title": "疯狂动物城 中文版IMAX预告片1",
+                        "coverUrl": "http://img1.tbcdn.cn/tfscom/http://img01.taobaocdn.com/bao/uploaded/TB1B1xLLVXXXXbjXpXXXXXXXXXX.jpg",
+                        "uploaderId": "1745440806",
+                        "description": "疯狂动物城 中文版IMAX预告片1",
+                        "videoId": "35192208",
+                        "duration": "15",
+                        "uploadTime": "2016-03-03 01:14:26",
+                        "features": "{\"keyframe\":1}",
+                        "state": "6",
+                        "webUrl": "<script src=\"http://api.video.taobao.com/video/getPlayerJS\"></script><script src=\"http://api.video.taobao.com/video/embedVideo?vid=35192208&uid=1745440806&tid=1&autoplay=true\"></script>",
+                        "flashUrl": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/1/t/1/35192208.swf",
+                        "ipadUrl": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/6/t/1/d/hd/35192208.mp4",
+                        "iphoneUrl": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/6/t/1/d/hd/35192208.mp4",
+                        "androidPadUrl": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/4/t/1/35192208.m3u8",
+                        "androidPhoneUrl": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/5/t/1/35192208.m3u8",
+                        "androidPadV23Url": {
+                        "ld": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/7/t/1/d/ld/35192208.mp4",
+                        "sd": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/7/t/1/d/sd/35192208.mp4",
+                        "hd": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/7/t/1/d/hd/35192208.mp4",
+                        "ud": ""
+                        },
+                        "androidPhoneV23Url": {
+                        "ld": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/6/t/1/d/ld/35192208.mp4",
+                        "sd": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/6/t/1/d/sd/35192208.mp4",
+                        "hd": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/6/t/1/d/hd/35192208.mp4",
+                        "ud": ""
+                        }
+                        }, {
+                        "title": "疯狂动物城 宣传片之“Year in Film”",
+                        "coverUrl": "http://img1.tbcdn.cn/tfscom/http://img04.taobaocdn.com/bao/uploaded/TB1WgAHLFXXXXbRXVXXXXXXXXXX.jpg",
+                        "uploaderId": "1745440806",
+                        "description": "疯狂动物城 宣传片之“Year in Film”",
+                        "videoId": "35024495",
+                        "duration": "30",
+                        "uploadTime": "2016-02-28 00:58:18",
+                        "features": "{\"keyframe\":1}",
+                        "state": "6",
+                        "webUrl": "<script src=\"http://api.video.taobao.com/video/getPlayerJS\"></script><script src=\"http://api.video.taobao.com/video/embedVideo?vid=35024495&uid=1745440806&tid=1&autoplay=true\"></script>",
+                        "flashUrl": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/1/t/1/35024495.swf",
+                        "ipadUrl": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/6/t/1/d/hd/35024495.mp4",
+                        "iphoneUrl": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/6/t/1/d/hd/35024495.mp4",
+                        "androidPadUrl": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/4/t/1/35024495.m3u8",
+                        "androidPhoneUrl": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/5/t/1/35024495.m3u8",
+                        "androidPadV23Url": {
+                        "ld": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/7/t/1/d/ld/35024495.mp4",
+                        "sd": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/7/t/1/d/sd/35024495.mp4",
+                        "hd": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/7/t/1/d/hd/35024495.mp4",
+                        "ud": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/7/t/1/d/ud/35024495.mp4"
+                        },
+                        "androidPhoneV23Url": {
+                        "ld": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/6/t/1/d/ld/35024495.mp4",
+                        "sd": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/6/t/1/d/sd/35024495.mp4",
+                        "hd": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/6/t/1/d/hd/35024495.mp4",
+                        "ud": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/6/t/1/d/ud/35024495.mp4"
+                        }
+                        }, {
+                        "title": "疯狂动物城 情人节宣传片",
+                        "coverUrl": "http://img1.tbcdn.cn/tfscom/http://img02.taobaocdn.com/bao/uploaded/TB1OWyhLFXXXXcIXVXXXXXXXXXX.jpg",
+                        "uploaderId": "1745440806",
+                        "description": "疯狂动物城 情人节宣传片",
+                        "videoId": "34591871",
+                        "duration": "30",
+                        "uploadTime": "2016-02-15 00:58:03",
+                        "features": "{\"keyframe\":1}",
+                        "state": "6",
+                        "webUrl": "<script src=\"http://api.video.taobao.com/video/getPlayerJS\"></script><script src=\"http://api.video.taobao.com/video/embedVideo?vid=34591871&uid=1745440806&tid=1&autoplay=true\"></script>",
+                        "flashUrl": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/1/t/1/34591871.swf",
+                        "ipadUrl": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/6/t/1/d/ld/34591871.mp4",
+                        "iphoneUrl": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/6/t/1/d/ld/34591871.mp4",
+                        "androidPadUrl": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/4/t/1/34591871.m3u8",
+                        "androidPhoneUrl": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/5/t/1/34591871.m3u8",
+                        "androidPadV23Url": {
+                        "ld": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/7/t/1/d/ld/34591871.mp4",
+                        "sd": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/7/t/1/d/sd/34591871.mp4",
+                        "hd": "",
+                        "ud": ""
+                        },
+                        "androidPhoneV23Url": {
+                        "ld": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/6/t/1/d/ld/34591871.mp4",
+                        "sd": "http://cloud.video.taobao.com/play/u/1745440806/p/1/e/6/t/1/d/sd/34591871.mp4",
+                        "hd": "",
+                        "ud": ""
+                        }
+                        }],
+            "highlight": "全球口碑神作，迪斯尼新巅峰",
+            "trailer": ["i2/TB1Pi4TJpXXXXXjXVXXXXXXXXXX_.jpg", "i4/TB1saI5LpXXXXXNXFXXXXXXXXXX_.jpg", "i4/TB1RxMULpXXXXaGXVXXXXXXXXXX_.jpg", "i4/TB16is_LpXXXXb1XpXXXXXXXXXX_.jpg", "i1/TB1aQs9LpXXXXaoXpXXXXXXXXXX_.jpg", "i4/TB1KfUWLpXXXXXRXVXXXXXXXXXX_.jpg", "i3/TB1TkI7LpXXXXcZXpXXXXXXXXXX_.jpg", "i1/TB1_lBcLFXXXXXRXpXXXXXXXXXX_.jpg", "i4/TB1S4NcLFXXXXXTXpXXXXXXXXXX_.jpg", "i1/TB1dtU7LpXXXXXjXFXXXXXXXXXX_.jpg"],
+            "trailerMeta": [{
+                            "width": "1000",
+                            "height": "713",
+                            "size": "73187"
+                            }, {
+                            "width": "1000",
+                            "height": "647",
+                            "size": "126583"
+                            }, {
+                            "width": "1000",
+                            "height": "647",
+                            "size": "138472"
+                            }, {
+                            "width": "1000",
+                            "height": "647",
+                            "size": "141069"
+                            }, {
+                            "width": "1000",
+                            "height": "647",
+                            "size": "72802"
+                            }, {
+                            "width": "1000",
+                            "height": "647",
+                            "size": "125735"
+                            }, {
+                            "width": "1000",
+                            "height": "647",
+                            "size": "146304"
+                            }, {
+                            "width": "1000",
+                            "height": "647",
+                            "size": "74719"
+                            }, {
+                            "width": "1000",
+                            "height": "647",
+                            "size": "115691"
+                            }, {
+                            "width": "1000",
+                            "height": "647",
+                            "size": "141088"
+                            }],
+            "showVersion": ["IMAX3D"],
+            "flag": "8",
+            "orderBy": "11900",
+            "isAttention": "false",
+            "activities": [{
+                           "id": "12776",
+                           "oriActivityId": "12776",
+                           "activityName": "疯狂动物城--立减5.2元",
+                           "activityTitle": "《疯狂动物城》特惠抢票，每人限购2张",
+                           "activityType": "REDUCE",
+                           "activityPrice": "520",
+                           "activityPriceLimit": "8000",
+                           "allowanceLimit": "520",
+                           "seatLimit": "2",
+                           "totalCountLimit": "2147483647",
+                           "totalBudgetLimit": "1000000000",
+                           "partnerCountLimit": "2147483647",
+                           "partnerBudgetLimit": "2147483647",
+                           "scheduleCountLimit": "2147483647",
+                           "scheduleBudgetLimit": "2147483647",
+                           "periodCountLimit": "2147483647",
+                           "periodBudgetLimit": "2147483647",
+                           "startTime": "2016-03-11 00:00:00",
+                           "endTime": "2016-03-20 23:59:59",
+                           "description": "《疯狂动物城》特惠抢票，每人限购2张",
+                           "longDescription": "1、活动时间：3月11日至3月20日，每天0点限量开抢。\n2、请选择购买带有“春季特惠“活动标签的场次即可享受对应优惠观影价格。不同影院不同影片的活动价格有可能不同，以最终下单价格为准。\n3、抢票规则：活动期间，同一用户只限享受1次抢票机会，最多可购买2张特惠影票。（注：同一用户定义：淘宝账号、支付宝账号、手机号、移动设备任一相同，即为同一用户。）\n4、参与用户限制：支付宝账号完成支付宝实名认证的用户方可参加此次活动。\n5、不可退换规定：特惠电影票不可退换，下单前请确认。\n6、在参加活动过程中，如果出现作弊行为（如批量注册、恶意购买、虚假交易等），淘宝电影将自动取消该用户本次活动的活动资格，并有权撤销违规交易及取消用户后续参加淘宝电影任何活动的权利，必要时将追究相关法律责任。\n7、淘宝电影有权在法律允许范围内对活动规则做出适当调整。\n8、淘宝电影客服热线：0571-88157838。",
+                           "activityTag": "春季特惠",
+                           "activityExtTagMap": {
+                           "CINEMA": "",
+                           "ALIPAY": "",
+                           "SEAT": "",
+                           "ORDERING": "",
+                           "APP_ORDERING": "",
+                           "SCHEDULE": "",
+                           "APP_CINEMA": "",
+                           "APP_SHOW_CINEMA": "",
+                           "APP_SHOW": "",
+                           "APP": "",
+                           "APP_SCHEDULE": "",
+                           "SCHEDULE_ANNOUNCE": "",
+                           "SHOW": "",
+                           "SHOW_CINEMA": ""
+                           },
+                           "joinLimit": "1",
+                           "joinCount": "0",
+                           "qualificationScheme": "96",
+                           "showVersionScheme": "0",
+                           "showId": "187271",
+                           "remainCount": "0",
+                           "activityExtType": "2",
+                           "features": ";general_desc:1、活动时间：3月11日至3月20日，每天0点限量开抢。\n2、请选择购买带有“春季特惠“活动标签的场次即可享受对应优惠观影价格。不同影院不同影片的活动价格有可能不同，以最终下单价格为准。\n3、抢票规则：活动期间，同一用户只限享受1次抢票机会，最多可购买2张特惠影票。（注：同一用户定义：淘宝账号、支付宝账号、手机号、移动设备任一相同，即为同一用户。）\n4、参与用户限制：支付宝账号完成支付宝实名认证的用户方可参加此次活动。\n5、不可退换规定：特惠电影票不可退换，下单前请确认。\n6、在参加活动过程中，如果出现作弊行为（如批量注册、恶意购买、虚假交易等），淘宝电影将自动取消该用户本次活动的活动资格，并有权撤销违规交易及取消用户后续参加淘宝电影任何活动的权利，必要时将追究相关法律责任。\n7、淘宝电影有权在法律允许范围内对活动规则做出适当调整。\n8、淘宝电影客服热线：0571-88157838。;source:TFXENIASERVICE;includeSales:0;cityOptionCities:{\n  \"cityOption\"#3B 0,\n  \"bdActivityIds\"#3B \"123,124,125,126,127,128\"\n};needSms:0;minActivityPrice:880;",
+                           "activitySeq": "20160310182232",
+                           "includeSales": "0"
+                           }],
+            "backgroundPicture": "i1/TB1sAZ.LpXXXXbkXpXXXXXXXXXX_.jpg",
+            "platform": "0",
+            "showMark": "IMAX3D",
+            "minSeatPrice": "2100",
+            "maxSeatPrice": "15000",
+            "availableScheduleCount": "9377",
+            "availableTodayScheduleCount": "1002",
+            "availableCinemaCount": "164",
+            "wantCount": "48248",
+            "remarkCount": "121752",
+            "worthPct": "94%",
+            "isWant": "false",
+            "isRemind": "false",
+            "features": {
+                "album": "2100271670",
+                "openTime": "2016-03-04",
+                "openCountry": "中国"
+            },
+            "specialSchedules": [],
+            "isOpenChina": "true",
+            "artistes": {
+                "directors": [{
+                              "id": "1543670",
+                              "artisteName": "拜恩·霍华德",
+                              "artisteNameEn": "Byron Howard",
+                              "bornDay": "1968-01-01",
+                              "avatar": "i2/TB1n.E6LpXXXXXEXFXXXXXXXXXX_.jpg",
+                              "profession": "导演",
+                              "deadDay": ""
+                              }, {
+                              "id": "2079599",
+                              "artisteName": "杰拉德·布什",
+                              "artisteNameEn": "Jared Bush",
+                              "avatar": "i4/TB1SMOVLVXXXXb5XFXXXXXXXXXX_.jpg",
+                              "profession": "导演",
+                              "deadDay": ""
+                              }, {
+                              "id": "899447",
+                              "artisteName": "里奇·摩尔",
+                              "artisteNameEn": "Rich Moore",
+                              "bornDay": "1963-05-10",
+                              "avatar": "i4/TB1fqU5LpXXXXamXFXXXXXXXXXX_.jpg",
+                              "profession": "导演",
+                              "deadDay": ""
+                              }],
+                "actor": [{
+                          "id": "913635",
+                          "artisteName": "金妮弗·古德温",
+                          "artisteNameEn": "Ginnifer Goodwin",
+                          "bornDay": "1978-05-22",
+                          "roleName": "朱迪（配音）",
+                          "avatar": "i1/TB1yPCOLVXXXXbPXpXXXXXXXXXX_.jpg",
+                          "profession": "演员",
+                          "deadDay": ""
+                          }, {
+                          "id": "953969",
+                          "artisteName": "杰森·贝特曼",
+                          "artisteNameEn": "Jason Bateman",
+                          "bornDay": "1969-01-14",
+                          "roleName": "尼克（配音）",
+                          "avatar": "i1/TB1wGW4LVXXXXbFXpXXXXXXXXXX_.jpg",
+                          "profession": "演员",
+                          "deadDay": ""
+                          }, {
+                          "id": "920328",
+                          "artisteName": "J·K·西蒙斯",
+                          "artisteNameEn": "J.K. Simmons",
+                          "bornDay": "1955-01-09",
+                          "roleName": "狮市长（配音）",
+                          "avatar": "i4/TB1FAq6LVXXXXcKXXXXXXXXXXXX_.jpg",
+                          "profession": "演员",
+                          "deadDay": ""
+                          }, {
+                          "id": "1703866",
+                          "artisteName": "珍妮·斯蕾特",
+                          "artisteNameEn": "Jenny Slate",
+                          "bornDay": "1982-03-25",
+                          "roleName": "羊副市长（配音）",
+                          "avatar": "i1/TB1TnuLLVXXXXcPXVXXXXXXXXXX_.jpg",
+                          "profession": "演员",
+                          "deadDay": ""
+                          }, {
+                          "id": "1236081",
+                          "artisteName": "雷蒙德·S·珀斯",
+                          "artisteNameEn": "Raymond S. Persi",
+                          "bornDay": "1975-02-17",
+                          "roleName": "闪电（配音）",
+                          "avatar": "i3/TB1SIKFLVXXXXXHapXXXXXXXXXX_.jpg",
+                          "profession": "演员",
+                          "deadDay": ""
+                          }, {
+                          "id": "921437",
+                          "artisteName": "莫利斯·拉马谢",
+                          "artisteNameEn": "Maurice LaMarche",
+                          "roleName": "大先生（配音）",
+                          "avatar": "i4/TB1B5CbLVXXXXa6XXXXXXXXXXXX_.jpg",
+                          "profession": "演员",
+                          "deadDay": ""
+                          }, {
+                          "id": "915095",
+                          "artisteName": "艾伦·图代克",
+                          "artisteNameEn": "Alan Tudyk",
+                          "bornDay": "1971-03-16",
+                          "roleName": "Weaselton公爵（配音）",
+                          "avatar": "i4/TB1Gt4kLFXXXXacXXXXXXXXXXXX_.jpg",
+                          "profession": "演员",
+                          "deadDay": ""
+                          }, {
+                          "id": "1324655",
+                          "artisteName": "凯蒂·洛斯",
+                          "artisteNameEn": "Katie Lowes",
+                          "roleName": "Dr. Madge Honey Badger       (voice)",
+                          "avatar": "i3/TB1Df42LVXXXXXuXFXXXXXXXXXX_.jpg",
+                          "profession": "演员",
+                          "deadDay": ""
+                          }, {
+                          "id": "1350426",
+                          "artisteName": "夏奇拉",
+                          "artisteNameEn": "Shakira",
+                          "bornDay": "1977-02-02",
+                          "roleName": "夏奇拉（配音）",
+                          "avatar": "i4/TB1kLydJpXXXXasXXXXXXXXXXXX_.jpg",
+                          "profession": "演员",
+                          "deadDay": ""
+                          }, {
+                          "id": "962842",
+                          "artisteName": "伊德瑞斯·艾尔巴",
+                          "artisteNameEn": "Idris Elba",
+                          "bornDay": "1972-09-06",
+                          "roleName": "警局局长（配音）",
+                          "avatar": "i3/TB1eOuTLVXXXXbuXVXXXXXXXXXX_.jpg",
+                          "profession": "演员",
+                          "deadDay": ""
+                          }, {
+                          "id": "913268",
+                          "artisteName": "内特·托伦斯",
+                          "artisteNameEn": "Nate Torrence",
+                          "roleName": "Clawhauser警官（配音）",
+                          "avatar": "i2/TB17AJSLVXXXXaHXVXXXXXXXXXX_.jpg",
+                          "profession": "演员",
+                          "deadDay": ""
+                          }, {
+                          "id": "905125",
+                          "artisteName": "唐·雷克",
+                          "artisteNameEn": "Don Lake",
+                          "roleName": "斯图·霍普斯（配音）",
+                          "avatar": "i3/TB1BMh1LVXXXXaPXFXXXXXXXXXX_.jpg",
+                          "profession": "演员",
+                          "deadDay": ""
+                          }, {
+                          "id": "910144",
+                          "artisteName": "汤米·钟",
+                          "artisteNameEn": "Tommy Chong",
+                          "bornDay": "1938-05-24",
+                          "roleName": "Yax（配音）",
+                          "avatar": "i2/TB1Ci4UJpXXXXcgXFXXXXXXXXXX_.jpg",
+                          "profession": "演员",
+                          "deadDay": ""
+                          }, {
+                          "id": "959918",
+                          "artisteName": "奥克塔维亚·斯宾瑟",
+                          "artisteNameEn": "Octavia Spencer",
+                          "bornDay": "1972-05-25",
+                          "roleName": "Otterton女士（配音）",
+                          "avatar": "i3/TB1LeubJpXXXXaZXXXXXXXXXXXX_.jpg",
+                          "profession": "演员",
+                          "deadDay": ""
+                          }, {
+                          "id": "905121",
+                          "artisteName": "邦尼·亨特",
+                          "artisteNameEn": "Bonnie Hunt",
+                          "bornDay": "1961-09-22",
+                          "roleName": "邦尼·霍普斯（配音）",
+                          "avatar": "i4/TB1yDtMJpXXXXbhXVXXXXXXXXXX_.jpg",
+                          "profession": "演员",
+                          "deadDay": ""
+                          }, {
+                          "id": "926607",
+                          "artisteName": "汤米·里斯特",
+                          "artisteNameEn": "Tommy Lister",
+                          "bornDay": "1958-06-24",
+                          "roleName": "Finnick（配音）",
+                          "avatar": "i3/TB1NgNVJpXXXXcqXFXXXXXXXXXX_.jpg",
+                          "profession": "演员",
+                          "deadDay": ""
+                          }, {
+                          "id": "919161",
+                          "artisteName": "Jesse Corti",
+                          "roleName": "Manchas (voice)",
+                          "avatar": "i1/TB1xh8SLVXXXXaZXVXXXXXXXXXX_.jpg",
+                          "profession": "演员",
+                          "deadDay": ""
+                          }]
+            },
+            "artisteNum": "31",
+            "trailerNum": "185",
+            "fromSearch": "false",
+            "openTime": "2016-03-04",
+            "albumMusic": ["2100271670"],
+            "openCountry": "中国",
+            "alipayH5Url": "http://h5.m.taobao.com/app/movie/pages/index/show-detail.html?showid=187271&hasbuybtn=false",
+            "fantastic": "0",
+            "shareUrl": "http://www.tmall.hk/market/movie/show-detail.php?showid=187271&citycode=310100",
+            "h5UrlMap": {
+                "commentDetail": "https://h5.m.taobao.com/app/movie/pages/index/show-replies.html?__webview_options__=showOptionMenu%3DNO",
+                "watchedShow": "https://h5.m.taobao.com/app/movie/pages/index/my-comment.html?__webview_options__=showOptionMenu%3DNO",
+                "artisteList": "https://h5.m.taobao.com/app/movie/pages/index/show-artistes.html?showId=187271&showName=疯狂动物城&__webview_options__=showOptionMenu%3DNO",
+                "artisteDetail": "https://h5.m.taobao.com/app/movie/pages/index/artist-detail.html?__webview_options__=showOptionMenu%3DNO",
+                "showComment": "https://h5.m.taobao.com/app/mymovie/pages/mine/critique.html?showId=187271&showName=疯狂动物城&__webview_options__=showOptionMenu%3DNO",
+                "wantedShow": "https://h5.m.taobao.com/app/movie/pages/index/my-interest.html?__webview_options__=showOptionMenu%3DNO",
+                "commentList": "https://h5.m.taobao.com/app/movie/pages/index/show-comments.html?showId=187271&showName=疯狂动物城&__webview_options__=showOptionMenu%3DNO",
+                "trailerList": "https://h5.m.taobao.com/app/movie/pages/index/show-trailers.html?showId=187271&__webview_options__=showOptionMenu%3DNO"
+            }
+        }
+    }
+}

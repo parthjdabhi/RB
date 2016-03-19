@@ -14,6 +14,9 @@
 @property int port;
 @property NSString* appVersion;
 
+@property NSInteger uid;
+@property NSString* token;
+
 -(id) initWithIp:(NSString*) ip
              port:(int) port
        appVersion:(NSString*) appVersion;

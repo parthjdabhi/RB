@@ -22,14 +22,14 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F93-Rb-5S2">
-                        <rect key="frame" x="84" y="16" width="215" height="24"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                        <rect key="frame" x="84" y="22" width="215" height="22"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mbf-G3-1iz">
-                        <rect key="frame" x="84" y="48" width="215" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <rect key="frame" x="84" y="52" width="215" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -48,10 +48,10 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="avatar" destination="QZR-eO-opX" id="A2i-lN-vZ1"/>
-                <outlet property="commentLabel" destination="mbf-G3-1iz" id="zFc-AL-v4v"/>
-                <outlet property="nicknameLabel" destination="F93-Rb-5S2" id="oSr-T7-QgU"/>
+                <outlet property="displayNameLabel" destination="F93-Rb-5S2" id="ilb-g6-asw"/>
+                <outlet property="nicknameLabel" destination="mbf-G3-1iz" id="k81-QD-rrx"/>
             </connections>
-            <point key="canvasLocation" x="294.5" y="284.5"/>
+            <point key="canvasLocation" x="153.5" y="273.5"/>
         </tableViewCell>
     </objects>
 </document>

@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'B252CB5A70993E66CB588AF6'
+               BlueprintIdentifier = '2CFA8F3981F89738CEA24694'
                BlueprintName = 'UIImage-ResizeMagick'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'UIImage_ResizeMagick.framework'>

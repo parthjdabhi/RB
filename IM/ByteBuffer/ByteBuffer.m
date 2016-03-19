@@ -59,26 +59,26 @@ typedef enum {
 }
 
 
--(ByteBuffer *) short:(short) val
+-(ByteBuffer *) short:(int16_t) val
 {
     [list addObject:[[NSDictionary alloc] initWithObjectsAndKeys:@"short", @"type", val, @"value", 2, @"length", nil]];
     return self;
 }
 
--(ByteBuffer *) ushort:(short) val
+-(ByteBuffer *) ushort:(int16_t) val
 {
     [list addObject:[[NSDictionary alloc] initWithObjectsAndKeys:@"ushort", @"type", val, @"value", 2, @"length", nil]];
     return self;
 }
 
--(ByteBuffer *) int32:(int) val
+-(ByteBuffer *) int32:(int32_t) val
 {
     val = NSSwapHostIntToBig(val);
     [org_buf appendBytes:&val length:4];
     return self;
 }
 
--(ByteBuffer *) uint32:(int) val
+-(ByteBuffer *) uint32:(int32_t) val
 {
     val = NSSwapHostIntToBig(val);
     [org_buf appendBytes:&val length:4];
@@ -93,7 +93,7 @@ typedef enum {
     return self;
 }
 
--(ByteBuffer *) int64:(long long) val
+-(ByteBuffer *) int64:(int64_t) val
 {
     val = NSSwapHostDoubleToBig(val).v;
     [org_buf appendBytes:&val length:sizeof(val)];

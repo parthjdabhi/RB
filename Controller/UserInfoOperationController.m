@@ -36,7 +36,7 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    [self adjustHeightOfTableview];
+//    [self adjustHeightOfTableview];
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
@@ -50,16 +50,9 @@
     _tableCells = [[NSMutableArray alloc] init];
     
     
-    NSMutableArray *cs = [NSMutableArray arrayWithObjects: [NSMutableDictionary dictionaryWithObjectsAndKeys: @"1", @"name",nil], nil];
-    [_tableCells addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:cs, @"cells", nil]];
-    
-    NSMutableDictionary *cell1 = [NSMutableDictionary dictionaryWithObjectsAndKeys: @"消息免打扰", @"title", nil];
-    NSMutableDictionary *group1 = [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSMutableArray arrayWithObjects:cell1, nil], @"cells", nil];
-    [_tableCells addObject:group1];
-    
-    NSMutableDictionary *cell3 = [NSMutableDictionary dictionaryWithObjectsAndKeys: @"设置聊天背景", @"title", nil];
-    NSMutableDictionary *group2 = [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSMutableArray arrayWithObjects:cell3, nil], @"cells", nil];
-    [_tableCells addObject:group2];
+    [_tableCells addObject:@{@"cells":@[@{@"title":@"用户信息"}]}];
+    [_tableCells addObject:@{@"cells":@[@{@"title":@"消息免打扰"}]}];
+    [_tableCells addObject:@{@"cells":@[@{@"title":@"设置聊天背景"}]}];
 }
 
 #pragma mark - 数据源方法
@@ -68,45 +61,54 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    NSMutableDictionary *group = _tableCells[section];
-    NSMutableArray * cells = (NSMutableArray *)[group objectForKey:@"cells"];
+    NSDictionary *group = _tableCells[section];
+    NSArray *cells = (NSArray *)[group objectForKey:@"cells"];
+    
     return cells.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSMutableDictionary *group = _tableCells[indexPath.section];
-    NSMutableArray *cells = (NSMutableArray *)[group objectForKey:@"cells"];
-    NSMutableDictionary *contact = cells[indexPath.row];
+    NSDictionary *group = _tableCells[indexPath.section];
+    NSArray *cells = (NSArray *)[group objectForKey:@"cells"];
+    NSDictionary *contact = cells[indexPath.row];
     
     if (indexPath.section == 0 && indexPath.row == 0) {
         static NSString *CellIdentifier = @"DialogMemberCell";
-        DialogMemberCell *cell = [[DialogMemberCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        DialogMemberCell *cell = [[DialogMemberCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                                         reuseIdentifier:CellIdentifier];
         
         if (_groupId > 0) {
             _group = [[IMDAO shareInstance] getGroupWithId:_groupId];
             NSArray *groupMembers = _group.members;
+            
             if (_group.members) {
                 [cell setMember:groupMembers];
             }
+            
         } else {
             [cell setMember:@[_user]];
         }
 
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.delegate = self;
+        
         return cell;
+        
     } else if (indexPath.section == 1 && indexPath.row == 0) {
+        
         UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
 
         cell.textLabel.text = [contact objectForKey:@"title"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        UISwitch *switchview = [[UISwitch alloc] initWithFrame:CGRectZero];
-        cell.accessoryView = switchview;
+        cell.accessoryView = [[UISwitch alloc] initWithFrame:CGRectZero];
+        
         return cell;
+        
     } else {
         UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.textLabel.text = [contact objectForKey:@"title"];
+
         return cell;
     }
 }
@@ -119,9 +121,11 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
     if(indexPath.section == 0 && indexPath.row == 0){
         return 60;
     }
+
     return 45;
 }
 
@@ -152,9 +156,11 @@
 #pragma mark GroupMemberCell delegate
 - (void)go2FriendSelectController {
     FriendSelectController *fsc = nil;
+    
     if (_groupId > 0) {
         fsc = [[FriendSelectController alloc] initWithSelectUsers:_group.members];
         fsc.groupId = _groupId;
+    
     } else {
         fsc = [[FriendSelectController alloc] initWithSelectUsers:@[_user]];
     }

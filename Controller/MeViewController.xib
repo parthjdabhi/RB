@@ -18,10 +18,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7ey-AH-fk0">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="330"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="265"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="330" id="EqJ-Lm-KhE"/>
+                        <constraint firstAttribute="height" constant="265" id="EqJ-Lm-KhE"/>
                     </constraints>
                     <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                     <connections>
@@ -30,7 +30,7 @@
                     </connections>
                 </tableView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GCV-q3-DJI">
-                    <rect key="frame" x="13" y="354" width="348" height="40"/>
+                    <rect key="frame" x="13" y="285" width="348" height="40"/>
                     <color key="backgroundColor" red="0.31764705879999999" green="0.74117647060000003" blue="0.10980392160000001" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="1Wy-wH-6bm"/>
@@ -44,12 +44,12 @@
             </subviews>
             <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="7ey-AH-fk0" secondAttribute="trailing" id="8QJ-lP-DqB"/>
-                <constraint firstItem="7ey-AH-fk0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="BE7-TV-P5R"/>
-                <constraint firstItem="7ey-AH-fk0" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="N1z-5R-Bxv"/>
-                <constraint firstItem="GCV-q3-DJI" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="13" id="kC8-r7-e4L"/>
+                <constraint firstItem="7ey-AH-fk0" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="eMj-hu-DNk"/>
+                <constraint firstItem="7ey-AH-fk0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="mLR-A4-v3K"/>
                 <constraint firstItem="7ey-AH-fk0" firstAttribute="centerX" secondItem="GCV-q3-DJI" secondAttribute="centerX" id="sCq-iu-STj"/>
-                <constraint firstItem="GCV-q3-DJI" firstAttribute="top" secondItem="7ey-AH-fk0" secondAttribute="bottom" constant="24" id="wXd-5C-aD5"/>
+                <constraint firstItem="GCV-q3-DJI" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="13" id="tFC-1P-rA4"/>
+                <constraint firstAttribute="trailing" secondItem="7ey-AH-fk0" secondAttribute="trailing" id="uu8-fc-xq8"/>
+                <constraint firstItem="GCV-q3-DJI" firstAttribute="top" secondItem="7ey-AH-fk0" secondAttribute="bottom" constant="20" id="wXd-5C-aD5"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
             <point key="canvasLocation" x="304.5" y="273.5"/>

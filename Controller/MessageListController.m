@@ -16,7 +16,6 @@
 #import "IMDAO.h"
 #import "NoticeObserver.h"
 #import "DialogItemCell.h"
-#import "MessageDetailViewController.h"
 #import "DialogDetailController.h"
 
 #import <SDWebImage/UIImageView+WebCache.h>
@@ -57,10 +56,11 @@
 
     [[AppProfile instance] incrMsgUnreadCount:[[IMDAO shareInstance] getMsgUnreadCount]];
     
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(onReceivedMsgNotification:) name:ReceiveMessageNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(onReceivedMessageNotification:) name:ReceiveMessageNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(onReceivedMessagesNotification:) name:ReceiveMessagesNotification object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(onReceivedNoticeNotification:) name:ReceiveNoticeNotification object:nil];
     
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateMsgCount) name:UpdateMsgCountNotification object:nil];
+//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateMsgCount) name:UpdateMsgCountNotification object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(onUpdateConnStatusNotification:) name:UpdateConnectionStatusNotification object:nil];
     
     UINib *nib = [UINib nibWithNibName:@"DialogItemCell" bundle:nil];
@@ -87,10 +87,10 @@
 - (void) connectIM {
     
     ConnectionConfig *config = [[ConnectionConfig alloc] initWithIp:IM_SERVER_IP port:10101 appVersion:@"golo/5.0"];
-    [IMClient setConfig:config];
-    client = [IMClient shareInstance];
+    client = [IMClient instance];
+    [client setConfig:config];
     [client connectWithUid:[MUser currentUser].uid accessToken: [MUser currentUser].accessToken];
-    [NoticeObserver shareInstance];
+    [NoticeObserver instance];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -105,10 +105,11 @@
     DialogItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DialogItemCell" forIndexPath:indexPath];
     NSUInteger row = [indexPath row];
     MDialog *dialog = (MDialog *)[_dialogs objectAtIndex:row];
-    cell.title.text = dialog.name;
+
+    MFriend *friend = [[IMDAO shareInstance] getFriendWithId:dialog.uid];
+    cell.title.text = friend.displayName;
     
-    MUser *user = [[IMDAO shareInstance] getUserWithUid:dialog.uid];
-    NSURL *url = [NSURL URLWithString:user.avatarUrl];
+    NSURL *url = [NSURL URLWithString:friend.avatarUrl];
     [cell.avatar sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"avater_default.png"] completed:nil];
     cell.subTitle.text = dialog.desc;
     [cell setUnreadCount:dialog.unreadCount];
@@ -138,13 +139,6 @@
     return _dialogs.count;
 }
 
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    //    MessageController *messageController = [[MessageController alloc] initWithNibName:@"MessageController" bundle:nil];
-//    //    [self.navigationController pushViewController:messageController animated:true];
-//    [self performSegueWithIdentifier:@"showMessageController" sender:self];
-//}
-
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     MDialog *dialog = (MDialog *)[_dialogs objectAtIndex:indexPath.row];
@@ -172,7 +166,7 @@
 
 #pragma mark notification
 
--(void) onReceivedMsgNotification:(NSNotification *)aNotification {
+-(void) onReceivedMessageNotification:(NSNotification *)aNotification {
     Message *rawMessage = (Message *)[aNotification object];
     
     MMessage *message = [[MMessage alloc] init];
@@ -194,6 +188,32 @@
         });
     }
 
+}
+
+-(void) onReceivedMessagesNotification:(NSNotification *)aNotification {
+    NSArray *messages = (NSArray *)[aNotification object];
+    
+    for (Message *rawMessage in messages) {
+        MMessage *message = [[MMessage alloc] init];
+        message.senderId = rawMessage.from;
+        message.receiverId = rawMessage.to;
+        message.isOutput = FALSE;
+        message.type = rawMessage.messageType;
+        message.rawContent = rawMessage.messageBody;
+        message.stamp = rawMessage.stamp / 1000;
+        [[IMDAO shareInstance] saveMessage:message];
+    }
+    
+    [[AppProfile instance] incrMsgUnreadCount:messages.count];
+    
+    if(self.isViewLoaded && self.view.window) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [self updateMsgCount];
+            _dialogs = [[IMDAO shareInstance] getDialogs];
+            [self.tableView reloadData];
+        });
+    }
+    
 }
 
 -(void) updateMsgCount {
@@ -221,16 +241,16 @@
 //    UINavigationItem *item = [[self.navigationController.viewControllers firstObject] navigationItem];
     UINavigationItem *item = self.navigationItem;
     if (self.isViewLoaded) {
-        if ([IMClient shareInstance].connection.status == Connecting) {
+        if ([IMClient instance].connection.status == Connecting) {
 //            self.title = @"消息（连接中）";
             [item setTitle: @"消息（连接中）"];
-        } else if([IMClient shareInstance].connection.status == Binding) {
+        } else if([IMClient instance].connection.status == Binding) {
 //            self.title = @"消息（收取中）";
             [item setTitle: @"消息（收取中）"];
-        } else if([IMClient shareInstance].connection.status == Connected) {
+        } else if([IMClient instance].connection.status == Connected) {
 //            self.title = @"消息（已连接）";
             [item setTitle: @"消息（已连接）" ];
-        } else if([IMClient shareInstance].connection.status == Disconnected) {
+        } else if([IMClient instance].connection.status == Disconnected) {
 //            self.title = @"消息（已断开）";
             [item setTitle: @"消息（已断开）" ];
         }
